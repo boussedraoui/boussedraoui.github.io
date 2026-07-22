@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        // Get the current path the user is trying to access
+        const currentPath = window.location.pathname;
+
+        // If the path is the lowercase repository name, redirect to the uppercase one
+        if (currentPath === '/multitool-pro-full-complete' || currentPath === '/multitool-pro-full-complete/') {
+            window.location.replace('https://boussedraoui.github.io/Multitool-Pro-Full-Complete');
+        } else {
+            // Fallback in case the script doesn't redirect
+            document.write('<p>Page not found. If you were looking for the correct repo, click <a href="https://boussedraoui.github.io/Multitool-Pro-Full-Complete">here</a>.</p>');
+        }
+    </script>
+</head>
+<body>
+    <h1>Redirecting...</h1>
+</body>
+</html>
