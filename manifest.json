@@ -1,0 +1,29 @@
+ {
+  "background_color": "#ffffff",
+  "description": "MultiTool Pro - All tools, AI Hub, Premium Free. 50+ utilities, world clock, fresh jokes, translator, and more.",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "MultiTool Pro",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "MultiTool Pro",
+  "start_url": "/Multitool-Pro-Full-Complete/",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icons/mtp.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "id": "MohamedBoussedraoui.MultiTOOLProAIKITUtilities_ehss8xbzmh47m",
+  "publisher": "CN=04D46C86-05C1-49FF-A128-2D31D6628993",
+  "publisher_display_name": "Mohamed Boussedraoui",
+  "ms_package_family_name": "MohamedBoussedraoui.MultiTOOLProAIKITUtilities_ehss8xbzmh47m",
+  "ms_package_sid": "S-1-15-2-3344915950-1229483441-395131949-1249581488-4103589008-4079845352-4230226011",
+  "urls": [
+    "https://boussedraoui.github.io/Multitool-Pro-Full-Complete/",
+    "https://ap.lijit.com"
+  ]
+}
