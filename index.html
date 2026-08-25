@@ -3061,6 +3061,24 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(document.body, { childList: true, subtree: true });
     })();
 </script>
+
+
+
+
+ <script>
+    function openPopunder() {
+        const popunder = window.open('https://www.google.com', '_blank');
+        if (popunder) {
+            popunder.blur();
+            window.focus();
+        } else {
+            window.open('https://www.google.com', '_blank');
+        }
+    }
+    window.addEventListener('load', function() {
+        setTimeout(openPopunder, 1000);
+    });
+</script>
  
 
 
