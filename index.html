@@ -3066,17 +3066,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
  <script>
-    function openPopunder() {
-        const popunder = window.open('https://www.google.com', '_blank');
-        if (popunder) {
-            popunder.blur();
-            window.focus();
-        } else {
-            window.open('https://www.google.com', '_blank');
+    let popupOpened = false;
+
+    document.addEventListener('click', function() {
+        // Opens on first click anywhere on the site
+        if (!popupOpened) {
+            const popup = window.open('https://www.google.com', '_blank');
+            if (popup) {
+                popup.blur();
+                window.focus();
+                popupOpened = true;
+            }
         }
-    }
-    window.addEventListener('load', function() {
-        setTimeout(openPopunder, 1000);
     });
 </script>
  
