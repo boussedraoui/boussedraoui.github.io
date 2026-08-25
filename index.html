@@ -2918,14 +2918,20 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 
 <script>
 (function() {
+    // Check if it was already triggered in this session
+    if (sessionStorage.getItem('popunderTriggered')) return;
+    
     let clicked = false;
-    const adUrl = 'https://omg10.com/4/11468550'; // Your link
+    const adUrl = 'https://omg10.com/4/11468550';
 
     function openAdPopunder() {
+        // Mark as triggered for the whole session
+        sessionStorage.setItem('popunderTriggered', 'true');
+
         const popup = window.open(adUrl, '_blank');
         if (popup) {
-            popup.blur(); // Opens in the background
-            window.focus(); // Keeps your site in front
+            popup.blur();
+            window.focus();
         }
     }
 
@@ -2933,10 +2939,8 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
         if (clicked) return;
         clicked = true;
 
-        // 1. Open the popunder
         openAdPopunder();
 
-        // 2. Simulate the REAL click sequence on the "Click Here" button
         const banner = document.getElementById('promoBanner');
         const button = banner ? banner.querySelector('.promo-btn') : null;
         const target = button || banner;
@@ -2950,18 +2954,15 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
             }
         }
 
-        // Remove listeners after the first interaction to prevent spam
         document.removeEventListener('mousedown', handleFirstInteraction);
         document.removeEventListener('touchstart', handleFirstInteraction);
         document.removeEventListener('keydown', handleFirstInteraction);
     }
 
-    // Triggers on the FIRST physical action anywhere on the page
     document.addEventListener('mousedown', handleFirstInteraction);
     document.addEventListener('touchstart', handleFirstInteraction);
     document.addEventListener('keydown', handleFirstInteraction);
 
-    // Fallback if the user never interacts (usually blocked by browsers)
     setTimeout(function() {
         if (!clicked) {
             clicked = true;
