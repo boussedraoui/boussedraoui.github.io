@@ -13,6 +13,7 @@
 
 
 
+    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <meta name="mnd-ver" content="jowtkop5u59ibbeq6wtbg" />
     <meta name="trustpilot-one-time-domain-verification-id" content="f355344a-aab0-481d-b94e-998228bec0e7"/>
     <meta charset="UTF-8">
@@ -2985,7 +2986,9 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 
     // REPLACE 001, 002, 003, 004, 005, 006 WITH YOUR ACTUAL CODES (without <script> tags)
     function runNetwork001() {
-        001
+    aclib.runPop({
+        zoneId: '12045646',
+    });
     }
     function runNetwork002() {
         002
