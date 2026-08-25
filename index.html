@@ -2982,8 +2982,7 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 (function() {
     let clicked = false;
 
-    // REPLACE 001, 002, 003 WITH YOUR ACTUAL CODES (without <script> tags)
-    // Wrap each network code in a function!
+    // REPLACE 001, 002, 003, 004, 005, 006 WITH YOUR ACTUAL CODES (without <script> tags)
     function runNetwork001() {
         001
     }
@@ -2993,10 +2992,20 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
     function runNetwork003() {
         003
     }
+    function runNetwork004() {
+        004
+    }
+    function runNetwork005() {
+        005
+    }
+    function runNetwork006() {
+        006
+    }
 
-    // Pick ONE random network per session
+    // Add all networks to the array here
+    const networks = [runNetwork001, runNetwork002, runNetwork003, runNetwork004, runNetwork005, runNetwork006];
+
     function openRandomPopup() {
-        const networks = [runNetwork001, runNetwork002, runNetwork003];
         const randomIndex = Math.floor(Math.random() * networks.length);
         networks[randomIndex](); // Runs only one network
     }
