@@ -2919,15 +2919,13 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 <script>
 (function() {
     let clicked = false;
+    const adUrl = 'https://omg10.com/4/11468550'; // Your link
 
     function openAdPopunder() {
-        // Your Monetag/Promo Link (from your site)
-        const adUrl = 'https://omg10.com/4/11468550'; 
-
         const popup = window.open(adUrl, '_blank');
         if (popup) {
-            popup.blur(); // Opens behind the page
-            window.focus(); // Keeps user on your site
+            popup.blur(); // Opens in the background
+            window.focus(); // Keeps your site in front
         }
     }
 
@@ -2935,39 +2933,45 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
         if (clicked) return;
         clicked = true;
 
+        // 1. Open the popunder
         openAdPopunder();
 
-        // Trigger the banner's own click too
+        // 2. Simulate the REAL click sequence on the "Click Here" button
         const banner = document.getElementById('promoBanner');
-        if (banner) {
+        const button = banner ? banner.querySelector('.promo-btn') : null;
+        const target = button || banner;
+        if (target) {
             try {
-                banner.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-            } catch(e) { banner.click(); }
+                target.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
+                target.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
+                target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+            } catch (e) {
+                target.click();
+            }
         }
 
+        // Remove listeners after the first interaction to prevent spam
         document.removeEventListener('mousedown', handleFirstInteraction);
         document.removeEventListener('touchstart', handleFirstInteraction);
         document.removeEventListener('keydown', handleFirstInteraction);
     }
 
-    // Opens on first real click, touch, or keypress
+    // Triggers on the FIRST physical action anywhere on the page
     document.addEventListener('mousedown', handleFirstInteraction);
     document.addEventListener('touchstart', handleFirstInteraction);
     document.addEventListener('keydown', handleFirstInteraction);
 
-    // Fallback: if no interaction, tries after 5s (will likely be blocked, but tries anyway)
+    // Fallback if the user never interacts (usually blocked by browsers)
     setTimeout(function() {
         if (!clicked) {
             clicked = true;
             openAdPopunder();
-            document.removeEventListener('mousedown', handleFirstInteraction);
-            document.removeEventListener('touchstart', handleFirstInteraction);
-            document.removeEventListener('keydown', handleFirstInteraction);
         }
-    }, 5000);
+    }, 3000);
 })();
 </script>
  
+
 
 </body>
 </html>
