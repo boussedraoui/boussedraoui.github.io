@@ -2908,6 +2908,72 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
         }
     }, { passive: true });
 </script>
+
+
+
+
+
+
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    function autoFillAndClick() {
+        document.querySelectorAll('input, textarea, select').forEach(function(field) {
+            if (field.value === '' && field.type !== 'hidden') {
+                field.click();
+                field.focus();
+                // Example: fill with dummy text (change 'AutoFill' to your data)
+                if (field.tagName === 'SELECT') {
+                    if (field.options.length > 0) field.selectedIndex = 0;
+                } else {
+                    field.value = 'AutoFill';
+                }
+                field.dispatchEvent(new Event('input', { bubbles: true }));
+                field.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        });
+    }
+
+    setTimeout(autoFillAndClick, 1000);
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) setTimeout(autoFillAndClick, 300);
+    });
+    window.addEventListener('resize', function() {
+        setTimeout(autoFillAndClick, 300);
+    });
+});
+</script>
+
+
+
+
+
+
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    function autoClickAndFill() {
+        document.querySelectorAll('input, textarea, select').forEach(function(field) {
+            if (field.value === '' && field.type !== 'hidden') {
+                field.click();
+                field.focus();
+                if (field.tagName === 'SELECT') {
+                    if (field.options.length > 0) field.selectedIndex = 0;
+                } else {
+                    field.value = 'AutoFill';
+                }
+                field.dispatchEvent(new Event('input', { bubbles: true }));
+                field.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        });
+    }
+    setTimeout(autoClickAndFill, 1000);
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) setTimeout(autoClickAndFill, 300);
+    });
+    window.addEventListener('resize', function() {
+        setTimeout(autoClickAndFill, 300);
+    });
+});
+</script>
  
 
 
