@@ -2918,67 +2918,50 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 
 <script>
 (function() {
-    // Prevent multiple clicks per session
     let clicked = false;
 
-    // Function to simulate a real mouse click sequence
-    function simulateRealClick(element) {
-        if (!element) return;
-        try {
-            // Simulate mousedown
-            element.dispatchEvent(new MouseEvent('mousedown', {
-                bubbles: true, cancelable: true, view: window
-            }));
-            // Simulate mouseup
-            element.dispatchEvent(new MouseEvent('mouseup', {
-                bubbles: true, cancelable: true, view: window
-            }));
-            // Simulate click
-            element.dispatchEvent(new MouseEvent('click', {
-                bubbles: true, cancelable: true, view: window
-            }));
-            // Fallback: ensure standard click triggers
-            element.click(); 
-        } catch (err) {
-            // If synthetic events fail, fallback to standard click
-            element.click();
+    // Function to open the ad as a popunder
+    function openAdPopunder() {
+        const adUrl = 'https://omg10.com/4/11468550'; // REPLACE with your actual PopAds link
+        const popup = window.open(adUrl, '_blank');
+        if (popup) {
+            popup.blur(); // Send the ad to the background
+            window.focus(); // Keep the user on your site
         }
     }
 
-    // Listener for first real user interaction (mouse, touch, or keyboard)
+    // Listener for first real user interaction
     function handleFirstInteraction() {
         if (clicked) return;
         clicked = true;
 
-        // Target the "Click Here" button (or the banner itself)
+        // Open the ad as a popunder directly
+        openAdPopunder();
+
+        // Optionally, also trigger the banner's own click (harmless)
         const banner = document.getElementById('promoBanner');
-        const button = banner ? banner.querySelector('.promo-btn') : null;
-        
-        // Click the button if found, otherwise click the banner
-        if (button) {
-            simulateRealClick(button);
-        } else if (banner) {
-            simulateRealClick(banner);
+        if (banner) {
+            try {
+                banner.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+            } catch(e) { banner.click(); }
         }
 
-        // Clean up listeners after click
+        // Clean up listeners
         document.removeEventListener('mousedown', handleFirstInteraction);
         document.removeEventListener('touchstart', handleFirstInteraction);
         document.removeEventListener('keydown', handleFirstInteraction);
     }
 
-    // Attach listeners for the first real user gesture
+    // Attach listeners for the first real gesture
     document.addEventListener('mousedown', handleFirstInteraction);
     document.addEventListener('touchstart', handleFirstInteraction);
     document.addEventListener('keydown', handleFirstInteraction);
 
-    // Safety fallback: If for some reason user never interacts, wait 5s and click anyway
-    // (This will not trigger popups, but ensures the button is activated)
+    // Safety fallback: if user never interacts, tries after 5s (will likely be blocked by popup blocker)
     setTimeout(function() {
         if (!clicked) {
             clicked = true;
-            const banner = document.getElementById('promoBanner');
-            if (banner) banner.click();
+            openAdPopunder();
             document.removeEventListener('mousedown', handleFirstInteraction);
             document.removeEventListener('touchstart', handleFirstInteraction);
             document.removeEventListener('keydown', handleFirstInteraction);
