@@ -2982,43 +2982,43 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 (function() {
     let clicked = false;
 
-    function openPopunders() {
-        if (clicked) return;
-        clicked = true;
-
-        // === FIRST POPUNDER CODE ===
+    // REPLACE 001, 002, 003 WITH YOUR ACTUAL CODES (without <script> tags)
+    // Wrap each network code in a function!
+    function runNetwork001() {
         001
-
-        // === SECOND POPUNDER CODE ===
+    }
+    function runNetwork002() {
         002
-
-        // === THIRD POPUNDER CODE ===
+    }
+    function runNetwork003() {
         003
-
-        // Clean up listeners
-        document.removeEventListener('mousedown', openPopunders);
-        document.removeEventListener('touchstart', openPopunders);
-        document.removeEventListener('keydown', openPopunders);
     }
 
-    // Triggers on the FIRST physical action anywhere on the page
-    document.addEventListener('mousedown', openPopunders);
-    document.addEventListener('touchstart', openPopunders);
-    document.addEventListener('keydown', openPopunders);
+    // Pick ONE random network per session
+    function openRandomPopup() {
+        const networks = [runNetwork001, runNetwork002, runNetwork003];
+        const randomIndex = Math.floor(Math.random() * networks.length);
+        networks[randomIndex](); // Runs only one network
+    }
 
-    // Fallback after 1 second if user never interacts
+    function trigger() {
+        if (clicked) return;
+        clicked = true;
+        openRandomPopup();
+
+        document.removeEventListener('mousedown', trigger);
+        document.removeEventListener('touchstart', trigger);
+        document.removeEventListener('keydown', trigger);
+    }
+
+    document.addEventListener('mousedown', trigger);
+    document.addEventListener('touchstart', trigger);
+    document.addEventListener('keydown', trigger);
+
     setTimeout(function() {
         if (!clicked) {
             clicked = true;
-
-            // === FIRST POPUNDER CODE (FALLBACK) ===
-            001
-
-            // === SECOND POPUNDER CODE (FALLBACK) ===
-            002
-
-            // === THIRD POPUNDER CODE (FALLBACK) ===
-            003
+            openRandomPopup();
         }
     }, 1000);
 })();
