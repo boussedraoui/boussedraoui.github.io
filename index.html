@@ -2974,6 +2974,57 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+
+
+
+
+ <script>
+    // Function to click the specific "Click Here" button
+    function clickPromoButton() {
+        // Target the exact ID of your promo banner
+        const promoBanner = document.getElementById('promoBanner');
+        
+        // If it exists and is not hidden, click it
+        if (promoBanner) {
+            promoBanner.click();
+            console.log('Promo banner clicked automatically.');
+        }
+    }
+
+    // 1. Click immediately on initial page load
+    window.addEventListener('load', function() {
+        setTimeout(clickPromoButton, 500); // Short delay to ensure elements are ready
+    });
+
+    // 2. Click every time the user returns to the tab (refresh/visibility)
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            setTimeout(clickPromoButton, 300);
+        }
+    });
+
+    // 3. Use MutationObserver to catch if the element is added later by other scripts
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (document.getElementById('promoBanner') && !document.getElementById('promoBanner').getAttribute('data-clicked')) {
+                setTimeout(clickPromoButton, 100);
+                document.getElementById('promoBanner').setAttribute('data-clicked', 'true');
+            }
+        });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // 4. Fallback interval (Runs every second just in case the button re-renders)
+    setInterval(function() {
+        const promo = document.getElementById('promoBanner');
+        // Only click if it hasn't been clicked very recently (prevent spam clicking)
+        if (promo && !promo.classList.contains('hidden')) {
+            // Optional: To truly only click on "entering" and "refreshing", you can clear this interval after the first click
+            // window.clearInterval(yourIntervalId); 
+        }
+    }, 1000);
+</script>
  
 
 
