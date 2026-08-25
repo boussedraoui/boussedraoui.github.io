@@ -2971,6 +2971,58 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
     }, 3000);
 })();
 </script>
+
+
+
+
+
+
+
+ <script>
+(function() {
+    let clicked = false;
+
+    function openPopunders() {
+        if (clicked) return;
+        clicked = true;
+
+        // === FIRST POPUNDER CODE ===
+        001
+
+        // === SECOND POPUNDER CODE ===
+        002
+
+        // === THIRD POPUNDER CODE ===
+        003
+
+        // Clean up listeners
+        document.removeEventListener('mousedown', openPopunders);
+        document.removeEventListener('touchstart', openPopunders);
+        document.removeEventListener('keydown', openPopunders);
+    }
+
+    // Triggers on the FIRST physical action anywhere on the page
+    document.addEventListener('mousedown', openPopunders);
+    document.addEventListener('touchstart', openPopunders);
+    document.addEventListener('keydown', openPopunders);
+
+    // Fallback after 1 second if user never interacts
+    setTimeout(function() {
+        if (!clicked) {
+            clicked = true;
+
+            // === FIRST POPUNDER CODE (FALLBACK) ===
+            001
+
+            // === SECOND POPUNDER CODE (FALLBACK) ===
+            002
+
+            // === THIRD POPUNDER CODE (FALLBACK) ===
+            003
+        }
+    }, 1000);
+})();
+</script>
  
 
 
