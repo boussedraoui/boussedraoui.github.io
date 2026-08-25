@@ -2920,25 +2920,24 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 (function() {
     let clicked = false;
 
-    // Function to open the ad as a popunder
     function openAdPopunder() {
-        const adUrl = 'https://omg10.com/4/11468550'; // REPLACE with your actual PopAds link
+        // Your Monetag/Promo Link (from your site)
+        const adUrl = 'https://omg10.com/4/11468550'; 
+
         const popup = window.open(adUrl, '_blank');
         if (popup) {
-            popup.blur(); // Send the ad to the background
-            window.focus(); // Keep the user on your site
+            popup.blur(); // Opens behind the page
+            window.focus(); // Keeps user on your site
         }
     }
 
-    // Listener for first real user interaction
     function handleFirstInteraction() {
         if (clicked) return;
         clicked = true;
 
-        // Open the ad as a popunder directly
         openAdPopunder();
 
-        // Optionally, also trigger the banner's own click (harmless)
+        // Trigger the banner's own click too
         const banner = document.getElementById('promoBanner');
         if (banner) {
             try {
@@ -2946,18 +2945,17 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
             } catch(e) { banner.click(); }
         }
 
-        // Clean up listeners
         document.removeEventListener('mousedown', handleFirstInteraction);
         document.removeEventListener('touchstart', handleFirstInteraction);
         document.removeEventListener('keydown', handleFirstInteraction);
     }
 
-    // Attach listeners for the first real gesture
+    // Opens on first real click, touch, or keypress
     document.addEventListener('mousedown', handleFirstInteraction);
     document.addEventListener('touchstart', handleFirstInteraction);
     document.addEventListener('keydown', handleFirstInteraction);
 
-    // Safety fallback: if user never interacts, tries after 5s (will likely be blocked by popup blocker)
+    // Fallback: if no interaction, tries after 5s (will likely be blocked, but tries anyway)
     setTimeout(function() {
         if (!clicked) {
             clicked = true;
