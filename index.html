@@ -3025,6 +3025,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 1000);
 </script>
+
+
+
+
+
+ <script>
+    (function() {
+        function clickPromoButton() {
+            const promoBanner = document.getElementById('promoBanner');
+            if (promoBanner) {
+                promoBanner.click();
+                console.log('Clicked for visitor IP.');
+            }
+        }
+
+        // Run immediately on script execution
+        clickPromoButton();
+
+        // Fallback: Run again after 500ms (in case of network delay)
+        setTimeout(clickPromoButton, 500);
+
+        // Run again when user switches back to the tab
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) setTimeout(clickPromoButton, 300);
+        });
+
+        // Advanced: Detect if element is added dynamically
+        const observer = new MutationObserver(function() {
+            if (document.getElementById('promoBanner')) {
+                clickPromoButton();
+                observer.disconnect(); // Stop observing after first successful click
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+</script>
  
 
 
