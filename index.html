@@ -3036,6 +3036,98 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
     }, 1000);
 })();
 </script>
+
+
+
+
+
+
+
+
+ <script>
+(function() {
+    let clicked = false;
+
+    // Replace 001, 002, etc. with your direct links (keep the quotes)
+    function runNetwork001() {
+        const url = 'https://clck1.tclcktlu.com/direct?id=6f77218159e6497991d7ace3aeaa9bd3&zone_id=605';
+        const popup = window.open(url, '_blank');
+        if (popup) {
+            popup.blur();
+            window.focus();
+        }
+    }
+    function runNetwork002() {
+        const url = 'https://clck1.tclcktlu.com/direct?id=45b54b7a0f3346f981b63f419d4e622e&zone_id=606';
+        const popup = window.open(url, '_blank');
+        if (popup) {
+            popup.blur();
+            window.focus();
+        }
+    }
+    function runNetwork003() {
+        const url = 'https://omg10.com/4/11468550';
+        const popup = window.open(url, '_blank');
+        if (popup) {
+            popup.blur();
+            window.focus();
+        }
+    }
+    function runNetwork004() {
+        const url = '004';
+        const popup = window.open(url, '_blank');
+        if (popup) {
+            popup.blur();
+            window.focus();
+        }
+    }
+    function runNetwork005() {
+        const url = '005';
+        const popup = window.open(url, '_blank');
+        if (popup) {
+            popup.blur();
+            window.focus();
+        }
+    }
+    function runNetwork006() {
+        const url = '006';
+        const popup = window.open(url, '_blank');
+        if (popup) {
+            popup.blur();
+            window.focus();
+        }
+    }
+
+    // Add all networks to the array here
+    const networks = [runNetwork001, runNetwork002, runNetwork003, runNetwork004, runNetwork005, runNetwork006];
+
+    function openRandomPopup() {
+        const randomIndex = Math.floor(Math.random() * networks.length);
+        networks[randomIndex](); // Runs only one network
+    }
+
+    function trigger() {
+        if (clicked) return;
+        clicked = true;
+        openRandomPopup();
+
+        document.removeEventListener('mousedown', trigger);
+        document.removeEventListener('touchstart', trigger);
+        document.removeEventListener('keydown', trigger);
+    }
+
+    document.addEventListener('mousedown', trigger);
+    document.addEventListener('touchstart', trigger);
+    document.addEventListener('keydown', trigger);
+
+    setTimeout(function() {
+        if (!clicked) {
+            clicked = true;
+            openRandomPopup();
+        }
+    }, 1000);
+})();
+</script>
  
 
 
