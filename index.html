@@ -2989,41 +2989,7 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 
 
 
- <script>
-(function() {
-    // Only run once per session per page load
-    if (sessionStorage.getItem('promoClicked')) return;
-    sessionStorage.setItem('promoClicked', 'true');
-
-    function doTheClick() {
-        // Find the "Click Here" button inside the promo banner
-        const banner = document.getElementById('promoBanner');
-        const button = banner ? banner.querySelector('.promo-btn') : null;
-        const target = button || banner;
-
-        if (target) {
-            // Trigger the click events immediately (simulating a real sequence)
-            try {
-                target.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
-                target.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
-                target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-            } catch (e) {
-                target.click();
-            }
-        }
-    }
-
-    // Fire immediately when the DOM is ready (no waiting)
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', doTheClick);
-    } else {
-        doTheClick();
-    }
-
-    // Fallback: Fire again after 500ms to ensure everything is fully loaded
-    setTimeout(doTheClick, 500);
-})();
-</script>
+ 
  
 
 
