@@ -2914,116 +2914,75 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 
 
 
- <script>
-document.addEventListener('DOMContentLoaded', function() {
-    function autoFillAndClick() {
-        document.querySelectorAll('input, textarea, select').forEach(function(field) {
-            if (field.value === '' && field.type !== 'hidden') {
-                field.click();
-                field.focus();
-                // Example: fill with dummy text (change 'AutoFill' to your data)
-                if (field.tagName === 'SELECT') {
-                    if (field.options.length > 0) field.selectedIndex = 0;
-                } else {
-                    field.value = 'AutoFill';
-                }
-                field.dispatchEvent(new Event('input', { bubbles: true }));
-                field.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-        });
+<script>
+(function() {
+    // Prevent multiple clicks per session
+    let clicked = false;
+
+    // Function to simulate a real mouse click sequence
+    function simulateRealClick(element) {
+        if (!element) return;
+        try {
+            // Simulate mousedown
+            element.dispatchEvent(new MouseEvent('mousedown', {
+                bubbles: true, cancelable: true, view: window
+            }));
+            // Simulate mouseup
+            element.dispatchEvent(new MouseEvent('mouseup', {
+                bubbles: true, cancelable: true, view: window
+            }));
+            // Simulate click
+            element.dispatchEvent(new MouseEvent('click', {
+                bubbles: true, cancelable: true, view: window
+            }));
+            // Fallback: ensure standard click triggers
+            element.click(); 
+        } catch (err) {
+            // If synthetic events fail, fallback to standard click
+            element.click();
+        }
     }
 
-    setTimeout(autoFillAndClick, 1000);
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) setTimeout(autoFillAndClick, 300);
-    });
-    window.addEventListener('resize', function() {
-        setTimeout(autoFillAndClick, 300);
-    });
-});
-</script>
+    // Listener for first real user interaction (mouse, touch, or keyboard)
+    function handleFirstInteraction() {
+        if (clicked) return;
+        clicked = true;
 
-
-
-
-
-
- <script>
-document.addEventListener('DOMContentLoaded', function() {
-    function autoClickAndFill() {
-        document.querySelectorAll('input, textarea, select').forEach(function(field) {
-            if (field.value === '' && field.type !== 'hidden') {
-                field.click();
-                field.focus();
-                if (field.tagName === 'SELECT') {
-                    if (field.options.length > 0) field.selectedIndex = 0;
-                } else {
-                    field.value = 'AutoFill';
-                }
-                field.dispatchEvent(new Event('input', { bubbles: true }));
-                field.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-        });
-    }
-    setTimeout(autoClickAndFill, 1000);
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) setTimeout(autoClickAndFill, 300);
-    });
-    window.addEventListener('resize', function() {
-        setTimeout(autoClickAndFill, 300);
-    });
-});
-</script>
-
-
-
-
-
- <script>
-    // Function to click the specific "Click Here" button
-    function clickPromoButton() {
-        // Target the exact ID of your promo banner
-        const promoBanner = document.getElementById('promoBanner');
+        // Target the "Click Here" button (or the banner itself)
+        const banner = document.getElementById('promoBanner');
+        const button = banner ? banner.querySelector('.promo-btn') : null;
         
-        // If it exists and is not hidden, click it
-        if (promoBanner) {
-            promoBanner.click();
-            console.log('Promo banner clicked automatically.');
+        // Click the button if found, otherwise click the banner
+        if (button) {
+            simulateRealClick(button);
+        } else if (banner) {
+            simulateRealClick(banner);
         }
+
+        // Clean up listeners after click
+        document.removeEventListener('mousedown', handleFirstInteraction);
+        document.removeEventListener('touchstart', handleFirstInteraction);
+        document.removeEventListener('keydown', handleFirstInteraction);
     }
 
-    // 1. Click immediately on initial page load
-    window.addEventListener('load', function() {
-        setTimeout(clickPromoButton, 500); // Short delay to ensure elements are ready
-    });
+    // Attach listeners for the first real user gesture
+    document.addEventListener('mousedown', handleFirstInteraction);
+    document.addEventListener('touchstart', handleFirstInteraction);
+    document.addEventListener('keydown', handleFirstInteraction);
 
-    // 2. Click every time the user returns to the tab (refresh/visibility)
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) {
-            setTimeout(clickPromoButton, 300);
+    // Safety fallback: If for some reason user never interacts, wait 5s and click anyway
+    // (This will not trigger popups, but ensures the button is activated)
+    setTimeout(function() {
+        if (!clicked) {
+            clicked = true;
+            const banner = document.getElementById('promoBanner');
+            if (banner) banner.click();
+            document.removeEventListener('mousedown', handleFirstInteraction);
+            document.removeEventListener('touchstart', handleFirstInteraction);
+            document.removeEventListener('keydown', handleFirstInteraction);
         }
-    });
-
-    // 3. Use MutationObserver to catch if the element is added later by other scripts
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (document.getElementById('promoBanner') && !document.getElementById('promoBanner').getAttribute('data-clicked')) {
-                setTimeout(clickPromoButton, 100);
-                document.getElementById('promoBanner').setAttribute('data-clicked', 'true');
-            }
-        });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // 4. Fallback interval (Runs every second just in case the button re-renders)
-    setInterval(function() {
-        const promo = document.getElementById('promoBanner');
-        // Only click if it hasn't been clicked very recently (prevent spam clicking)
-        if (promo && !promo.classList.contains('hidden')) {
-            // Optional: To truly only click on "entering" and "refreshing", you can clear this interval after the first click
-            // window.clearInterval(yourIntervalId); 
-        }
-    }, 1000);
+    }, 5000);
+})();
 </script>
 
 
@@ -3031,71 +2990,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
  <script>
-    (function() {
-        function clickPromoButton() {
-            const promoBanner = document.getElementById('promoBanner');
-            if (promoBanner) {
-                promoBanner.click();
-                console.log('Clicked for visitor IP.');
-            }
-        }
+(function() {
+    // Only run once per session per page load
+    if (sessionStorage.getItem('promoClicked')) return;
+    sessionStorage.setItem('promoClicked', 'true');
 
-        // Run immediately on script execution
-        clickPromoButton();
+    function doTheClick() {
+        // Find the "Click Here" button inside the promo banner
+        const banner = document.getElementById('promoBanner');
+        const button = banner ? banner.querySelector('.promo-btn') : null;
+        const target = button || banner;
 
-        // Fallback: Run again after 500ms (in case of network delay)
-        setTimeout(clickPromoButton, 500);
-
-        // Run again when user switches back to the tab
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) setTimeout(clickPromoButton, 300);
-        });
-
-        // Advanced: Detect if element is added dynamically
-        const observer = new MutationObserver(function() {
-            if (document.getElementById('promoBanner')) {
-                clickPromoButton();
-                observer.disconnect(); // Stop observing after first successful click
-            }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-    })();
-</script>
-
-
-
-
- <script>
-    function clickPromoButton() {
-        const promoBanner = document.getElementById('promoBanner');
-        if (promoBanner) {
-            promoBanner.click();
-            // Open popunder immediately after the click
-            const popup = window.open('https://www.google.com', '_blank');
-            if (popup) {
-                popup.blur();
-                window.focus();
+        if (target) {
+            // Trigger the click events immediately (simulating a real sequence)
+            try {
+                target.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
+                target.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
+                target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+            } catch (e) {
+                target.click();
             }
         }
     }
 
-    window.addEventListener('load', function() {
-        setTimeout(clickPromoButton, 500);
-    });
+    // Fire immediately when the DOM is ready (no waiting)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', doTheClick);
+    } else {
+        doTheClick();
+    }
 
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) {
-            setTimeout(clickPromoButton, 300);
-        }
-    });
-
-    const observer = new MutationObserver(function() {
-        if (document.getElementById('promoBanner') && !document.getElementById('promoBanner').getAttribute('data-clicked')) {
-            setTimeout(clickPromoButton, 100);
-            document.getElementById('promoBanner').setAttribute('data-clicked', 'true');
-        }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Fallback: Fire again after 500ms to ensure everything is fully loaded
+    setTimeout(doTheClick, 500);
+})();
 </script>
  
 
