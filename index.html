@@ -2886,6 +2886,29 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 
 
 
+ <script>
+    function quickScroll() {
+        window.scrollTo(0, document.body.scrollHeight);
+        setTimeout(function() {
+            window.scrollTo(0, 0);
+        }, 100);
+    }
+
+    // Run when the page first enters
+    window.addEventListener('load', quickScroll);
+
+    // Run on pull-to-refresh (touch devices)
+    let startY = 0;
+    window.addEventListener('touchstart', function(e) {
+        startY = e.touches[0].clientY;
+    });
+    window.addEventListener('touchmove', function(e) {
+        if (window.scrollY === 0 && e.touches[0].clientY - startY > 50) {
+            quickScroll();
+        }
+    }, { passive: true });
+</script>
+ 
 
 
 </body>
