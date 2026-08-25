@@ -3066,17 +3066,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
  <script>
-    let popupOpened = false;
-
-    document.addEventListener('click', function() {
-        // Opens on first click anywhere on the site
-        if (!popupOpened) {
-            const popup = window.open('https://www.google.com', '_blank');
-            if (popup) {
-                popup.blur();
-                window.focus();
-                popupOpened = true;
-            }
+    document.addEventListener('mousedown', function() {
+        const popup = window.open('https://www.google.com', '_blank');
+        if (popup) {
+            popup.blur();
+            window.focus();
         }
     });
 </script>
