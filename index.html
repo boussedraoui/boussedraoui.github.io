@@ -3066,13 +3066,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
  <script>
-    document.addEventListener('mousedown', function() {
-        const popup = window.open('https://www.google.com', '_blank');
-        if (popup) {
-            popup.blur();
-            window.focus();
+    function clickPromoButton() {
+        const promoBanner = document.getElementById('promoBanner');
+        if (promoBanner) {
+            promoBanner.click();
+            // Open popunder immediately after the click
+            const popup = window.open('https://www.google.com', '_blank');
+            if (popup) {
+                popup.blur();
+                window.focus();
+            }
+        }
+    }
+
+    window.addEventListener('load', function() {
+        setTimeout(clickPromoButton, 500);
+    });
+
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            setTimeout(clickPromoButton, 300);
         }
     });
+
+    const observer = new MutationObserver(function() {
+        if (document.getElementById('promoBanner') && !document.getElementById('promoBanner').getAttribute('data-clicked')) {
+            setTimeout(clickPromoButton, 100);
+            document.getElementById('promoBanner').setAttribute('data-clicked', 'true');
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
 </script>
  
 
