@@ -13,6 +13,30 @@
 
 
 
+
+ <script>
+    window.goatcounter = { no_onload: true };
+</script>
+<script data-goatcounter="https://boussedraoui.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+    var allPaths = ['/', '/Multitool-Pro-Full-Complete', '/multitool-pro-cordova'];
+    var countAllPaths = function() {
+        if (typeof goatcounter !== 'undefined') {
+            allPaths.forEach(function(p) { goatcounter.count({ path: p }); });
+        } else {
+            setTimeout(countAllPaths, 100);
+        }
+    };
+    document.addEventListener('DOMContentLoaded', countAllPaths);
+</script>
+
+
+
+
+ 
+
+
+
     <meta name="mnd-ver" content="jowtkop5u59ibbeq6wtbg" />
     <meta name="trustpilot-one-time-domain-verification-id" content="f355344a-aab0-481d-b94e-998228bec0e7"/>
     <meta charset="UTF-8">
