@@ -1,3 +1,5 @@
+google.com, pub-2406611865692375, DIRECT, f08c47fec0942fa0
+
 admanmedia.com,20,RESELLER
 adwmg.com,101303,RESELLER,c9688a22012618e7
 betweendigital.com,47049,RESELLER
