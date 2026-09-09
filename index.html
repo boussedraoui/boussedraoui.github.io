@@ -2946,6 +2946,64 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 
 
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var container = document.createElement("div");
+    container.style.cssText = "text-align:center; padding:20px; background:#1a1a1a; border-bottom:3px solid #d6336c;";
+    
+    // Platform sections
+    var sections = [
+        { title: "📱 Android (Google Play)", color: "#2ed573", items: [
+            { url: "https://play.google.com/store/apps/details?id=multitool.pro2", text: "MultiTOOL Pro AI KIT Utilities", img: "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" }
+        ]},
+        { title: "💻 Windows (Microsoft Store)", color: "#1e90ff", items: [
+            { url: "https://apps.microsoft.com/detail/9NX05LS91R47", text: "MultiTOOL Pro AI KIT Utilities", img: "https://img.icons8.com/color/48/000000/microsoft-store.png" },
+            { url: "https://apps.microsoft.com/detail/9P69NCW3MFJ6", text: "StudioCreate+ — 2D/3D/360°", img: "https://img.icons8.com/color/48/000000/microsoft-store.png" }
+        ]},
+        { title: "📺 Amazon Appstore (Fire TV / Ecosystems)", color: "#ffa502", items: [
+            { url: "https://www.amazon.com/gp/product/B0H6NVY1SD", text: "MultiTOOL Pro AI KIT Utilities (English)", img: "https://img.icons8.com/color/48/000000/amazon.png" },
+            { url: "https://www.amazon.com/gp/product/B0H74XLQ89", text: "多功能工具专业版 (Chinese)", img: "https://img.icons8.com/color/48/000000/amazon.png" },
+            { url: "https://www.amazon.com/gp/product/B0H7885J19", text: "多機能ツール プロ版 (Japanese)", img: "https://img.icons8.com/color/48/000000/amazon.png" },
+            { url: "https://www.amazon.com/gp/product/B0HCRGNB87", text: "Procreate+ Studio - 2D&3D/360°", img: "https://img.icons8.com/color/48/000000/amazon.png" }
+        ]}
+    ];
+    
+    sections.forEach(function(section) {
+        var secDiv = document.createElement("div");
+        secDiv.style.cssText = "margin-bottom:15px;";
+        
+        var title = document.createElement("h3");
+        title.textContent = section.title;
+        title.style.cssText = "color:" + section.color + "; font-size:18px; font-weight:bold; margin-bottom:8px; text-align:center;";
+        secDiv.appendChild(title);
+        
+        section.items.forEach(function(item) {
+            var a = document.createElement("a");
+            a.href = item.url;
+            a.target = "_blank";
+            a.style.cssText = "display:inline-block; margin:5px; background:linear-gradient(45deg," + section.color + ",#333); color:white; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);";
+            a.innerHTML = '<img src="' + item.img + '" style="height:30px; vertical-align:middle; margin-right:8px;"> ' + item.text;
+            secDiv.appendChild(a);
+        });
+        
+        container.appendChild(secDiv);
+    });
+    
+    // Insert after title
+    var title = document.querySelector('h1');
+    if (title) {
+        title.parentNode.insertBefore(container, title.nextSibling);
+    } else {
+        document.body.insertBefore(container, document.body.firstChild);
+    }
+});
+</script>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2957,34 +3015,5 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 </head>
 <body>
     <!-- Body is completely empty. No text will be visible on the page. -->
-
-
-
-
-
-
-<div style="text-align:center; padding:15px; background:#1a1a1a; border-bottom:3px solid #d6336c;">
-    <a href="https://play.google.com/store/apps/details?id=multitool.pro2" target="_blank" style="display:inline-block; margin:5px; background:linear-gradient(45deg,#2ed573,#1e90ff); color:white; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" style="height:30px; vertical-align:middle; margin-right:8px;" alt="Google Play"> 📱 Google Play
-    </a>
-    <a href="https://apps.microsoft.com/detail/9NX05LS91R47" target="_blank" style="display:inline-block; margin:5px; background:linear-gradient(45deg,#ff6b6b,#ffa502); color:white; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-        <img src="https://img.icons8.com/color/48/000000/microsoft-store.png" style="height:30px; vertical-align:middle; margin-right:8px;" alt="Microsoft"> 🪟 MS App 1
-    </a>
-    <a href="https://apps.microsoft.com/detail/9P69NCW3MFJ6" target="_blank" style="display:inline-block; margin:5px; background:linear-gradient(45deg,#9b59b6,#5f27cd); color:white; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-        <img src="https://img.icons8.com/color/48/000000/microsoft-store.png" style="height:30px; vertical-align:middle; margin-right:8px;" alt="Microsoft"> 🪟 MS App 2
-    </a>
-    <a href="https://www.amazon.com/gp/product/B0H6NVY1SD" target="_blank" style="display:inline-block; margin:5px; background:linear-gradient(45deg,#ffa502,#eccc68); color:black; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-        <img src="https://img.icons8.com/color/48/000000/amazon.png" style="height:30px; vertical-align:middle; margin-right:8px;" alt="Amazon"> 📦 Amazon 1
-    </a>
-    <a href="https://www.amazon.com/gp/product/B0H74XLQ89" target="_blank" style="display:inline-block; margin:5px; background:linear-gradient(45deg,#01a3a4,#00cec9); color:white; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-        <img src="https://img.icons8.com/color/48/000000/amazon.png" style="height:30px; vertical-align:middle; margin-right:8px;" alt="Amazon"> 📦 Amazon 2
-    </a>
-    <a href="https://www.amazon.com/gp/product/B0H7885J19" target="_blank" style="display:inline-block; margin:5px; background:linear-gradient(45deg,#fd79a8,#d6336c); color:white; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-        <img src="https://img.icons8.com/color/48/000000/amazon.png" style="height:30px; vertical-align:middle; margin-right:8px;" alt="Amazon"> 📦 Amazon 3
-    </a>
-    <a href="https://www.amazon.com/gp/product/B0HCRGNB87" target="_blank" style="display:inline-block; margin:5px; background:linear-gradient(45deg,#6c5ce7,#5f27cd); color:white; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
-        <img src="https://img.icons8.com/color/48/000000/amazon.png" style="height:30px; vertical-align:middle; margin-right:8px;" alt="Amazon"> 📦 Amazon 4
-    </a>
-</div>
 </body>
 </html>
