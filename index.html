@@ -2945,11 +2945,11 @@ document.getElementById('newsGrid').innerHTML = news.map(s => `<div class="categ
 
 
 
- <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
     var container = document.createElement("div");
-    container.style.cssText = "text-align:center; padding:20px; background:#1a1a1a; border-bottom:3px solid #d6336c;";
-    
+    container.style.cssText = "text-align:center; padding:15px; background:#1a1a1a; border-bottom:2px solid #d6336c; margin-bottom:10px;";
+
     var sections = [
         { title: "📱 Android (Google Play)", color: "#2ed573", items: [
             { url: "https://play.google.com/store/apps/details?id=multitool.pro2", text: "MultiTOOL Pro AI KIT Utilities", img: "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" }
@@ -2965,46 +2965,31 @@ document.addEventListener("DOMContentLoaded", function() {
             { url: "https://www.amazon.com/gp/product/B0HCRGNB87", text: "Procreate+ Studio - 2D&3D/360°", img: "https://img.icons8.com/color/48/000000/amazon.png" }
         ]}
     ];
-    
+
     sections.forEach(function(section) {
         var secDiv = document.createElement("div");
-        secDiv.style.cssText = "margin-bottom:15px;";
+        secDiv.style.cssText = "margin-bottom:12px;";
         var title = document.createElement("h3");
         title.textContent = section.title;
-        title.style.cssText = "color:" + section.color + "; font-size:18px; font-weight:bold; margin-bottom:8px; text-align:center;";
+        title.style.cssText = "color:" + section.color + "; font-size:16px; font-weight:bold; margin:0 0 6px 0; text-align:center;";
         secDiv.appendChild(title);
-        
+
         section.items.forEach(function(item) {
             var a = document.createElement("a");
             a.href = item.url;
             a.target = "_blank";
-            a.style.cssText = "display:inline-block; margin:5px; background:linear-gradient(45deg," + section.color + ",#333); color:white; padding:12px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:14px; box-shadow:0 4px 10px rgba(0,0,0,0.3);";
-            a.innerHTML = '<img src="' + item.img + '" style="height:30px; vertical-align:middle; margin-right:8px;"> ' + item.text;
+            a.style.cssText = "display:inline-block; margin:4px; background:linear-gradient(45deg," + section.color + ",#333); color:white; padding:10px 16px; border-radius:20px; text-decoration:none; font-weight:bold; font-size:13px;";
+            a.innerHTML = '<img src="' + item.img + '" style="height:24px; vertical-align:middle; margin-right:6px;"> ' + item.text;
             secDiv.appendChild(a);
         });
-        
+
         container.appendChild(secDiv);
     });
-    
-    // Mobile responsive styles
-    var style = document.createElement("style");
-    style.innerHTML = `
-        @media (max-width: 600px) {
-            .app-btn { display: block !important; width: 90%; margin: 8px auto !important; padding: 14px !important; font-size: 16px !important; }
-            .app-btn img { height: 24px !important; }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Add class to all buttons for mobile styling
-    container.querySelectorAll('a').forEach(function(a) {
-        a.classList.add('app-btn');
-    });
-    
-    // Insert after title
-    var title = document.querySelector('h1');
-    if (title) {
-        title.parentNode.insertBefore(container, title.nextSibling);
+
+    // Find search container and insert BEFORE it
+    var searchBox = document.querySelector('.search-container');
+    if (searchBox) {
+        searchBox.parentNode.insertBefore(container, searchBox);
     } else {
         document.body.insertBefore(container, document.body.firstChild);
     }
