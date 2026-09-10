@@ -2995,6 +2995,41 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 </script>
+
+
+
+
+
+
+
+
+ <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Find the IMAGINE card
+    var imagineCard = document.querySelector('.tool-card[onclick="openImagineOverlay()"]');
+    
+    if (imagineCard) {
+        // Create the new Play Game card
+        var playGameCard = document.createElement("div");
+        playGameCard.className = "tool-card large"; 
+        playGameCard.style.background = "linear-gradient(135deg, #ff4757, #ffa502)"; // Orange/Red gradient
+        playGameCard.style.cursor = "pointer";
+        playGameCard.innerHTML = `
+            <div style="font-size:2.8rem;">🎮</div>
+            <div class="tool-name">PLAY GAME</div>
+            <div style="font-size:0.95rem;margin-top:6px;">Click here to play</div>
+        `;
+        
+        // Add click event to redirect to game.html
+        playGameCard.onclick = function() {
+            window.location.href = 'game.html';
+        };
+
+        // Insert immediately after the IMAGINE card
+        imagineCard.insertAdjacentElement('afterend', playGameCard);
+    }
+});
+</script>
 </body>
 </html>
 
