@@ -38,9 +38,15 @@
         }
         #score-board {
             font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #ffd700;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        #timer-board {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #00cec9;
+            font-weight: bold;
         }
         #game-container {
             position: relative;
@@ -67,21 +73,6 @@
         #target:active {
             transform: translate(-50%, -50%) scale(0.9);
         }
-        #start-btn {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            background: #d6336c;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 20px;
-        }
-        #start-btn:hover {
-            background: #b02a5b;
-        }
         #ad-banner {
             width: 100%;
             max-width: 800px;
@@ -102,12 +93,11 @@
     <a href="https://boussedraoui.github.io/" id="back-home">← Back to Home</a>
 
     <div id="score-board">Score: <span id="score">0</span></div>
+    <div id="timer-board">Time: <span id="timer">30</span>s</div>
 
     <div id="game-container">
         <div id="target"></div>
     </div>
-
-    <button id="start-btn">Start Game</button>
 
     <!-- GameMonetize Banner Ad Container -->
     <div id="ad-banner">
@@ -125,10 +115,13 @@
 
         // Game Variables
         let score = 0;
+        let timeLeft = 30;
         let gameActive = false;
+        let timerInterval = null;
+        
         const target = document.getElementById('target');
         const scoreDisplay = document.getElementById('score');
-        const startBtn = document.getElementById('start-btn');
+        const timerDisplay = document.getElementById('timer');
         const container = document.getElementById('game-container');
 
         // 3. Function to move the target randomly
@@ -143,35 +136,77 @@
             target.style.top = randomY + 'px';
         }
 
-        // 4. Handle Target Click
+        // 4. Start Game Function (Auto-play)
+        function startGame() {
+            if (gameActive) return;
+
+            // Show Banner Ad when game starts
+            sdk.showBanner('gamemonetize-banner');
+
+            // Reset game state
+            score = 0;
+            scoreDisplay.textContent = score;
+            timeLeft = 30;
+            timerDisplay.textContent = timeLeft;
+            gameActive = true;
+            
+            target.style.display = 'block';
+            target.style.left = '50%';
+            target.style.top = '50%';
+
+            // Start the 30 second countdown
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        // 5. End Game Function (Auto-repeat)
+        function endGame() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            target.style.display = 'none';
+
+            // Trigger Interstitial Ad on game over
+            sdk.showInterstitial();
+
+            // Show a quick message and restart automatically after 3 seconds
+            scoreDisplay.innerHTML = `Game Over! Score: ${score}`;
+            
+            setTimeout(() => {
+                startGame();
+            }, 3000);
+        }
+
+        // 6. Handle Target Click
         target.addEventListener('click', () => {
             if (!gameActive) return;
+            
             score++;
             scoreDisplay.textContent = score;
             moveTarget();
 
-            // 5. Trigger Interstitial Ad every 5 points
+            // Trigger Interstitial Ad every 5 points
             if (score > 0 && score % 5 === 0) {
                 sdk.showInterstitial();
             }
         });
 
-        // 6. Start Game Function
-        startBtn.addEventListener('click', () => {
-            sdk.showBanner('gamemonetize-banner');
-            score = 0;
-            scoreDisplay.textContent = score;
-            gameActive = true;
-            startBtn.style.display = 'none';
-            target.style.display = 'block';
-            target.style.left = '50%';
-            target.style.top = '50%';
-        });
-
-        // Handle Window Resize
+        // Handle Window Resize (to keep target inside container)
         window.addEventListener('resize', () => {
             if (gameActive) moveTarget();
         });
+
+        // 7. Automatically start the game when the page loads
+        window.addEventListener('load', () => {
+            // Small delay to ensure the SDK is fully ready
+            setTimeout(startGame, 1000); 
+        });
+
     </script>
 
 </body>
