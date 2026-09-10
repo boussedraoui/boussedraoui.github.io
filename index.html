@@ -3002,7 +3002,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var imagineCard = document.querySelector('.tool-card[onclick="openImagineOverlay()"]');
+    if (imagineCard) {
+        var walkthroughCard = document.createElement("div");
+        walkthroughCard.className = "tool-card large"; 
+        walkthroughCard.style.background = "linear-gradient(135deg, #8e44ad, #3498db)";
+        walkthroughCard.style.cursor = "pointer";
+        walkthroughCard.innerHTML = `
+            <div style="font-size:2.8rem;">📺</div>
+            <div class="tool-name">WATCH WALKTHROUGH</div>
+            <div style="font-size:0.95rem;margin-top:6px;">Video Guide & Ads</div>
+        `;
+        walkthroughCard.onclick = function() {
+            window.location.href = 'walkthrough.html';
+        };
+        imagineCard.insertAdjacentElement('afterend', walkthroughCard);
+    }
+});
+</script>
 
 </body>
 </html>
