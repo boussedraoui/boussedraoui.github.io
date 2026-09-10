@@ -3022,6 +3022,35 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+
+
+
+
+
+ <script>
+document.addEventListener("DOMContentLoaded", function() {
+    var imagineCard = document.querySelector('.tool-card[onclick="openImagineOverlay()"]');
+    if (imagineCard) {
+        var adCard = document.createElement("a");
+        adCard.href = "https://sovrn.co/1qe9396";
+        adCard.target = "_blank";
+        adCard.className = "tool-card large"; 
+        adCard.style.background = "#ffffff";
+        adCard.style.textDecoration = "none";
+        adCard.style.display = "flex";
+        adCard.style.flexDirection = "column";
+        adCard.style.alignItems = "center";
+        adCard.style.justifyContent = "center";
+        adCard.style.padding = "15px";
+        adCard.innerHTML = `
+            <img src="https://i5.walmartimages.com/seo/Casper-Essential-Cooling-Foam-Pillow-Standard_bc03f5a7-c46b-44c9-8d56-4e1c0c55c32d.178ef834bd469bc57b2966729177a1fe.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF" style="width: 80%; height: auto; border-radius: 8px; margin-bottom: 10px;" alt="Product">
+            <div class="tool-name" style="color: #333; font-weight: bold;">Shop Now</div>
+        `;
+        imagineCard.insertAdjacentElement('afterend', adCard);
+    }
+});
+</script>
+
 </body>
 </html>
 
