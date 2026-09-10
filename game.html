@@ -5,91 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click the Target - Game</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #1a1a2e;
-            color: white;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        #back-home {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            background: #d6336c;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            z-index: 9999;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: background 0.2s;
-        }
-        #back-home:hover {
-            background: #b02a5b;
-        }
-        #score-board {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-        #timer-board {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #00cec9;
-            font-weight: bold;
-        }
-        #game-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            height: 60vh;
-            background-color: #16213e;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        #target {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #ff6b6b, #d6336c);
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
-            transition: transform 0.1s;
-            transform: translate(-50%, -50%);
-        }
-        #target:active {
-            transform: translate(-50%, -50%) scale(0.9);
-        }
-        #ad-banner {
-            width: 100%;
-            max-width: 800px;
-            height: 90px;
-            margin-top: 20px;
-            background-color: #0f0f1a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+        body { margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background-color: #1a1a2e; color: white; font-family: Arial, sans-serif; overflow: hidden; }
+        #back-home { position: fixed; top: 15px; left: 15px; background: #d6336c; color: white; padding: 10px 18px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 14px; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: background 0.2s; }
+        #back-home:hover { background: #b02a5b; }
+        #score-board { font-size: 2rem; margin-bottom: 10px; color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        #timer-board { font-size: 1.5rem; margin-bottom: 20px; color: #00cec9; font-weight: bold; }
+        #game-container { position: relative; width: 100%; max-width: 800px; height: 60vh; background-color: #16213e; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #target { position: absolute; width: 80px; height: 80px; background: radial-gradient(circle, #ff6b6b, #d6336c); border-radius: 50%; cursor: pointer; display: none; box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); transition: transform 0.1s; transform: translate(-50%, -50%); z-index: 10; }
+        #target:active { transform: translate(-50%, -50%) scale(0.9); }
+        #ad-banner { width: 100%; max-width: 800px; height: 90px; margin-top: 20px; background-color: #0f0f1a; display: flex; justify-content: center; align-items: center; border-radius: 10px; overflow: hidden; }
     </style>
 </head>
 <body>
 
-    <!-- Back to Home Button -->
     <a href="https://boussedraoui.github.io/" id="back-home">← Back to Home</a>
 
     <div id="score-board">Score: <span id="score">0</span></div>
@@ -99,21 +27,22 @@
         <div id="target"></div>
     </div>
 
-    <!-- GameMonetize Banner Ad Container -->
     <div id="ad-banner">
         <div id="gamemonetize-banner"></div>
     </div>
 
-    <!-- 1. Load the GameMonetize SDK -->
     <script src="https://api.gamemonetize.com/sdk.js"></script>
 
     <script>
-        // 2. Initialize the SDK with YOUR game ID
-        var sdk = new SDK({ 
-            gameId: '4kci7og3klgj0ivy2wz3gdvd9dth5e7n' 
-        });
+        // Initialize SDK safely
+        var sdk = null;
+        try {
+            sdk = new SDK({ gameId: '4kci7og3klgj0ivy2wz3gdvd9dth5e7n' });
+            console.log("GameMonetize SDK initialized successfully.");
+        } catch (e) {
+            console.error("SDK initialization failed:", e);
+        }
 
-        // Game Variables
         let score = 0;
         let timeLeft = 30;
         let gameActive = false;
@@ -124,7 +53,6 @@
         const timerDisplay = document.getElementById('timer');
         const container = document.getElementById('game-container');
 
-        // 3. Function to move the target randomly
         function moveTarget() {
             const containerRect = container.getBoundingClientRect();
             const targetSize = 80;
@@ -136,14 +64,16 @@
             target.style.top = randomY + 'px';
         }
 
-        // 4. Start Game Function (Auto-play)
         function startGame() {
             if (gameActive) return;
+            console.log("Game started. Ads will attempt to load.");
 
-            // Show Banner Ad when game starts
-            sdk.showBanner('gamemonetize-banner');
+            // Try to show banner ad
+            if (sdk) {
+                try { sdk.showBanner('gamemonetize-banner'); } 
+                catch (e) { console.error("Banner ad failed to load:", e); }
+            }
 
-            // Reset game state
             score = 0;
             scoreDisplay.textContent = score;
             timeLeft = 30;
@@ -154,59 +84,54 @@
             target.style.left = '50%';
             target.style.top = '50%';
 
-            // Start the 30 second countdown
+            if (timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(() => {
                 timeLeft--;
                 timerDisplay.textContent = timeLeft;
-
                 if (timeLeft <= 0) {
                     endGame();
                 }
             }, 1000);
         }
 
-        // 5. End Game Function (Auto-repeat)
         function endGame() {
             gameActive = false;
             clearInterval(timerInterval);
             target.style.display = 'none';
 
-            // Trigger Interstitial Ad on game over
-            sdk.showInterstitial();
+            // Try to show interstitial ad on game over
+            if (sdk) {
+                try { sdk.showInterstitial(); } 
+                catch (e) { console.error("Interstitial ad failed:", e); }
+            }
 
-            // Show a quick message and restart automatically after 3 seconds
             scoreDisplay.innerHTML = `Game Over! Score: ${score}`;
             
-            setTimeout(() => {
-                startGame();
-            }, 3000);
+            // Automatically restart the game after 3 seconds
+            setTimeout(() => { startGame(); }, 3000);
         }
 
-        // 6. Handle Target Click
         target.addEventListener('click', () => {
             if (!gameActive) return;
-            
             score++;
             scoreDisplay.textContent = score;
             moveTarget();
 
-            // Trigger Interstitial Ad every 5 points
-            if (score > 0 && score % 5 === 0) {
-                sdk.showInterstitial();
+            // Try to show interstitial ad every 5 points
+            if (sdk && score > 0 && score % 5 === 0) {
+                try { sdk.showInterstitial(); } 
+                catch (e) { console.error("Interstitial ad failed:", e); }
             }
         });
 
-        // Handle Window Resize (to keep target inside container)
         window.addEventListener('resize', () => {
             if (gameActive) moveTarget();
         });
 
-        // 7. Automatically start the game when the page loads
+        // Auto-start the game 1 second after page load
         window.addEventListener('load', () => {
-            // Small delay to ensure the SDK is fully ready
             setTimeout(startGame, 1000); 
         });
-
     </script>
 
 </body>
