@@ -18,6 +18,30 @@
             font-family: Arial, sans-serif;
             overflow: hidden;
         }
+        #back-home {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: #d6336c;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: background 0.2s;
+        }
+        #back-home:hover {
+            background: #b02a5b;
+        }
+        #score-board {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
         #game-container {
             position: relative;
             width: 100%;
@@ -42,12 +66,6 @@
         }
         #target:active {
             transform: translate(-50%, -50%) scale(0.9);
-        }
-        #score-board {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         #start-btn {
             padding: 15px 40px;
@@ -79,6 +97,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Back to Home Button -->
+    <a href="https://boussedraoui.github.io/" id="back-home">← Back to Home</a>
 
     <div id="score-board">Score: <span id="score">0</span></div>
 
@@ -113,15 +134,11 @@
         // 3. Function to move the target randomly
         function moveTarget() {
             const containerRect = container.getBoundingClientRect();
-            const targetSize = 80; // Target width/height
-            
-            // Calculate random position within the game container
+            const targetSize = 80;
             const maxX = containerRect.width - targetSize;
             const maxY = containerRect.height - targetSize;
-            
             const randomX = Math.floor(Math.random() * maxX) + (targetSize / 2);
             const randomY = Math.floor(Math.random() * maxY) + (targetSize / 2);
-            
             target.style.left = randomX + 'px';
             target.style.top = randomY + 'px';
         }
@@ -129,41 +146,32 @@
         // 4. Handle Target Click
         target.addEventListener('click', () => {
             if (!gameActive) return;
-            
             score++;
             scoreDisplay.textContent = score;
-            
-            // Move the target to a new position
             moveTarget();
 
             // 5. Trigger Interstitial Ad every 5 points
             if (score > 0 && score % 5 === 0) {
-                sdk.showInterstitial(); // Show a full-screen ad every 5 clicks
+                sdk.showInterstitial();
             }
         });
 
         // 6. Start Game Function
         startBtn.addEventListener('click', () => {
-            // Show Banner Ad when game starts
-            sdk.showBanner('gamemonetize-banner'); 
-
-            // Reset game
+            sdk.showBanner('gamemonetize-banner');
             score = 0;
             scoreDisplay.textContent = score;
             gameActive = true;
             startBtn.style.display = 'none';
             target.style.display = 'block';
-            
-            // Place target in center initially
             target.style.left = '50%';
             target.style.top = '50%';
         });
 
-        // Handle Window Resize (to keep target inside container)
+        // Handle Window Resize
         window.addEventListener('resize', () => {
             if (gameActive) moveTarget();
         });
-
     </script>
 
 </body>
