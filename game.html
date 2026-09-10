@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click the Target - Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #1a1a2e;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        #game-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 60vh;
+            background-color: #16213e;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #target {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ff6b6b, #d6336c);
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
+            transition: transform 0.1s;
+            transform: translate(-50%, -50%);
+        }
+        #target:active {
+            transform: translate(-50%, -50%) scale(0.9);
+        }
+        #score-board {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        #start-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #d6336c;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        #start-btn:hover {
+            background: #b02a5b;
+        }
+        #ad-banner {
+            width: 100%;
+            max-width: 800px;
+            height: 90px;
+            margin-top: 20px;
+            background-color: #0f0f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="score-board">Score: <span id="score">0</span></div>
+
+    <div id="game-container">
+        <div id="target"></div>
+    </div>
+
+    <button id="start-btn">Start Game</button>
+
+    <!-- GameMonetize Banner Ad Container -->
+    <div id="ad-banner">
+        <div id="gamemonetize-banner"></div>
+    </div>
+
+    <!-- 1. Load the GameMonetize SDK -->
+    <script src="https://api.gamemonetize.com/sdk.js"></script>
+
+    <script>
+        // 2. Initialize the SDK with YOUR game ID
+        var sdk = new SDK({ 
+            gameId: '4kci7og3klgj0ivy2wz3gdvd9dth5e7n' 
+        });
+
+        // Game Variables
+        let score = 0;
+        let gameActive = false;
+        const target = document.getElementById('target');
+        const scoreDisplay = document.getElementById('score');
+        const startBtn = document.getElementById('start-btn');
+        const container = document.getElementById('game-container');
+
+        // 3. Function to move the target randomly
+        function moveTarget() {
+            const containerRect = container.getBoundingClientRect();
+            const targetSize = 80; // Target width/height
+            
+            // Calculate random position within the game container
+            const maxX = containerRect.width - targetSize;
+            const maxY = containerRect.height - targetSize;
+            
+            const randomX = Math.floor(Math.random() * maxX) + (targetSize / 2);
+            const randomY = Math.floor(Math.random() * maxY) + (targetSize / 2);
+            
+            target.style.left = randomX + 'px';
+            target.style.top = randomY + 'px';
+        }
+
+        // 4. Handle Target Click
+        target.addEventListener('click', () => {
+            if (!gameActive) return;
+            
+            score++;
+            scoreDisplay.textContent = score;
+            
+            // Move the target to a new position
+            moveTarget();
+
+            // 5. Trigger Interstitial Ad every 5 points
+            if (score > 0 && score % 5 === 0) {
+                sdk.showInterstitial(); // Show a full-screen ad every 5 clicks
+            }
+        });
+
+        // 6. Start Game Function
+        startBtn.addEventListener('click', () => {
+            // Show Banner Ad when game starts
+            sdk.showBanner('gamemonetize-banner'); 
+
+            // Reset game
+            score = 0;
+            scoreDisplay.textContent = score;
+            gameActive = true;
+            startBtn.style.display = 'none';
+            target.style.display = 'block';
+            
+            // Place target in center initially
+            target.style.left = '50%';
+            target.style.top = '50%';
+        });
+
+        // Handle Window Resize (to keep target inside container)
+        window.addEventListener('resize', () => {
+            if (gameActive) moveTarget();
+        });
+
+    </script>
+
+</body>
+</html>
