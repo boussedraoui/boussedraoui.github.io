@@ -13,7 +13,7 @@
         #game-container { position: relative; width: 100%; max-width: 800px; height: 60vh; background-color: #16213e; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         #target { position: absolute; width: 80px; height: 80px; background: radial-gradient(circle, #ff6b6b, #d6336c); border-radius: 50%; cursor: pointer; display: none; box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); transition: transform 0.1s; transform: translate(-50%, -50%); z-index: 10; }
         #target:active { transform: translate(-50%, -50%) scale(0.9); }
-        #ad-banner { width: 100%; max-width: 800px; height: 90px; margin-top: 20px; background-color: #0f0f1a; display: flex; justify-content: center; align-items: center; border-radius: 10px; overflow: hidden; color: #6c6c8a; font-size: 14px; }
+        #ad-banner { width: 100%; max-width: 800px; height: 90px; margin-top: 20px; background-color: #0f0f1a; display: flex; justify-content: center; align-items: center; border-radius: 10px; overflow: hidden; color: #ff6b6b; font-weight: bold; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -27,25 +27,31 @@
         <div id="target"></div>
     </div>
 
-    <!-- Ad Banner Container with Status Text -->
     <div id="ad-banner">
         <div id="gamemonetize-banner" style="width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
-            Waiting for Ad SDK...
+            Loading SDK...
         </div>
     </div>
 
-    <script src="https://api.gamemonetize.com/sdk.js"></script>
+    <!-- Add onerror to catch if the script is blocked -->
+    <script src="https://api.gamemonetize.com/sdk.js" onerror="document.getElementById('gamemonetize-banner').textContent='SDK Script Blocked by Browser/AdBlocker!';"></script>
 
     <script>
         var sdk = null;
         const adBanner = document.getElementById('gamemonetize-banner');
 
-        try {
-            sdk = new SDK({ gameId: '4kci7og3klgj0ivy2wz3gdvd9dth5e7n' });
-            adBanner.textContent = "Ad SDK Loaded. Requesting Banner...";
-        } catch (e) {
-            console.error("SDK initialization failed:", e);
-            adBanner.textContent = "Ad SDK Failed to Load.";
+        // Check if SDK loaded
+        if (typeof SDK === 'undefined') {
+            adBanner.textContent = "SDK Failed to Load. Disable AdBlocker!";
+            console.error("SDK is undefined. Script blocked.");
+        } else {
+            try {
+                sdk = new SDK({ gameId: '4kci7og3klgj0ivy2wz3gdvd9dth5e7n' });
+                adBanner.textContent = "SDK Loaded. Requesting Banner...";
+            } catch (e) {
+                console.error("SDK initialization failed:", e);
+                adBanner.textContent = "SDK Init Error: Check Game ID";
+            }
         }
 
         let score = 0;
@@ -76,7 +82,7 @@
                     adBanner.textContent = ""; // Clear text if banner loads
                 } catch (e) { 
                     console.error("Banner error:", e);
-                    adBanner.textContent = "Banner ad failed to display.";
+                    adBanner.textContent = "No Ad Available (Check Geo/Traffic)";
                 }
             } else {
                 adBanner.textContent = "No SDK available for ads.";
