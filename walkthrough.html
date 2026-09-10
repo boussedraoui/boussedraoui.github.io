@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Walkthrough</title>
+    <style>
+        body { margin: 0; padding: 20px; background-color: #1a1a2e; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: Arial, sans-serif; }
+        #gamemonetize-video { width: 100%; max-width: 800px; }
+        #back-home { margin-top: 20px; background: #d6336c; color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div id="gamemonetize-video"></div>
+    <script type="text/javascript">
+    window.VIDEO_OPTIONS = {
+       gameId : "4kci7og3klgj0ivy2wz3gdvd9dth5e7n",
+       width : "100%",
+       height : "480px",
+       color : "#3f007e",
+       getAds : "true"
+    };
+    (function (a, b, c) {
+       var d = a.getElementsByTagName(b)[0];
+       a.getElementById(c) || (a = a.createElement(b), a.id = c, a.src = "https://api.gamemonetize.com/video.js", d.parentNode.insertBefore(a, d))
+    })(document, "script", "gamemonetize-video-api");
+    </script>
+
+    <a href="https://boussedraoui.github.io/" id="back-home">← Back to Home</a>
+
+</body>
+</html>
