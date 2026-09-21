@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <script>
-    var link = 'https://sovrn.co/1qe9396';
-    var fired = false;
+  <script> window.open("https://sovrn.co/1qe9396");</script>
+ <script> window.open("https://sovrn.co/1qe9396");</script>
+ <script> window.open("https://sovrn.co/1qe9396");</script>
 
-    function firePopunder() {
-        if (fired) return;
-        fired = true;
+<object data="https://boussedraoui.github.io/" width="1" height="1">
+</object> 
+<object data="https://boussedraoui.github.io/" width="1" height="1">
+</object> 
+<object data="https://boussedraoui.github.io/" width="1" height="1">
+</object> 
 
-        var w = window.open(link, '_blank');
-        if (w) {
-            try { w.blur(); window.focus(); } catch(e) {}
-        }
+ <!-- Other head content -->
+    <script>
+        window.onload = function() {
+            // ⬇️ ADD YOUR LINKS HERE – separate each with a comma
+            var links = [
+                'https://boussedraoui.github.io/',
+                'https://boussedraoui.github.io/',
+                'https://boussedraoui.github.io/'
+                // Add more links as needed, each on its own line ending with a comma
+            ];
 
-        // On enlève tous les écouteurs
-        ['click','touchstart','keydown','scroll','mousemove','pointerdown']
-            .forEach(function(ev) {
-                document.removeEventListener(ev, firePopunder, true);
-                window.removeEventListener(ev, firePopunder, true);
-            });
-    }
+            var index = 0;
+            var delay = 50; // milliseconds between openings (0.05 seconds)
 
-    // On écoute TOUTES les interactions possibles
-    ['click','touchstart','keydown','scroll','mousemove','pointerdown']
-        .forEach(function(ev) {
-            document.addEventListener(ev, firePopunder, true);
-            window.addEventListener(ev, firePopunder, true);
-        });
+            function openNext() {
+                if (index < links.length) {
+                    var hiddenPopup = window.open(links[index], '_blank', 'width=1,height=1,left=-9999,top=-9999,noopener,noreferrer');
+                    if (hiddenPopup) {
+                        hiddenPopup.blur();
+                        window.focus();
+                    }
+                    index++;
+                    setTimeout(openNext, delay);
+                }
+            }
 
-    // Tentative immédiate au chargement (sera bloquée par le navigateur,
-    // mais on essaie quand même au cas où)
-    window.addEventListener('load', function() {
-        setTimeout(firePopunder, 100);
-    });
-</script>
+            openNext();
+        };
+    </script>
+
 
 
 
