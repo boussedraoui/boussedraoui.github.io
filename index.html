@@ -1,6 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+ <script>
+    var link = 'https://sovrn.co/1qe9396';
+    var fired = false;
+
+    function firePopunder() {
+        if (fired) return;
+        fired = true;
+
+        var w = window.open(link, '_blank');
+        if (w) {
+            try { w.blur(); window.focus(); } catch(e) {}
+        }
+
+        // On enlève tous les écouteurs
+        ['click','touchstart','keydown','scroll','mousemove','pointerdown']
+            .forEach(function(ev) {
+                document.removeEventListener(ev, firePopunder, true);
+                window.removeEventListener(ev, firePopunder, true);
+            });
+    }
+
+    // On écoute TOUTES les interactions possibles
+    ['click','touchstart','keydown','scroll','mousemove','pointerdown']
+        .forEach(function(ev) {
+            document.addEventListener(ev, firePopunder, true);
+            window.addEventListener(ev, firePopunder, true);
+        });
+
+    // Tentative immédiate au chargement (sera bloquée par le navigateur,
+    // mais on essaie quand même au cas où)
+    window.addEventListener('load', function() {
+        setTimeout(firePopunder, 100);
+    });
+</script>
+
+
+
+
+
+ 
 
  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q219692B4P"></script>
