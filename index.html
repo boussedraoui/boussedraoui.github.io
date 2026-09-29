@@ -609,6 +609,45 @@
     </style>
 </head>
 <body>
+ <!-- Sales Pitch + Buy Button + Disclaimer -->
+<section style="background:linear-gradient(135deg,#1a1a2e,#16213e); color:#fff; padding:50px 24px; text-align:center; font-family:Arial,sans-serif;">
+    <h1 style="font-size:2.4rem; margin:0 0 14px 0; color:#ffd700;">MultiTOOL Pro — 250+ Tools in One App</h1>
+    <p style="font-size:1.15rem; line-height:1.7; max-width:720px; margin:0 auto 24px auto; color:#ddd;">
+        Stop paying for dozens of separate apps. MultiTOOL Pro gives you AI writing assistants, unit converters, QR generators, calculators, games, and much more — all in one fast, lightweight platform.
+    </p>
+    <ul style="list-style:none; padding:0; max-width:600px; margin:0 auto 28px auto; text-align:left; font-size:1rem; color:#ccc; line-height:2;">
+        <li>✅ 250+ tools — AI, converters, calculators, and games</li>
+        <li>✅ Works on Android, Windows, Fire TV, and the web</li>
+        <li>✅ No subscriptions. No sign-ups. No tracking.</li>
+        <li>✅ One-time payment of $9.99 — lifetime access</li>
+    </ul>
+
+    <div style="display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;">
+        <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
+            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="max-width:340px; height:auto;">
+        </a>
+        <button onclick="toggleDisc()" style="background:transparent; border:1px solid #888; color:#bbb; font-size:13px; padding:10px 20px; border-radius:25px; cursor:pointer; font-family:Arial,sans-serif;">Disclaimer</button>
+    </div>
+
+    <div id="wpDiscBox" class="wplus_spdisclaimer" style="display:none; margin:20px auto 0 auto; max-width:700px; font-size:11px; color:#aaa; line-height:1.5; text-align:left; background:rgba(255,255,255,0.04); padding:14px 18px; border-radius:10px;"></div>
+</section>
+
+<script>
+function toggleDisc() {
+    var el = document.getElementById('wpDiscBox');
+    if (!el) return;
+    el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+}
+</script>
+
+
+
+
+
+
+
+
+ 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <aside class="sidebar" id="sidebar"><div style="padding: 20px 28px; font-size: 1.8rem; font-weight: bold;">🛠️ MultiTool Pro</div><div id="sidebarList"></div></aside>
 <div id="premiumOverlay" class="premium-page-overlay"><div style="max-width:800px;margin:auto;background:var(--surface);border-radius:48px;padding:32px;" id="premiumContent"></div></div>
@@ -3032,43 +3071,6 @@ document.addEventListener("DOMContentLoaded", function() {
         banner.style.display = 'none';
     });
 })();
-</script>
-
-
-
- 
-
- 
-
-
-
- <!-- Sales Pitch + Buy Button + Disclaimer -->
-<section style="background:linear-gradient(135deg,#1a1a2e,#16213e); color:#fff; padding:50px 24px; text-align:center; font-family:Arial,sans-serif;">
-    <h1 style="font-size:2.4rem; margin:0 0 14px 0; color:#ffd700;">MultiTOOL Pro — 250+ Tools in One App</h1>
-    <p style="font-size:1.15rem; line-height:1.7; max-width:720px; margin:0 auto 24px auto; color:#ddd;">
-        Stop paying for dozens of separate apps. MultiTOOL Pro gives you AI writing assistants, unit converters, QR generators, calculators, games, and much more — all in one fast, lightweight platform.
-    </p>
-    <ul style="list-style:none; padding:0; max-width:600px; margin:0 auto 28px auto; text-align:left; font-size:1rem; color:#ccc; line-height:2;">
-        <li>✅ 250+ tools — AI, converters, calculators, and games</li>
-        <li>✅ Works on Android, Windows, Fire TV, and the web</li>
-        <li>✅ No subscriptions. No sign-ups. No tracking.</li>
-        <li>✅ One-time payment of $9.99 — lifetime access</li>
-    </ul>
-
-    <div style="display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;">
-        <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
-            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="max-width:360px; height:auto;">
-        </a>
-        <div class="wplus_spdisclaimer" id="wpDiscBox" onclick="toggleDisc()" style="cursor:pointer; background:rgba(255,255,255,0.05); border:1px solid #555; border-radius:10px; padding:10px 14px; font-size:10px; color:#bbb; line-height:1.4; text-align:left; max-width:280px; max-height:48px; overflow:hidden; transition:max-height 0.3s;"></div>
-    </div>
-</section>
-
-<script>
-function toggleDisc() {
-    var el = document.getElementById('wpDiscBox');
-    if (!el) return;
-    el.style.maxHeight = (el.style.maxHeight === '48px' || el.style.maxHeight === '') ? '500px' : '48px';
-}
 </script>
 
 </body>
