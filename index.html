@@ -3040,6 +3040,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+ 
+
  <!-- MultiTOOL Pro Paywall with Device Binding -->
 <script src="https://warriorplus.com/o2/js/mfpz2z" defer></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -3130,11 +3132,17 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.style.pointerEvents = 'auto';
     }
 
-    if (!txn && !savedTxn) {
+    var isValidTxn = txn &&
+                     txn !== '{transaction_id}' &&
+                     txn.indexOf('{') === -1 &&
+                     txn.indexOf('}') === -1 &&
+                     txn.length >= 8;
+
+    if (!isValidTxn && !savedTxn) {
         showPaywall();
     } else if (savedTxn && savedDev === deviceId) {
         unlock();
-    } else if (txn && txn.length >= 8) {
+    } else if (isValidTxn) {
         db.ref('licenses/' + txn).once('value').then(function(snap) {
             var data = snap.val();
             if (!data) {
@@ -3156,6 +3164,8 @@ document.addEventListener("DOMContentLoaded", function() {
 })();
 </script>
 
+
+ 
 
 
 
