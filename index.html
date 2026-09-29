@@ -3049,8 +3049,8 @@ document.addEventListener("DOMContentLoaded", function() {
  <!-- MultiTOOL Pro Paywall -->
 <script src="https://warriorplus.com/o2/js/mfpz2z" defer></script>
 
-<div id="wpPaywall" style="position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-family:Arial,sans-serif; text-align:center; padding:20px;">
-    <div style="max-width:500px;">
+<div id="wpPaywall" style="position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-family:Arial,sans-serif; text-align:center; padding:20px; pointer-events:none;">
+    <div style="max-width:500px; pointer-events:auto; background:rgba(0,0,0,0.85); padding:30px 25px; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.6);">
         <div style="font-size:3rem; margin-bottom:15px;">🔒</div>
         <h2 style="color:#ffd700; margin:0 0 15px 0; font-size:24px;">Premium Access Required</h2>
         <p style="color:#ccc; line-height:1.6; margin:0 0 25px 0; font-size:15px;">To unlock MultiTOOL Pro, please complete your purchase below. Access will be granted instantly after successful payment.</p>
@@ -3085,12 +3085,17 @@ document.addEventListener("DOMContentLoaded", function() {
     function unlock() {
         localStorage.setItem(KEY, 'true');
         if (paywall) paywall.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        document.body.style.pointerEvents = 'auto';
     }
 
     function lock() {
         if (paywall) paywall.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        // Allow scrolling but block clicks on the page content
+        document.body.style.pointerEvents = 'none';
+        // Keep the buy button clickable
+        if (paywall) paywall.style.pointerEvents = 'none';
+        var box = paywall.querySelector('div');
+        if (box) box.style.pointerEvents = 'auto';
     }
 
     if (purchased) { unlock(); } else { lock(); }
