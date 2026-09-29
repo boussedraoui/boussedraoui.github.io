@@ -3042,132 +3042,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
- <!-- MultiTOOL Pro Paywall with Device Binding -->
-<script src="https://warriorplus.com/o2/js/mfpz2z" defer></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+ <!-- Sales Pitch + Buy Button + Disclaimer -->
+<section style="background:linear-gradient(135deg,#1a1a2e,#16213e); color:#fff; padding:50px 24px; text-align:center; font-family:Arial,sans-serif;">
+    <h1 style="font-size:2.4rem; margin:0 0 14px 0; color:#ffd700;">MultiTOOL Pro — 250+ Tools in One App</h1>
+    <p style="font-size:1.15rem; line-height:1.7; max-width:720px; margin:0 auto 24px auto; color:#ddd;">
+        Stop paying for dozens of separate apps. MultiTOOL Pro gives you AI writing assistants, unit converters, QR generators, calculators, games, and much more — all in one fast, lightweight platform.
+    </p>
+    <ul style="list-style:none; padding:0; max-width:600px; margin:0 auto 28px auto; text-align:left; font-size:1rem; color:#ccc; line-height:2;">
+        <li>✅ 250+ tools — AI, converters, calculators, and games</li>
+        <li>✅ Works on Android, Windows, Fire TV, and the web</li>
+        <li>✅ No subscriptions. No sign-ups. No tracking.</li>
+        <li>✅ One-time payment of $9.99 — lifetime access</li>
+    </ul>
 
-<div id="wpPaywall" style="position:fixed; top:15px; right:15px; z-index:999999; display:none; flex-direction:column; align-items:flex-end; pointer-events:none;">
-    <div style="pointer-events:auto; background:rgba(0,0,0,0.92); padding:20px 22px; border-radius:16px; box-shadow:0 8px 28px rgba(0,0,0,0.6); max-width:420px; text-align:center; color:#fff; font-family:Arial,sans-serif;">
-        <div style="font-size:2rem; margin-bottom:8px;">🔒</div>
-        <div style="color:#ffd700; font-weight:bold; font-size:18px; margin-bottom:8px;">Premium Access Required</div>
-        <div style="color:#ccc; font-size:13px; line-height:1.5; margin-bottom:14px;">Complete your purchase to unlock the full site.</div>
+    <div style="display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;">
         <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
-            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="width:100%; max-width:360px; height:auto; border:0; display:block; margin:0 auto;">
+            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="max-width:360px; height:auto;">
         </a>
-        <div class="wplus_spdisclaimer" style="margin-top:12px; font-size:10px; color:#aaa; line-height:1.4; text-align:left;"></div>
+        <div class="wplus_spdisclaimer" id="wpDiscBox" onclick="toggleDisc()" style="cursor:pointer; background:rgba(255,255,255,0.05); border:1px solid #555; border-radius:10px; padding:10px 14px; font-size:10px; color:#bbb; line-height:1.4; text-align:left; max-width:280px; max-height:48px; overflow:hidden; transition:max-height 0.3s;"></div>
     </div>
-</div>
-
-<div id="wpBlocked" style="position:fixed; top:15px; right:15px; z-index:999999; display:none; flex-direction:column; align-items:flex-end; pointer-events:none;">
-    <div style="pointer-events:auto; background:rgba(40,0,0,0.92); padding:20px 22px; border-radius:16px; border:2px solid #ff4444; max-width:420px; text-align:center; color:#fff; font-family:Arial,sans-serif;">
-        <div style="font-size:2rem; margin-bottom:8px;">🚫</div>
-        <div style="color:#ff6666; font-weight:bold; font-size:18px; margin-bottom:8px;">Access Denied</div>
-        <div style="color:#ccc; font-size:13px; line-height:1.5; margin-bottom:14px;">This license is already linked to another device.</div>
-        <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
-            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="width:100%; max-width:360px; height:auto; border:0; display:block; margin:0 auto;">
-        </a>
-        <div class="wplus_spdisclaimer" style="margin-top:12px; font-size:10px; color:#aaa; line-height:1.4; text-align:left;"></div>
-    </div>
-</div>
+</section>
 
 <script>
-(function() {
-    var firebaseConfig = {
-        apiKey: "AIzaSyCwYaCrwHZoGRuig8S4OQ8lF1Z8rbCGSFI",
-        authDomain: "multitool-pro-36a9b.firebaseapp.com",
-        databaseURL: "https://multitool-pro-36a9b-default-rtdb.firebaseio.com",
-        projectId: "multitool-pro-36a9b",
-        storageBucket: "multitool-pro-36a9b.firebasestorage.app",
-        messagingSenderId: "545894427611",
-        appId: "1:545894427611:web:afb24ae5e3e990617915fe"
-    };
-
-    if (typeof firebase === 'undefined') return;
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    var db = firebase.database();
-
-    function getDeviceId() {
-        var c = document.createElement('canvas');
-        var ctx = c.getContext('2d');
-        ctx.textBaseline = 'top';
-        ctx.font = '14px Arial';
-        ctx.fillText('fp-x9', 2, 2);
-        var canvas = c.toDataURL();
-        var raw = [
-            navigator.userAgent,
-            navigator.language,
-            screen.width + 'x' + screen.height,
-            screen.colorDepth,
-            new Date().getTimezoneOffset(),
-            navigator.hardwareConcurrency || 0,
-            navigator.platform || '',
-            canvas
-        ].join('|');
-        var h = 0;
-        for (var i = 0; i < raw.length; i++) { h = ((h << 5) - h + raw.charCodeAt(i)) | 0; }
-        return 'd' + Math.abs(h).toString(36);
-    }
-
-    var deviceId = getDeviceId();
-    var params = new URLSearchParams(window.location.search);
-    var txn = params.get('txn') || '';
-    var savedTxn = localStorage.getItem('wp_lic_txn');
-    var savedDev = localStorage.getItem('wp_lic_dev');
-
-    var paywall = document.getElementById('wpPaywall');
-    var blocked = document.getElementById('wpBlocked');
-
-    function showPaywall() {
-        if (paywall) paywall.style.display = 'flex';
-        if (blocked) blocked.style.display = 'none';
-        document.body.style.pointerEvents = 'none';
-        if (paywall) paywall.style.pointerEvents = 'none';
-        var b = paywall.querySelector('div'); if (b) b.style.pointerEvents = 'auto';
-    }
-    function showBlocked() {
-        if (paywall) paywall.style.display = 'none';
-        if (blocked) blocked.style.display = 'flex';
-        document.body.style.pointerEvents = 'none';
-        if (blocked) blocked.style.pointerEvents = 'none';
-        var b = blocked.querySelector('div'); if (b) b.style.pointerEvents = 'auto';
-    }
-    function unlock() {
-        if (paywall) paywall.style.display = 'none';
-        if (blocked) blocked.style.display = 'none';
-        document.body.style.pointerEvents = 'auto';
-    }
-
-    var isValidTxn = txn &&
-                     txn !== '{transaction_id}' &&
-                     txn.indexOf('{') === -1 &&
-                     txn.indexOf('}') === -1 &&
-                     txn.length >= 8;
-
-    if (!isValidTxn && !savedTxn) {
-        showPaywall();
-    } else if (savedTxn && savedDev === deviceId) {
-        unlock();
-    } else if (isValidTxn) {
-        db.ref('licenses/' + txn).once('value').then(function(snap) {
-            var data = snap.val();
-            if (!data) {
-                db.ref('licenses/' + txn).set({ device: deviceId, ts: Date.now() });
-                localStorage.setItem('wp_lic_txn', txn);
-                localStorage.setItem('wp_lic_dev', deviceId);
-                unlock();
-            } else if (data.device === deviceId) {
-                localStorage.setItem('wp_lic_txn', txn);
-                localStorage.setItem('wp_lic_dev', deviceId);
-                unlock();
-            } else {
-                showBlocked();
-            }
-        }).catch(function() { showPaywall(); });
-    } else {
-        showPaywall();
-    }
-})();
+function toggleDisc() {
+    var el = document.getElementById('wpDiscBox');
+    if (!el) return;
+    el.style.maxHeight = (el.style.maxHeight === '48px' || el.style.maxHeight === '') ? '500px' : '48px';
+}
 </script>
 
 </body>
