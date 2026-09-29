@@ -3040,6 +3040,70 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
  <script type="text/javascript" src="https://warriorplus.com/o2/js/mfpz2z" defer></script>
+
+
+
+
+
+
+ <!-- MultiTOOL Pro Paywall -->
+<script src="https://warriorplus.com/o2/js/mfpz2z" defer></script>
+
+<div id="wpPaywall" style="position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-family:Arial,sans-serif; text-align:center; padding:20px;">
+    <div style="max-width:500px;">
+        <div style="font-size:3rem; margin-bottom:15px;">🔒</div>
+        <h2 style="color:#ffd700; margin:0 0 15px 0; font-size:24px;">Premium Access Required</h2>
+        <p style="color:#ccc; line-height:1.6; margin:0 0 25px 0; font-size:15px;">To unlock MultiTOOL Pro, please complete your purchase below. Access will be granted instantly after successful payment.</p>
+        <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
+            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="max-width:100%; height:auto; border:0;">
+        </a>
+        <p style="color:#666; font-size:11px; margin:20px 0 0 0;">Secure checkout · Instant access</p>
+    </div>
+</div>
+
+<script>
+(function() {
+    var KEY = 'wplus_purchased_b73whb';
+    var paywall = document.getElementById('wpPaywall');
+    var params = new URLSearchParams(window.location.search);
+    var ref = (document.referrer || '').toLowerCase();
+    var url = window.location.href.toLowerCase();
+
+    var purchased =
+        localStorage.getItem(KEY) === 'true' ||
+        params.has('wp') ||
+        params.has('wplus') ||
+        params.has('transaction_id') ||
+        params.has('txn_id') ||
+        params.has('wp_purchase') ||
+        url.indexOf('transaction_id=') !== -1 ||
+        url.indexOf('txn_id=') !== -1 ||
+        ref.indexOf('warriorplus.com') !== -1 ||
+        document.cookie.indexOf('wplus_') !== -1 ||
+        document.cookie.indexOf('warriorplus') !== -1;
+
+    function unlock() {
+        localStorage.setItem(KEY, 'true');
+        if (paywall) paywall.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function lock() {
+        if (paywall) paywall.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    if (purchased) { unlock(); } else { lock(); }
+
+    setInterval(function() {
+        if (localStorage.getItem(KEY) === 'true') return;
+        var hasCookie = document.cookie.indexOf('wplus_') !== -1 || document.cookie.indexOf('warriorplus') !== -1;
+        var p = new URLSearchParams(window.location.search);
+        var hasParam = p.has('transaction_id') || p.has('txn_id') || p.has('wp');
+        if (hasCookie || hasParam) unlock();
+    }, 2000);
+})();
+</script>
 </body>
 </html>
 
