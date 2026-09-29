@@ -15,9 +15,15 @@ ul.features { list-style:none; padding:0; max-width:600px; margin:0 auto 30px au
 .buyrow img { max-width:340px; height:auto; }
 .disc-btn { background:transparent; border:1px solid #888; color:#bbb; font-size:13px; padding:10px 22px; border-radius:25px; cursor:pointer; }
 .disc-btn:hover { background:rgba(255,255,255,0.08); }
-#wpDiscBox { display:none; margin:20px auto 0 auto; max-width:700px; font-size:12px; color:#aaa; line-height:1.6; text-align:left; background:rgba(255,255,255,0.04); padding:16px 20px; border-radius:10px; }
+#discBox { display:none; margin:20px auto 0 auto; max-width:700px; font-size:12px; color:#aaa; line-height:1.6; text-align:left; background:rgba(255,255,255,0.04); padding:16px 20px; border-radius:10px; }
 .footer { text-align:center; padding:30px 20px; font-size:13px; color:#888; background:#0a0a14; }
-.footer a { color:#d6336c; text-decoration:none; margin:0 10px; }
+.footer a { color:#d6336c; text-decoration:none; margin:0 10px; cursor:pointer; }
+.modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; overflow-y:auto; padding:30px 20px; }
+.modal-content { max-width:820px; margin:0 auto; background:#fff; color:#222; border-radius:16px; padding:36px 32px; line-height:1.7; position:relative; }
+.modal-content h1 { font-size:2rem; color:#111; margin:0 0 6px 0; }
+.modal-content h2 { font-size:1.2rem; margin-top:22px; }
+.modal-content p { font-size:0.95rem; color:#333; }
+.modal-close { position:absolute; top:16px; right:20px; background:#d6336c; color:#fff; border:none; border-radius:50%; width:36px; height:36px; font-size:20px; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -39,22 +45,77 @@ ul.features { list-style:none; padding:0; max-width:600px; margin:0 auto 30px au
         <button class="disc-btn" onclick="toggleDisc()">Disclaimer</button>
     </div>
 
-    <div id="wpDiscBox" class="wplus_spdisclaimer">
+    <div id="discBox" class="wplus_spdisclaimer">
         Disclaimer: WarriorPlus is used to help manage the sale of products on this site. While WarriorPlus helps facilitate the sale, all payments are made directly to the product vendor and NOT WarriorPlus. Thus, all product questions, support inquiries and/or refund requests must be sent to the vendor. WarriorPlus's role should not be construed as an endorsement, approval or review of these products or any claim, statement or opinion used in the marketing of these products.
     </div>
 </section>
 
 <div class="footer">
-    <a href="privacy.html">Privacy Policy</a> |
+    <a onclick="openPrivacy()">Privacy Policy</a> |
     <a href="mailto:mbgroups@replyloop.com">mbgroups@replyloop.com</a>
     <p style="margin-top:14px; font-size:11px; color:#666;">© 2026 MultiTOOL Pro. All rights reserved.</p>
 </div>
 
+<!-- Privacy Policy Modal -->
+<div class="modal" id="privacyModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closePrivacy()">×</button>
+        <h1>Privacy Policy</h1>
+        <p style="font-size:0.85rem; color:#888;">Last updated: 26 July 2026</p>
+
+        <p><strong>MultiTool Pro</strong> ("we", "our", "us") respects your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our application and website.</p>
+
+        <h2>1. Information We Do Not Collect</h2>
+        <p>We do <strong>not</strong> collect, store, or transmit any personal data (such as your name, email address, phone number, or financial information) to our servers. All tools operate locally on your device.</p>
+
+        <h2>2. Information We May Store Locally</h2>
+        <p>To improve your experience, we store a few preferences locally on your device using <strong>localStorage</strong>:</p>
+        <ul>
+            <li>Your chosen theme (light / dark).</li>
+            <li>Sound settings (on / off).</li>
+            <li>Recently used colors (for the color picker).</li>
+        </ul>
+        <p>This data never leaves your device and is deleted if you clear your browser's cache.</p>
+
+        <h2>3. Third-Party Services</h2>
+        <p>Our tool uses external APIs to provide certain features. These third parties have their own privacy policies:</p>
+        <ul>
+            <li><strong>QR Code Generator:</strong> api.qrserver.com</li>
+            <li><strong>Currency Exchange:</strong> exchangerate-api.com</li>
+            <li><strong>Joke API:</strong> v2.jokeapi.dev</li>
+            <li><strong>IP Geolocation:</strong> ip-api.com and api.ipify.org</li>
+            <li><strong>Translation:</strong> Google Translate API</li>
+        </ul>
+
+        <h2>4. Analytics and Tracking</h2>
+        <p>We do <strong>not</strong> use any analytics, tracking cookies, or fingerprinting scripts.</p>
+
+        <h2>5. Children's Privacy</h2>
+        <p>Our tool is not directed to children under the age of 13. We do not knowingly collect any personal information from children.</p>
+
+        <h2>6. Your Rights</h2>
+        <p>Since we do not collect personal data, there is no data to request, modify, or delete.</p>
+
+        <h2>7. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. You are advised to review this policy periodically.</p>
+
+        <h2>8. Contact Us</h2>
+        <p>If you have any questions, please contact us at: <strong>boussedraoui.mohamed@gmail.com</strong></p>
+    </div>
+</div>
+
 <script>
 function toggleDisc() {
-    var el = document.getElementById('wpDiscBox');
-    if (!el) return;
+    var el = document.getElementById('discBox');
     el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+}
+function openPrivacy() {
+    document.getElementById('privacyModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+function closePrivacy() {
+    document.getElementById('privacyModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
 }
 </script>
 
