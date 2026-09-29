@@ -3036,8 +3036,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+ 
 
-
+ 
 
 
 
@@ -3047,28 +3048,47 @@ document.addEventListener("DOMContentLoaded", function() {
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <div id="wpPaywall" style="position:fixed; top:15px; right:15px; z-index:999999; display:none; flex-direction:column; align-items:flex-end; pointer-events:none;">
-    <div style="pointer-events:auto; background:rgba(0,0,0,0.9); padding:15px 18px; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.5); max-width:280px; text-align:center; color:#fff; font-family:Arial,sans-serif;">
-        <div style="font-size:1.6rem; margin-bottom:6px;">🔒</div>
-        <div style="color:#ffd700; font-weight:bold; font-size:14px; margin-bottom:6px;">Premium Access Required</div>
-        <div style="color:#ccc; font-size:11px; line-height:1.4; margin-bottom:10px;">Complete your purchase to unlock the full site.</div>
+    <div style="pointer-events:auto; background:rgba(0,0,0,0.92); padding:20px 22px; border-radius:16px; box-shadow:0 8px 28px rgba(0,0,0,0.6); max-width:420px; text-align:center; color:#fff; font-family:Arial,sans-serif;">
+        <div style="font-size:2rem; margin-bottom:8px;">🔒</div>
+        <div style="color:#ffd700; font-weight:bold; font-size:18px; margin-bottom:8px;">Premium Access Required</div>
+        <div style="color:#ccc; font-size:13px; line-height:1.5; margin-bottom:14px;">Complete your purchase to unlock the full site.</div>
         <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
-            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="max-width:100%; height:auto; border:0;">
+            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="width:100%; max-width:360px; height:auto; border:0; display:block; margin:0 auto;">
         </a>
+        <button onclick="toggleDisclaimer()" style="margin-top:12px; background:transparent; border:1px solid #666; color:#aaa; font-size:11px; padding:5px 12px; border-radius:20px; cursor:pointer;">Disclaimer</button>
+        <div id="disclaimerBox" style="display:none; margin-top:10px; font-size:10px; color:#aaa; line-height:1.4; text-align:left; border-top:1px solid #333; padding-top:10px;"></div>
     </div>
 </div>
 
 <div id="wpBlocked" style="position:fixed; top:15px; right:15px; z-index:999999; display:none; flex-direction:column; align-items:flex-end; pointer-events:none;">
-    <div style="pointer-events:auto; background:rgba(40,0,0,0.92); padding:15px 18px; border-radius:14px; border:2px solid #ff4444; max-width:280px; text-align:center; color:#fff; font-family:Arial,sans-serif;">
-        <div style="font-size:1.6rem; margin-bottom:6px;">🚫</div>
-        <div style="color:#ff6666; font-weight:bold; font-size:14px; margin-bottom:6px;">Access Denied</div>
-        <div style="color:#ccc; font-size:11px; line-height:1.4; margin-bottom:10px;">This license is already linked to another device.</div>
+    <div style="pointer-events:auto; background:rgba(40,0,0,0.92); padding:20px 22px; border-radius:16px; border:2px solid #ff4444; max-width:420px; text-align:center; color:#fff; font-family:Arial,sans-serif;">
+        <div style="font-size:2rem; margin-bottom:8px;">🚫</div>
+        <div style="color:#ff6666; font-weight:bold; font-size:18px; margin-bottom:8px;">Access Denied</div>
+        <div style="color:#ccc; font-size:13px; line-height:1.5; margin-bottom:14px;">This license is already linked to another device.</div>
         <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
-            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="max-width:100%; height:auto; border:0;">
+            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="width:100%; max-width:360px; height:auto; border:0; display:block; margin:0 auto;">
         </a>
+        <button onclick="toggleDisclaimer()" style="margin-top:12px; background:transparent; border:1px solid #666; color:#aaa; font-size:11px; padding:5px 12px; border-radius:20px; cursor:pointer;">Disclaimer</button>
+        <div id="disclaimerBox" style="display:none; margin-top:10px; font-size:10px; color:#aaa; line-height:1.4; text-align:left; border-top:1px solid #333; padding-top:10px;"></div>
     </div>
 </div>
 
-<div class="wplus_spdisclaimer"></div>
+<!-- Hidden source for WarriorPlus disclaimer text -->
+<div id="wpDisclaimerSource" style="display:none;">
+    Disclaimer: WarriorPlus is used to help manage the sale of products on this site. While WarriorPlus helps facilitate the sale, all payments are made directly to the product vendor and NOT WarriorPlus. Thus, all product questions, support inquiries and/or refund requests must be sent to the vendor. WarriorPlus's role should not be construed as an endorsement, approval or review of these products or any claim, statement or opinion used in the marketing of these products.
+</div>
+
+<script>
+function toggleDisclaimer() {
+    var box = document.getElementById('disclaimerBox');
+    var src = document.getElementById('wpDisclaimerSource');
+    if (!box || !src) return;
+    if (box.innerHTML.trim() === '') {
+        box.innerHTML = src.innerHTML.trim();
+    }
+    box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+}
+</script>
 
 <script>
 (function() {
@@ -3168,12 +3188,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 })();
 </script>
- 
-
- 
-
-
-
 
 </body>
 </html>
