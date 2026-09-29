@@ -3055,8 +3055,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
             <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="width:100%; max-width:360px; height:auto; border:0; display:block; margin:0 auto;">
         </a>
-        <button onclick="toggleDisclaimer()" style="margin-top:12px; background:transparent; border:1px solid #666; color:#aaa; font-size:11px; padding:5px 12px; border-radius:20px; cursor:pointer;">Disclaimer</button>
-        <div id="disclaimerBox" style="display:none; margin-top:10px; font-size:10px; color:#aaa; line-height:1.4; text-align:left; border-top:1px solid #333; padding-top:10px;"></div>
+        <div class="wplus_spdisclaimer" style="margin-top:12px; font-size:10px; color:#aaa; line-height:1.4; text-align:left;"></div>
     </div>
 </div>
 
@@ -3068,27 +3067,9 @@ document.addEventListener("DOMContentLoaded", function() {
         <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
             <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="width:100%; max-width:360px; height:auto; border:0; display:block; margin:0 auto;">
         </a>
-        <button onclick="toggleDisclaimer()" style="margin-top:12px; background:transparent; border:1px solid #666; color:#aaa; font-size:11px; padding:5px 12px; border-radius:20px; cursor:pointer;">Disclaimer</button>
-        <div id="disclaimerBox" style="display:none; margin-top:10px; font-size:10px; color:#aaa; line-height:1.4; text-align:left; border-top:1px solid #333; padding-top:10px;"></div>
+        <div class="wplus_spdisclaimer" style="margin-top:12px; font-size:10px; color:#aaa; line-height:1.4; text-align:left;"></div>
     </div>
 </div>
-
-<!-- Hidden source for WarriorPlus disclaimer text -->
-<div id="wpDisclaimerSource" style="display:none;">
-    Disclaimer: WarriorPlus is used to help manage the sale of products on this site. While WarriorPlus helps facilitate the sale, all payments are made directly to the product vendor and NOT WarriorPlus. Thus, all product questions, support inquiries and/or refund requests must be sent to the vendor. WarriorPlus's role should not be construed as an endorsement, approval or review of these products or any claim, statement or opinion used in the marketing of these products.
-</div>
-
-<script>
-function toggleDisclaimer() {
-    var box = document.getElementById('disclaimerBox');
-    var src = document.getElementById('wpDisclaimerSource');
-    if (!box || !src) return;
-    if (box.innerHTML.trim() === '') {
-        box.innerHTML = src.innerHTML.trim();
-    }
-    box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
-}
-</script>
 
 <script>
 (function() {
