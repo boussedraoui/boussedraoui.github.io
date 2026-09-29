@@ -3040,62 +3040,119 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
- <!-- MultiTOOL Pro Paywall -->
+ <!-- MultiTOOL Pro Paywall with Device Binding -->
 <script src="https://warriorplus.com/o2/js/mfpz2z" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
-<div id="wpPaywall" style="position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-family:Arial,sans-serif; text-align:center; padding:20px; pointer-events:none;">
-    <div style="max-width:500px; pointer-events:auto; background:rgba(0,0,0,0.85); padding:30px 25px; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+<div id="wpPaywall" style="position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:999999; display:none; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-family:Arial,sans-serif; text-align:center; padding:20px; pointer-events:none;">
+    <div style="max-width:500px; pointer-events:auto; background:rgba(0,0,0,0.9); padding:30px 25px; border-radius:20px;">
         <div style="font-size:3rem; margin-bottom:15px;">🔒</div>
-        <h2 style="color:#ffd700; margin:0 0 15px 0; font-size:24px;">Premium Access Required</h2>
-        <p style="color:#ccc; line-height:1.6; margin:0 0 25px 0; font-size:15px;">To unlock MultiTOOL Pro, please complete your purchase below. Access will be granted instantly after successful payment.</p>
+        <h2 style="color:#ffd700; margin:0 0 15px 0; font-size:22px;">Premium Access Required</h2>
+        <p style="color:#ccc; line-height:1.6; margin:0 0 25px 0; font-size:14px;">To unlock MultiTOOL Pro, please complete your purchase below.</p>
         <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
             <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="max-width:100%; height:auto; border:0;">
         </a>
-        <p style="color:#666; font-size:11px; margin:20px 0 0 0;">Secure checkout · Instant access</p>
+    </div>
+</div>
+
+<div id="wpBlocked" style="position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:999999; display:none; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-family:Arial,sans-serif; text-align:center; padding:20px;">
+    <div style="max-width:500px; background:rgba(40,0,0,0.9); padding:30px 25px; border-radius:20px; border:2px solid #ff4444;">
+        <div style="font-size:3rem; margin-bottom:15px;">🚫</div>
+        <h2 style="color:#ff6666; margin:0 0 15px 0; font-size:22px;">Access Denied</h2>
+        <p style="color:#ccc; line-height:1.6; margin:0 0 25px 0; font-size:14px;">This license is already linked to another device. Please purchase a new license to use MultiTOOL Pro on this device.</p>
+        <a href="https://warriorplus.com/o2/buy/md6kn2/mfpz2z/b73whb">
+            <img src="https://warriorplus.com/o2/btn/fn100011001/md6kn2/mfpz2z/475457" alt="Buy Now" style="max-width:100%; height:auto; border:0;">
+        </a>
     </div>
 </div>
 
 <script>
 (function() {
-    var KEY = 'wplus_purchased_b73whb';
-    var paywall = document.getElementById('wpPaywall');
+    var firebaseConfig = {
+        apiKey: "AIzaSyCwYaCrwHZoGRuig8S4OQ8lF1Z8rbCGSFI",
+        authDomain: "multitool-pro-36a9b.firebaseapp.com",
+        databaseURL: "https://multitool-pro-36a9b-default-rtdb.firebaseio.com",
+        projectId: "multitool-pro-36a9b",
+        storageBucket: "multitool-pro-36a9b.firebasestorage.app",
+        messagingSenderId: "545894427611",
+        appId: "1:545894427611:web:afb24ae5e3e990617915fe"
+    };
+
+    if (typeof firebase === 'undefined') return;
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+
+    function getDeviceId() {
+        var c = document.createElement('canvas');
+        var ctx = c.getContext('2d');
+        ctx.textBaseline = 'top';
+        ctx.font = '14px Arial';
+        ctx.fillText('fp-x9', 2, 2);
+        var canvas = c.toDataURL();
+        var raw = [
+            navigator.userAgent,
+            navigator.language,
+            screen.width + 'x' + screen.height,
+            screen.colorDepth,
+            new Date().getTimezoneOffset(),
+            navigator.hardwareConcurrency || 0,
+            navigator.platform || '',
+            canvas
+        ].join('|');
+        var h = 0;
+        for (var i = 0; i < raw.length; i++) { h = ((h << 5) - h + raw.charCodeAt(i)) | 0; }
+        return 'd' + Math.abs(h).toString(36);
+    }
+
+    var deviceId = getDeviceId();
     var params = new URLSearchParams(window.location.search);
-    var url = window.location.href.toLowerCase();
+    var txn = params.get('txn') || '';
+    var savedTxn = localStorage.getItem('wp_lic_txn');
+    var savedDev = localStorage.getItem('wp_lic_dev');
 
-    // Check for ?paid=1 or any WarriorPlus parameter/cookie
-    var purchased =
-        localStorage.getItem(KEY) === 'true' ||
-        params.has('paid') || 
-        params.has('wp') ||
-        params.has('wplus') ||
-        params.has('transaction_id') ||
-        params.has('txn_id') ||
-        url.indexOf('paid=1') !== -1 ||
-        url.indexOf('transaction_id=') !== -1 ||
-        document.cookie.indexOf('wplus_') !== -1 ||
-        document.cookie.indexOf('warriorplus') !== -1;
+    var paywall = document.getElementById('wpPaywall');
+    var blocked = document.getElementById('wpBlocked');
 
-    function unlock() {
-        localStorage.setItem(KEY, 'true');
+    function showPaywall() {
+        if (paywall) paywall.style.display = 'flex';
+        if (blocked) blocked.style.display = 'none';
+        document.body.style.pointerEvents = 'none';
+        var b = paywall.querySelector('div'); if (b) b.style.pointerEvents = 'auto';
+    }
+    function showBlocked() {
         if (paywall) paywall.style.display = 'none';
+        if (blocked) blocked.style.display = 'flex';
+    }
+    function unlock() {
+        if (paywall) paywall.style.display = 'none';
+        if (blocked) blocked.style.display = 'none';
         document.body.style.pointerEvents = 'auto';
     }
 
-    function lock() {
-        if (paywall) paywall.style.display = 'flex';
-        document.body.style.pointerEvents = 'none';
-        if (paywall) paywall.style.pointerEvents = 'none';
-        var box = paywall.querySelector('div');
-        if (box) box.style.pointerEvents = 'auto';
+    if (!txn && !savedTxn) {
+        showPaywall();
+    } else if (savedTxn && savedDev === deviceId) {
+        unlock();
+    } else if (txn && txn.length >= 8) {
+        db.ref('licenses/' + txn).once('value').then(function(snap) {
+            var data = snap.val();
+            if (!data) {
+                db.ref('licenses/' + txn).set({ device: deviceId, ts: Date.now() });
+                localStorage.setItem('wp_lic_txn', txn);
+                localStorage.setItem('wp_lic_dev', deviceId);
+                unlock();
+            } else if (data.device === deviceId) {
+                localStorage.setItem('wp_lic_txn', txn);
+                localStorage.setItem('wp_lic_dev', deviceId);
+                unlock();
+            } else {
+                showBlocked();
+            }
+        }).catch(function() { showPaywall(); });
+    } else {
+        showPaywall();
     }
-
-    if (purchased) { unlock(); } else { lock(); }
-
-    setInterval(function() {
-        if (localStorage.getItem(KEY) === 'true') return;
-        var p = new URLSearchParams(window.location.search);
-        if (p.has('paid') || p.has('transaction_id') || p.has('txn_id')) unlock();
-    }, 2000);
 })();
 </script>
 
