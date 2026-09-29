@@ -3060,19 +3060,18 @@ document.addEventListener("DOMContentLoaded", function() {
     var KEY = 'wplus_purchased_b73whb';
     var paywall = document.getElementById('wpPaywall');
     var params = new URLSearchParams(window.location.search);
-    var ref = (document.referrer || '').toLowerCase();
     var url = window.location.href.toLowerCase();
 
+    // Check for ?paid=1 or any WarriorPlus parameter/cookie
     var purchased =
         localStorage.getItem(KEY) === 'true' ||
+        params.has('paid') || 
         params.has('wp') ||
         params.has('wplus') ||
         params.has('transaction_id') ||
         params.has('txn_id') ||
-        params.has('wp_purchase') ||
+        url.indexOf('paid=1') !== -1 ||
         url.indexOf('transaction_id=') !== -1 ||
-        url.indexOf('txn_id=') !== -1 ||
-        ref.indexOf('warriorplus.com') !== -1 ||
         document.cookie.indexOf('wplus_') !== -1 ||
         document.cookie.indexOf('warriorplus') !== -1;
 
@@ -3084,9 +3083,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function lock() {
         if (paywall) paywall.style.display = 'flex';
-        // Allow scrolling but block clicks on the page content
         document.body.style.pointerEvents = 'none';
-        // Keep the buy button clickable
         if (paywall) paywall.style.pointerEvents = 'none';
         var box = paywall.querySelector('div');
         if (box) box.style.pointerEvents = 'auto';
@@ -3096,10 +3093,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     setInterval(function() {
         if (localStorage.getItem(KEY) === 'true') return;
-        var hasCookie = document.cookie.indexOf('wplus_') !== -1 || document.cookie.indexOf('warriorplus') !== -1;
         var p = new URLSearchParams(window.location.search);
-        var hasParam = p.has('transaction_id') || p.has('txn_id') || p.has('wp');
-        if (hasCookie || hasParam) unlock();
+        if (p.has('paid') || p.has('transaction_id') || p.has('txn_id')) unlock();
     }, 2000);
 })();
 </script>
