@@ -1585,24 +1585,23 @@
     window.shareFull = function(platform){ const playLink = 'https://play.google.com/store/apps/details?id=multitool.pro2'; const text = 'Check out MultiTool Pro - Ultimate toolkit with all tools! · AI Hub · Premium Free & More... ✨ 50+ utilities, world clock, fresh jokes, translator & much more!'; const urls = { facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(playLink)}&display=popup&ref=plugin`, twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(playLink)}`, linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(playLink)}`, reddit: `https://www.reddit.com/submit?url=${encodeURIComponent(playLink)}&title=${encodeURIComponent(text)}`, whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + playLink)}`, instagram: `https://www.instagram.com/` }; if (platform === 'instagram') {
   const imgUrl = 'https://play-lh.googleusercontent.com/pik7zbGQG-Szd44vuAkkWxVCrl6LIJk4e_r8RrmjU7CAVcvtHVgNlB39QMD7xcPfvQS1GtTZLJ-UE8zfjLlTvqI=s96';
   if (navigator.share) {
-    fetch(imgUrl)
-      .then(res => res.blob())
-      .then(blob => {
-        const file = new File([blob], 'multitool-icon.png', { type: 'image/png' });
-        navigator.share({ title: 'MultiTool Pro', text: text, url: playLink, files: [file] })
-          .catch(() => navigator.share({ title: 'MultiTool Pro', text: text, url: playLink }).catch(()=>{}));
-      })
-      .catch(() => navigator.share({ title: 'MultiTool Pro', text: text, url: playLink }).catch(()=>{}));
+    // MOBILE: native share sheet → user picks Instagram → link gets shared
+    navigator.share({
+      title: 'MultiTool Pro',
+      text: text + ' ' + playLink,
+      url: playLink
+    }).catch(()=>{});
   } else {
+    // DESKTOP: no direct share to Instagram exists. Copy link + download image + open Instagram.
     navigator.clipboard.writeText(playLink);
     const a = document.createElement('a');
     a.href = imgUrl;
-    a.download = 'multitool-icon.png';
+    a.download = 'multitool.png';
     document.body.appendChild(a);
     a.click();
     a.remove();
     window.open('https://www.instagram.com', '_blank');
-    showToast('Link copied + image downloaded. Paste & upload on Instagram.');
+    showToast('Link copied + image saved. Open Instagram and paste manually.');
   }
   return;
 } if(platform === 'copy') { navigator.clipboard.writeText(playLink); showToast('Play Store link copied!'); return; } const url = urls[platform]; if(url) window.open(url, '_blank', 'noopener'); };
