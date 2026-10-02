@@ -1582,7 +1582,30 @@
     window.checkStrength = function(){ let pwd = document.getElementById('pwdCheck').value; let strength = 'Weak'; if(pwd.length>=8 && /[A-Z]/.test(pwd) && /[0-9]/.test(pwd) && /[^A-Za-z0-9]/.test(pwd)) strength = 'Strong'; else if(pwd.length>=6) strength = 'Medium'; document.getElementById('strengthOut').innerHTML = `Strength: ${strength}`; };
     window.searchWikipedia = function(){ let query = document.getElementById('wikiQuery').value.trim(); if(!query) { document.getElementById('wikiOut').innerHTML = 'Please enter a search term.'; return; } window.open(`https://en.wikipedia.org/wiki/${encodeURIComponent(query.replace(/\s+/g, '_'))}`, '_blank'); document.getElementById('wikiOut').innerHTML = `Opening Wikipedia page for "${query}"...`; };
     const shareSection = document.createElement('div'); shareSection.className = 'flex-buttons'; shareSection.style.background = 'var(--surface)'; shareSection.style.padding = '16px'; shareSection.style.borderRadius = '48px'; shareSection.style.margin = '32px 0'; shareSection.innerHTML = `<strong style="font-size:1.2rem;">📱 Share</strong><button class="tool-btn share-btn-fb" onclick="shareFull('facebook')">📘 FB</button><button class="tool-btn share-btn-x" onclick="shareFull('twitter')">🐦 X</button><button class="tool-btn share-btn-linkedin" onclick="shareFull('linkedin')">💼 LinkedIn</button><button class="tool-btn share-btn-reddit" onclick="shareFull('reddit')">🤖 Reddit</button><button class="tool-btn share-btn-wa" onclick="shareFull('whatsapp')">💬 WhatsApp</button><button class="tool-btn share-btn-ig" onclick="shareFull('instagram')">📷 Instagram</button><button class="tool-btn share-btn-copy" onclick="shareFull('copy')">🔗 Copy Play Link</button>`; document.querySelector('.main-container').insertBefore(shareSection, document.getElementById('toolPanel'));
-    window.shareFull = function(platform){ const playLink = 'https://play.google.com/store/apps/details?id=multitool.pro2'; const text = 'Check out MultiTool Pro - Ultimate toolkit with all tools! · AI Hub · Premium Free & More... ✨ 50+ utilities, world clock, fresh jokes, translator & much more!'; const urls = { facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(playLink)}&display=popup&ref=plugin`, twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(playLink)}`, linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(playLink)}`, reddit: `https://www.reddit.com/submit?url=${encodeURIComponent(playLink)}&title=${encodeURIComponent(text)}`, whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + playLink)}`, instagram: `https://www.instagram.com/` }; if(platform === 'instagram') { window.open('https://www.instagram.com', '_blank'); showToast('Open Instagram and share manually'); return; } if(platform === 'copy') { navigator.clipboard.writeText(playLink); showToast('Play Store link copied!'); return; } const url = urls[platform]; if(url) window.open(url, '_blank', 'noopener'); };
+    window.shareFull = function(platform){ const playLink = 'https://play.google.com/store/apps/details?id=multitool.pro2'; const text = 'Check out MultiTool Pro - Ultimate toolkit with all tools! · AI Hub · Premium Free & More... ✨ 50+ utilities, world clock, fresh jokes, translator & much more!'; const urls = { facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(playLink)}&display=popup&ref=plugin`, twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(playLink)}`, linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(playLink)}`, reddit: `https://www.reddit.com/submit?url=${encodeURIComponent(playLink)}&title=${encodeURIComponent(text)}`, whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + playLink)}`, instagram: `https://www.instagram.com/` }; if (platform === 'instagram') {
+  const imgUrl = 'https://play-lh.googleusercontent.com/pik7zbGQG-Szd44vuAkkWxVCrl6LIJk4e_r8RrmjU7CAVcvtHVgNlB39QMD7xcPfvQS1GtTZLJ-UE8zfjLlTvqI=s96';
+  if (navigator.share) {
+    fetch(imgUrl)
+      .then(res => res.blob())
+      .then(blob => {
+        const file = new File([blob], 'multitool-icon.png', { type: 'image/png' });
+        navigator.share({ title: 'MultiTool Pro', text: text, url: playLink, files: [file] })
+          .catch(() => navigator.share({ title: 'MultiTool Pro', text: text, url: playLink }).catch(()=>{}));
+      })
+      .catch(() => navigator.share({ title: 'MultiTool Pro', text: text, url: playLink }).catch(()=>{}));
+  } else {
+    navigator.clipboard.writeText(playLink);
+    const a = document.createElement('a');
+    a.href = imgUrl;
+    a.download = 'multitool-icon.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.open('https://www.instagram.com', '_blank');
+    showToast('Link copied + image downloaded. Paste & upload on Instagram.');
+  }
+  return;
+} if(platform === 'copy') { navigator.clipboard.writeText(playLink); showToast('Play Store link copied!'); return; } const url = urls[platform]; if(url) window.open(url, '_blank', 'noopener'); };
     function renderToolPanel(tid){
         let title = '', content = '';
         switch(tid){
