@@ -1,3 +1,5 @@
+artb.adbite.com, 3000006, DIRECT
+
 google.com, pub-2406611865692375, DIRECT, f08c47fec0942fa0
 
 #GameMonetize.com
