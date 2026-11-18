@@ -1,3 +1,5 @@
+artb.adbite.com, 3000006, DIRECT
+
 admanmedia.com,20,RESELLER
 adwmg.com,101303,RESELLER,c9688a22012618e7
 betweendigital.com,47049,RESELLER
