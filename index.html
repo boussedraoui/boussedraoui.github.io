@@ -3060,6 +3060,371 @@ document.addEventListener("DOMContentLoaded", function() {
 })();
 </script>
 
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================== -->
+<!-- BLACK FRIDAY ANIMATED TICKERS (US, BR, DE) -->
+<!-- ========================================== -->
+<style>
+    /* Main Container */
+    #blackFridaySection {
+        margin: 20px auto 30px;
+        max-width: 1400px;
+        padding: 0 24px;
+        font-family: 'Inter', system-ui, sans-serif;
+        animation: fadeInBF 0.8s ease-out;
+    }
+
+    @keyframes fadeInBF {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Banner with Background Image */
+    .bf-header {
+        background: linear-gradient(rgba(10, 10, 25, 0.7), rgba(20, 20, 45, 0.9)), 
+                    url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop') center/cover;
+        border-radius: 24px 24px 0 0;
+        padding: 30px 24px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid #ffd700;
+        border-bottom: none;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    }
+
+    .bf-header::before {
+        content: '';
+        position: absolute;
+        top: -50%; left: -50%; width: 200%; height: 200%;
+        background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 60%);
+        animation: rotateGlow 12s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes rotateGlow {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .bf-header h2 {
+        font-family: 'Poppins', 'Montserrat', sans-serif;
+        font-size: 2.8rem;
+        font-weight: 900;
+        margin: 0;
+        background: linear-gradient(90deg, #ff8a00, #ff0055, #ff8a00);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 3s linear infinite, pulseScale 2s ease-in-out infinite alternate;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-shadow: 0 0 20px rgba(255, 138, 0, 0.5);
+    }
+
+    @keyframes shine {
+        to { background-position: 200% center; }
+    }
+
+    @keyframes pulseScale {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.03); }
+    }
+
+    .bf-header p {
+        color: #e0e0ff;
+        font-size: 1.2rem;
+        margin: 12px 0 0;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    }
+
+    /* Tickers Wrapper */
+    .bf-tickers-wrapper {
+        background: #0f0f1a;
+        border-radius: 0 0 24px 24px;
+        border: 2px solid #ffd700;
+        border-top: 1px solid rgba(255, 215, 0, 0.3);
+        padding: 20px 0;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+    }
+
+    /* Individual Strip */
+    .bf-strip {
+        margin: 15px 0;
+        position: relative;
+    }
+    
+    .bf-strip-title {
+        position: absolute;
+        left: 20px;
+        top: -10px;
+        background: #0f0f1a;
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 800;
+        padding: 4px 16px;
+        border-radius: 20px;
+        z-index: 2;
+        border: 1px solid var(--strip-color, #ffd700);
+        box-shadow: 0 0 15px var(--strip-color, #ffd700);
+        letter-spacing: 1px;
+    }
+
+    /* Marquee Animation */
+    .bf-marquee {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 15px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .bf-marquee-content {
+        display: inline-block;
+        animation: scrollMarquee 40s linear infinite;
+    }
+
+    .bf-marquee-content:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes scrollMarquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    /* Beautiful Links */
+    .bf-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        margin: 0 12px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .bf-link::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%; width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: all 0.5s;
+    }
+
+    .bf-link:hover::before {
+        left: 100%;
+    }
+
+    .bf-link:hover {
+        transform: translateY(-4px) scale(1.05);
+        background: rgba(255, 255, 255, 0.15);
+        border-color: var(--strip-color);
+        box-shadow: 0 0 20px var(--strip-color);
+        text-decoration: none;
+    }
+
+    .bf-flag {
+        font-size: 1.2rem;
+        filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
+    }
+
+    .bf-arrow {
+        font-size: 0.9rem;
+        opacity: 0.5;
+        transition: opacity 0.3s;
+    }
+
+    .bf-link:hover .bf-arrow {
+        opacity: 1;
+        color: var(--strip-color);
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 768px) {
+        .bf-header h2 { font-size: 1.8rem; letter-spacing: 1px; }
+        .bf-header p { font-size: 0.95rem; }
+        .bf-link { font-size: 0.85rem; padding: 8px 14px; margin: 0 8px; }
+        .bf-tickers-wrapper { padding: 10px 0; }
+        .bf-strip-title { font-size: 0.75rem; padding: 3px 12px; left: 10px; }
+    }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Define the Data (Links mapped sequentially to extracted company names)
+    const countriesData = [
+        {
+            name: "United States",
+            flag: "🇺🇸",
+            color: "#e74c3c",
+            links: [
+                "https://tatrck.com/h/0Hu30_aa0Sva?model=cpc", "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc", "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc", "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0XMd?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZV1?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc", "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0a9L?model=cpc", "https://tatrck.com/h/0Hu30_aa0a9g?model=cpc", "https://tatrck.com/h/0Hu30_aa0aQa?model=cpc", "https://tatrck.com/h/0Hu30_aa0azh?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0brA?model=cpc", "https://tatrck.com/h/0Hu30_aa0c1r?model=cpc", "https://tatrck.com/h/0Hu30_aa0cGC?model=cpc", "https://tatrck.com/h/0Hu30_aa0cVk?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0dPJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0dpZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0eI9?model=cpc", "https://tatrck.com/h/0Hu30_aa0eMa?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0ew6?model=cpc", "https://tatrck.com/h/0Hu30_aa0fYK?model=cpc", "https://tatrck.com/h/0Hu30_aa0f-3?model=cpc", "https://tatrck.com/h/0Hu30_aa0gG2?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0gPG?model=cpc", "https://tatrck.com/h/0Hu30_aa0h3i?model=cpc", "https://tatrck.com/h/0Hu30_aa0h4G?model=cpc", "https://tatrck.com/h/0Hu30_aa0hAd?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0hC7?model=cpc", "https://tatrck.com/h/0Hu30_aa0hvZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0iFq?model=cpc", "https://tatrck.com/h/0Hu30_aa0j3O?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0j8k?model=cpc", "https://tatrck.com/h/0Hu30_aa0jA_?model=cpc", "https://tatrck.com/h/0Hu30_aa0jB3?model=cpc", "https://tatrck.com/h/0Hu30_aa0jC6?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0jal?model=cpc", "https://tatrck.com/h/0Hu30_aa0kPU?model=cpc", "https://tatrck.com/h/0Hu30_aa0lNp?model=cpc", "https://tatrck.com/h/0Hu30_aa0mLz?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0nmq?model=cpc", "https://tatrck.com/h/0Hu30_aa0no9?model=cpc", "https://tatrck.com/h/0Hu30_aa0o77?model=cpc", "https://tatrck.com/h/0Hu30_aa0r08?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0r56?model=cpc", "https://tatrck.com/h/0Hu30_aa0sN8?model=cpc", "https://tatrck.com/h/0Hu30_aa0tQK?model=cpc", "https://tatrck.com/h/0Hu30_aa0taZ?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0u2C?model=cpc", "https://tatrck.com/h/0Hu30_aa0uMY?model=cpc", "https://tatrck.com/h/0Hu30_aa0ueB?model=cpc", "https://tatrck.com/h/0Hu30_aa0vbw?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0wVU?model=cpc", "https://tatrck.com/h/0Hu30_aa0wkW?model=cpc", "https://tatrck.com/h/0Hu30_aa0wvr?model=cpc", "https://tatrck.com/h/0Hu30_aa0wvy?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0x7k?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVV?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVi?model=cpc", "https://tatrck.com/h/0Hu30_aa0yYB?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0ykE?model=cpc", "https://tatrck.com/h/0Hu30_aa0zmw?model=cpc", "https://tatrck.com/h/0Hu30_aa0z-x?model=cpc", "https://tatrck.com/h/0Hu30_aa0-h5?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc", "https://tatrck.com/h/0Hu30_aa10h1?model=cpc", "https://tatrck.com/h/0Hu30_aa11aO?model=cpc", "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa12Xf?model=cpc", "https://tatrck.com/h/0Hu30_aa12g4?model=cpc", "https://tatrck.com/h/0Hu30_aa13Yd?model=cpc", "https://tatrck.com/h/0Hu30_aa13dL?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa149a?model=cpc", "https://tatrck.com/h/0Hu30_aa14Cf?model=cpc"
+            ],
+            names: [
+                "FAMOUS FOOTWEAR US", "Macu and Aru US", "Rock Bottom Golf US", "Denton & Burton Advisors US",
+                "Mac of all Trades US", "OmahaSteaks US", "eInfinity US", "TWINO DE",
+                "AIkenSpenceHotels UK", "DUSK UK", "Black UK", "Markas US",
+                "Tasc Performance US", "Royal Apparel US", "Bezel Vitale US", "Armosclubs US",
+                "BonTonSigna US", "Veronika Basel US", "Dallas Cowboys US", "Solsty Jewellery US",
+                "Jomashop US", "Virtual Vacations US", "ClassPass US", "Tumi US",
+                "Seated Development Limited US", "32 Degrees US", "LensCrafters US", "Lysse US",
+                "Pretty You London UK", "Jennifer Zeuner Jewelry US", "Glossier US", "US Chess Federation Sales US",
+                "Airgun Depot US", "J. Renee US", "Caddislife US", "Sun River Toys US",
+                "Feliway US", "IEW Cosmetics US", "Alffa Pharmaceuticals US", "Cie de Peau Beaute US",
+                "Dermas US", "Spilat US", "SISU US", "Aloette Intl US",
+                "Endota US", "Luma for Ever US", "Ogio US", "G-Star Health US",
+                "Freedumb Naturals US", "Viazza US", "Nifox Inc US", "Wild Natural Deodorant UK",
+                "Fribbillet Banda US", "Hill House Home US", "Old South US", "Petal & Pup US",
+                "Top Extrusions US", "Jo Malone US", "Peek Audio US", "Di Mecellio US",
+                "Four Leaf Rover US", "Blufly US", "IUI Mobile US", "DrySee US",
+                "Revviya US", "netcoyneva US", "Menosill US", "Metabo US",
+                "Tonerific US", "Luxeon US"
+            ]
+        },
+        {
+            name: "Brazil",
+            flag: "🇧🇷",
+            color: "#2ecc71",
+            links: [
+                "https://tatrck.com/h/0Hu30_aa0SQ_?model=cpc", "https://tatrck.com/h/0Hu30_aa0f3d?model=cpc", "https://tatrck.com/h/0Hu30_aa0nmM?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0pyq?model=cpc", "https://tatrck.com/h/0Hu30_aa0wRo?model=cpc", "https://tatrck.com/h/0Hu30_aa0yag?model=cpc"
+            ],
+            names: [
+                "Flores Online BR", "Quero Passagem BR", "Nars Cosmetics BR US",
+                "Shopee BR", "Probel BR CPA BR", "Gukdi BR"
+            ]
+        },
+        {
+            name: "Germany",
+            flag: "🇩🇪",
+            color: "#f1c40f",
+            links: [
+                "https://tatrck.com/h/0Hu30_aa0Ole?model=cpc", "https://tatrck.com/h/0Hu30_aa0PWd?model=cpc", "https://tatrck.com/h/0Hu30_aa0PY-?model=cpc", "https://tatrck.com/h/0Hu30_aa0UPp?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0V3K?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z51?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z6u?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z95?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0blO?model=cpc", "https://tatrck.com/h/0Hu30_aa0jje?model=cpc", "https://tatrck.com/h/0Hu30_aa0lqP?model=cpc", "https://tatrck.com/h/0Hu30_aa0pk_?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0qn4?model=cpc", "https://tatrck.com/h/0Hu30_aa0rtZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0vGt?model=cpc", "https://tatrck.com/h/0Hu30_aa0vK5?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa0z07?model=cpc", "https://tatrck.com/h/0Hu30_aa12DS?model=cpc", "https://tatrck.com/h/0Hu30_aa16tJ?model=cpc", "https://tatrck.com/h/0Hu30_aa172M?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa17Dh?model=cpc", "https://tatrck.com/h/0Hu30_aa17pw?model=cpc", "https://tatrck.com/h/0Hu30_aa18sk?model=cpc", "https://tatrck.com/h/0Hu30_aa19MJ?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa1Bgg?model=cpc", "https://tatrck.com/h/0Hu30_aa1DFr?model=cpc", "https://tatrck.com/h/0Hu30_aa1E52?model=cpc", "https://tatrck.com/h/0Hu30_aa1H9S?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa1HFe?model=cpc", "https://tatrck.com/h/0Hu30_aa1I4c?model=cpc", "https://tatrck.com/h/0Hu30_aa1J-g?model=cpc", "https://tatrck.com/h/0Hu30_aa1K0U?model=cpc",
+                "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc", "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc", "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc", "https://tatrck.com/h/0Hu30_aa1OKG?model=cpc"
+            ],
+            names: [
+                "Interhome DE", "Auto Europa DE", "DocYardFlightsGlobal DE", "JD Hollis DE",
+                "Logitel DE", "airembing DE", "TWINO DE", "Nestlika DE",
+                "Thesaurierbude DE", "Flugreining DE", "acne Rosace DE", "ClassPass US",
+                "Seated Development Limited US", "LensCrafters US", "Lysse US", "Pretty You London UK",
+                "US Chess Federation Sales US", "Innoshoesbrunnen DE", "Wild Natural Deodorant UK", "25% Weihnachtsrabatt DE",
+                "Ekamader FR", "BestSecret NL", "Gents DE", "Hamby DE",
+                "Robben-Basar.de DE", "Elizabeth Arden DE", "Getierk.de DE", "Foodspring NL DE",
+                "Avea Germany UK", "VICOR CA", "Europeanprep.eu DE", "seoBest.de DE",
+                "IndulgeoDream DE", "AQUA direct DE", "Crocs JP CPS", "health.ESDlife CPS"
+            ]
+        }
+    ];
+
+    // Function to generate the HTML for a single country strip
+    function createTickerHTML(country) {
+        // Repeat the array twice to ensure a seamless infinite scrolling loop
+        const doubledLinks = [...country.links, ...country.links];
+        const doubledNames = [...country.names, ...country.names];
+
+        let linksHTML = "";
+        for (let i = 0; i < doubledLinks.length; i++) {
+            linksHTML += `
+                <a href="${doubledLinks[i]}" target="_blank" rel="noopener noreferrer" class="bf-link">
+                    <span class="bf-flag">${country.flag}</span>
+                    <span class="bf-name">${doubledNames[i]}</span>
+                    <span class="bf-arrow">↗</span>
+                </a>
+            `;
+        }
+
+        return `
+            <div class="bf-strip" style="--strip-color: ${country.color};">
+                <div class="bf-strip-title">${country.flag} ${country.name}</div>
+                <div class="bf-marquee">
+                    <div class="bf-marquee-content">
+                        ${linksHTML}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Build the entire section
+    const bfSection = document.createElement("div");
+    bfSection.id = "blackFridaySection";
+    
+    let tickersHTML = "";
+    countriesData.forEach(country => {
+        tickersHTML += createTickerHTML(country);
+    });
+
+    bfSection.innerHTML = `
+        <div class="bf-header">
+            <h2>🔥 Black Friday Is Coming 🔥</h2>
+            <p>Higher payouts, top advertisers, CPA & CPC campaigns</p>
+        </div>
+        <div class="bf-tickers-wrapper">
+            ${tickersHTML}
+        </div>
+    `;
+
+    // Insert directly BEFORE the search box
+    const searchContainer = document.querySelector('.search-container');
+    if (searchContainer) {
+        searchContainer.parentNode.insertBefore(bfSection, searchContainer);
+    } else {
+        // Fallback just in case the search container is missing
+        const mainContainer = document.querySelector('.main-container');
+        if (mainContainer) mainContainer.prepend(bfSection);
+    }
+});
+</script>
 </body>
 </html>
 
