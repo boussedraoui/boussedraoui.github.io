@@ -3276,110 +3276,158 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    // Strict 1-to-1 mapping: Only names with a SINGLE matching flag, paired exactly with the sequential links.
     const countriesData = [
         {
             name: "United States",
             flag: "🇺🇸",
             color: "#e74c3c",
-            links: [
-                "https://tatrck.com/h/0Hu30_aa0Sva?model=cpc", "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc", "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc", "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0XMd?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZV1?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc", "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0a9L?model=cpc", "https://tatrck.com/h/0Hu30_aa0a9g?model=cpc", "https://tatrck.com/h/0Hu30_aa0aQa?model=cpc", "https://tatrck.com/h/0Hu30_aa0azh?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0brA?model=cpc", "https://tatrck.com/h/0Hu30_aa0c1r?model=cpc", "https://tatrck.com/h/0Hu30_aa0cGC?model=cpc", "https://tatrck.com/h/0Hu30_aa0cVk?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0dPJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0dpZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0eI9?model=cpc", "https://tatrck.com/h/0Hu30_aa0eMa?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0ew6?model=cpc", "https://tatrck.com/h/0Hu30_aa0fYK?model=cpc", "https://tatrck.com/h/0Hu30_aa0f-3?model=cpc", "https://tatrck.com/h/0Hu30_aa0gG2?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0gPG?model=cpc", "https://tatrck.com/h/0Hu30_aa0h3i?model=cpc", "https://tatrck.com/h/0Hu30_aa0h4G?model=cpc", "https://tatrck.com/h/0Hu30_aa0hAd?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0hC7?model=cpc", "https://tatrck.com/h/0Hu30_aa0hvZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0iFq?model=cpc", "https://tatrck.com/h/0Hu30_aa0j3O?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0j8k?model=cpc", "https://tatrck.com/h/0Hu30_aa0jA_?model=cpc", "https://tatrck.com/h/0Hu30_aa0jB3?model=cpc", "https://tatrck.com/h/0Hu30_aa0jC6?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0jal?model=cpc", "https://tatrck.com/h/0Hu30_aa0kPU?model=cpc", "https://tatrck.com/h/0Hu30_aa0lNp?model=cpc", "https://tatrck.com/h/0Hu30_aa0mLz?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0nmq?model=cpc", "https://tatrck.com/h/0Hu30_aa0no9?model=cpc", "https://tatrck.com/h/0Hu30_aa0o77?model=cpc", "https://tatrck.com/h/0Hu30_aa0r08?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0r56?model=cpc", "https://tatrck.com/h/0Hu30_aa0sN8?model=cpc", "https://tatrck.com/h/0Hu30_aa0tQK?model=cpc", "https://tatrck.com/h/0Hu30_aa0taZ?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0u2C?model=cpc", "https://tatrck.com/h/0Hu30_aa0uMY?model=cpc", "https://tatrck.com/h/0Hu30_aa0ueB?model=cpc", "https://tatrck.com/h/0Hu30_aa0vbw?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0wVU?model=cpc", "https://tatrck.com/h/0Hu30_aa0wkW?model=cpc", "https://tatrck.com/h/0Hu30_aa0wvr?model=cpc", "https://tatrck.com/h/0Hu30_aa0wvy?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0x7k?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVV?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVi?model=cpc", "https://tatrck.com/h/0Hu30_aa0yYB?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0ykE?model=cpc", "https://tatrck.com/h/0Hu30_aa0zmw?model=cpc", "https://tatrck.com/h/0Hu30_aa0z-x?model=cpc", "https://tatrck.com/h/0Hu30_aa0-h5?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc", "https://tatrck.com/h/0Hu30_aa10h1?model=cpc", "https://tatrck.com/h/0Hu30_aa11aO?model=cpc", "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa12Xf?model=cpc", "https://tatrck.com/h/0Hu30_aa12g4?model=cpc", "https://tatrck.com/h/0Hu30_aa13Yd?model=cpc", "https://tatrck.com/h/0Hu30_aa13dL?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa149a?model=cpc", "https://tatrck.com/h/0Hu30_aa14Cf?model=cpc"
-            ],
-            names: [
-                "Famous Footwear US", "Macu and Aru US", "Rock Bottom Golf US", "Denton & Burton Advisors US",
-                "Mac of all Trades US", "OmahaSteaks US", "eInfinity US", "Alcon & Ollie US",
-                "Markas US", "Tasc Performance US", "Based Vitale US", "Armosclubs US",
-                "Bennington US", "Dallas Cowboys US", "Solsty Jewellery US", "Jomashop US",
-                "Virtual Vacations US", "Tumi US", "32 Degrees US", "LensCrafters US",
-                "Jennifer Zeuner Jewelry US", "Glossier US", "US Chess Federation Sales US", "Airgun Depot US",
-                "J.Renee US", "Caddislife US", "Sun River Toys US", "Feliway US",
-                "IEW Cosmetics US", "Alffa Pharmaceuticals US", "Cie de Peau Beaute US", "Dermas US",
-                "Spilat US", "SISU US", "Aloette Intl US", "Endota US",
-                "Luma for Ever US", "Ogio US", "G-Star Health US", "Freedumb Naturals US",
-                "Viazza US", "Nifox Inc US", "Fribbillet Banda US", "Old South US",
-                "Petal & Pup US", "Top Extrusions US", "Peek Audio US", "Di Mecellio US",
-                "Four Leaf Rover US", "Blufly US", "IUI Mobile US", "DrySee US",
-                "Revviya US", "netcoyneva US", "Menosill US", "Metabo US",
-                "Tonerific US", "Luxeon US", "Bubba's Fine Foods US", "FreshBooks US",
-                "Ried Red US", "VITAMIN C US", "MUD\WTR US", "Sunspel US",
-                "Tentsile US", "KARA US", "BARK US", "MASA Chips US",
-                "Caffe Luxxe US", "Sun Bum US", "TUSHY US", "The Citizenry US",
-                "S'well US", "Ruggable US"
+            merchants: [
+                { name: "Famous Footwear US", url: "https://tatrck.com/h/0Hu30_aa0Sva?model=cpc" },
+                { name: "Macu and Aru US", url: "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc" },
+                { name: "Rock Bottom Golf US", url: "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc" },
+                { name: "Denton & Burton Advisors US", url: "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc" },
+                { name: "Mac of all Trades US", url: "https://tatrck.com/h/0Hu30_aa0XMd?model=cpc" },
+                { name: "OmahaSteaks US", url: "https://tatrck.com/h/0Hu30_aa0ZV1?model=cpc" },
+                { name: "eInfinity US", url: "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc" },
+                { name: "Markas US", url: "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc" },
+                { name: "Tasc Performance US", url: "https://tatrck.com/h/0Hu30_aa0a9L?model=cpc" },
+                { name: "Based Vitale US", url: "https://tatrck.com/h/0Hu30_aa0a9g?model=cpc" },
+                { name: "Armosclubs US", url: "https://tatrck.com/h/0Hu30_aa0aQa?model=cpc" },
+                { name: "BonTonSigna US", url: "https://tatrck.com/h/0Hu30_aa0azh?model=cpc" },
+                { name: "Dallas Cowboys US", url: "https://tatrck.com/h/0Hu30_aa0brA?model=cpc" },
+                { name: "Solsty Jewellery US", url: "https://tatrck.com/h/0Hu30_aa0c1r?model=cpc" },
+                { name: "Jomashop US", url: "https://tatrck.com/h/0Hu30_aa0cGC?model=cpc" },
+                { name: "Virtual Vacations US", url: "https://tatrck.com/h/0Hu30_aa0cVk?model=cpc" },
+                { name: "Tumi US", url: "https://tatrck.com/h/0Hu30_aa0dPJ?model=cpc" },
+                { name: "32 Degrees US", url: "https://tatrck.com/h/0Hu30_aa0dpZ?model=cpc" },
+                { name: "Jennifer Zeuner Jewelry US", url: "https://tatrck.com/h/0Hu30_aa0eI9?model=cpc" },
+                { name: "Glossier US", url: "https://tatrck.com/h/0Hu30_aa0eMa?model=cpc" },
+                { name: "US Chess Federation Sales US", url: "https://tatrck.com/h/0Hu30_aa0ew6?model=cpc" },
+                { name: "Airgun Depot US", url: "https://tatrck.com/h/0Hu30_aa0fYK?model=cpc" },
+                { name: "J.Renee US", url: "https://tatrck.com/h/0Hu30_aa0f-3?model=cpc" },
+                { name: "Caddislife US", url: "https://tatrck.com/h/0Hu30_aa0gG2?model=cpc" },
+                { name: "Sun River Toys US", url: "https://tatrck.com/h/0Hu30_aa0gPG?model=cpc" },
+                { name: "Feliway US", url: "https://tatrck.com/h/0Hu30_aa0h3i?model=cpc" },
+                { name: "IEW Cosmetics US", url: "https://tatrck.com/h/0Hu30_aa0h4G?model=cpc" },
+                { name: "Alffa Pharmaceuticals US", url: "https://tatrck.com/h/0Hu30_aa0hAd?model=cpc" },
+                { name: "Cie de Peau Beaute US", url: "https://tatrck.com/h/0Hu30_aa0hC7?model=cpc" },
+                { name: "Dermas US", url: "https://tatrck.com/h/0Hu30_aa0hvZ?model=cpc" },
+                { name: "Spilat US", url: "https://tatrck.com/h/0Hu30_aa0iFq?model=cpc" },
+                { name: "SISU US", url: "https://tatrck.com/h/0Hu30_aa0j3O?model=cpc" },
+                { name: "Aloette Intl US", url: "https://tatrck.com/h/0Hu30_aa0j8k?model=cpc" },
+                { name: "Endota US", url: "https://tatrck.com/h/0Hu30_aa0jA_?model=cpc" },
+                { name: "Luma for Ever US", url: "https://tatrck.com/h/0Hu30_aa0jB3?model=cpc" },
+                { name: "Ogio US", url: "https://tatrck.com/h/0Hu30_aa0jC6?model=cpc" },
+                { name: "G-Star Health US", url: "https://tatrck.com/h/0Hu30_aa0jal?model=cpc" },
+                { name: "Freedumb Naturals US", url: "https://tatrck.com/h/0Hu30_aa0kPU?model=cpc" },
+                { name: "Viazza US", url: "https://tatrck.com/h/0Hu30_aa0lNp?model=cpc" },
+                { name: "Nifox Inc US", url: "https://tatrck.com/h/0Hu30_aa0mLz?model=cpc" },
+                { name: "Fribbillet Banda US", url: "https://tatrck.com/h/0Hu30_aa0nmq?model=cpc" },
+                { name: "Old South US", url: "https://tatrck.com/h/0Hu30_aa0no9?model=cpc" },
+                { name: "Petal & Pup US", url: "https://tatrck.com/h/0Hu30_aa0o77?model=cpc" },
+                { name: "Top Extrusions US", url: "https://tatrck.com/h/0Hu30_aa0r08?model=cpc" },
+                { name: "Peek Audio US", url: "https://tatrck.com/h/0Hu30_aa0r56?model=cpc" },
+                { name: "Di Mecellio US", url: "https://tatrck.com/h/0Hu30_aa0sN8?model=cpc" },
+                { name: "Four Leaf Rover US", url: "https://tatrck.com/h/0Hu30_aa0tQK?model=cpc" },
+                { name: "Blufly US", url: "https://tatrck.com/h/0Hu30_aa0taZ?model=cpc" },
+                { name: "IUI Mobile US", url: "https://tatrck.com/h/0Hu30_aa0u2C?model=cpc" },
+                { name: "DrySee US", url: "https://tatrck.com/h/0Hu30_aa0uMY?model=cpc" },
+                { name: "Revviya US", url: "https://tatrck.com/h/0Hu30_aa0ueB?model=cpc" },
+                { name: "netcoyneva US", url: "https://tatrck.com/h/0Hu30_aa0vbw?model=cpc" },
+                { name: "Menosill US", url: "https://tatrck.com/h/0Hu30_aa0wVU?model=cpc" },
+                { name: "Metabo US", url: "https://tatrck.com/h/0Hu30_aa0wkW?model=cpc" },
+                { name: "Tonerific US", url: "https://tatrck.com/h/0Hu30_aa0wvr?model=cpc" },
+                { name: "Luxeon US", url: "https://tatrck.com/h/0Hu30_aa0wvy?model=cpc" },
+                { name: "Bubba's Fine Foods US", url: "https://tatrck.com/h/0Hu30_aa0x7k?model=cpc" },
+                { name: "FreshBooks US", url: "https://tatrck.com/h/0Hu30_aa0xVV?model=cpc" },
+                { name: "Ried Red US", url: "https://tatrck.com/h/0Hu30_aa0xVi?model=cpc" },
+                { name: "VITAMIN C US", url: "https://tatrck.com/h/0Hu30_aa0yYB?model=cpc" },
+                { name: "MUDWTR US", url: "https://tatrck.com/h/0Hu30_aa0ykE?model=cpc" },
+                { name: "Sunspel US", url: "https://tatrck.com/h/0Hu30_aa0zmw?model=cpc" },
+                { name: "Tentsile US", url: "https://tatrck.com/h/0Hu30_aa0z-x?model=cpc" },
+                { name: "KARA US", url: "https://tatrck.com/h/0Hu30_aa0-h5?model=cpc" },
+                { name: "BARK US", url: "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc" },
+                { name: "MASA Chips US", url: "https://tatrck.com/h/0Hu30_aa10h1?model=cpc" },
+                { name: "Caffe Luxxe US", url: "https://tatrck.com/h/0Hu30_aa11aO?model=cpc" },
+                { name: "Sun Bum US", url: "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc" },
+                { name: "TUSHY US", url: "https://tatrck.com/h/0Hu30_aa12Xf?model=cpc" },
+                { name: "The Citizenry US", url: "https://tatrck.com/h/0Hu30_aa12g4?model=cpc" },
+                { name: "S'well US", url: "https://tatrck.com/h/0Hu30_aa13Yd?model=cpc" },
+                { name: "Ruggable US", url: "https://tatrck.com/h/0Hu30_aa13dL?model=cpc" }
             ]
         },
         {
             name: "Brazil",
             flag: "🇧🇷",
             color: "#2ecc71",
-            links: [
-                "https://tatrck.com/h/0Hu30_aa0SQ_?model=cpc", "https://tatrck.com/h/0Hu30_aa0f3d?model=cpc", "https://tatrck.com/h/0Hu30_aa0nmM?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0pyq?model=cpc", "https://tatrck.com/h/0Hu30_aa0wRo?model=cpc", "https://tatrck.com/h/0Hu30_aa0yag?model=cpc"
-            ],
-            names: [
-                "Flores Online BR", "Quero Passagem BR", "Nars Cosmetics BR US",
-                "Shopee BR", "Probel BR CPA BR", "Gukdi BR"
+            merchants: [
+                { name: "Flores Online BR", url: "https://tatrck.com/h/0Hu30_aa0SQ_?model=cpc" },
+                { name: "Quero Passagem BR", url: "https://tatrck.com/h/0Hu30_aa0f3d?model=cpc" },
+                { name: "Shopee BR", url: "https://tatrck.com/h/0Hu30_aa0nmM?model=cpc" },
+                { name: "Probel BR CPA BR", url: "https://tatrck.com/h/0Hu30_aa0pyq?model=cpc" },
+                { name: "Gukdi BR", url: "https://tatrck.com/h/0Hu30_aa0wRo?model=cpc" }
             ]
         },
         {
             name: "Germany",
             flag: "🇩🇪",
             color: "#f1c40f",
-            links: [
-                "https://tatrck.com/h/0Hu30_aa0Ole?model=cpc", "https://tatrck.com/h/0Hu30_aa0PWd?model=cpc", "https://tatrck.com/h/0Hu30_aa0PY-?model=cpc", "https://tatrck.com/h/0Hu30_aa0UPp?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0V3K?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z51?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z6u?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z95?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0blO?model=cpc", "https://tatrck.com/h/0Hu30_aa0jje?model=cpc", "https://tatrck.com/h/0Hu30_aa0lqP?model=cpc", "https://tatrck.com/h/0Hu30_aa0pk_?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0qn4?model=cpc", "https://tatrck.com/h/0Hu30_aa0rtZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0vGt?model=cpc", "https://tatrck.com/h/0Hu30_aa0vK5?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa0z07?model=cpc", "https://tatrck.com/h/0Hu30_aa12DS?model=cpc", "https://tatrck.com/h/0Hu30_aa16tJ?model=cpc", "https://tatrck.com/h/0Hu30_aa172M?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa17Dh?model=cpc", "https://tatrck.com/h/0Hu30_aa17pw?model=cpc", "https://tatrck.com/h/0Hu30_aa18sk?model=cpc", "https://tatrck.com/h/0Hu30_aa19MJ?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa1Bgg?model=cpc", "https://tatrck.com/h/0Hu30_aa1DFr?model=cpc", "https://tatrck.com/h/0Hu30_aa1E52?model=cpc", "https://tatrck.com/h/0Hu30_aa1H9S?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa1HFe?model=cpc", "https://tatrck.com/h/0Hu30_aa1I4c?model=cpc", "https://tatrck.com/h/0Hu30_aa1J-g?model=cpc", "https://tatrck.com/h/0Hu30_aa1K0U?model=cpc",
-                "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc", "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc", "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc", "https://tatrck.com/h/0Hu30_aa1OKG?model=cpc"
-            ],
-            names: [
-                "Interhome DE", "Auto Europa DE", "DocYardFlightsGlobal DE", "JD Hollis DE",
-                "Logitel DE", "airembing DE", "Nestlika DE", "Thesaurierbude DE",
-                "Flugreining DE", "acne Rosace DE", "Innoshoesbrunnen DE", "25% Weihnachtsrabatt DE",
-                "Gents DE", "Hamby DE", "Robben-Basar.de DE", "Elizabeth Arden DE",
-                "Getierk.de DE", "Europeanprep.eu DE", "seoBest.de DE", "IndulgeoDream DE",
-                "AQUA direct DE", "Greenweek DACH", "BON BON DE", "Lensmotion DE",
-                "EVA", "Modena AD", "TuneyLuneyGlobal DE", "LIZYANNE DE",
-                "OFFICE DE", "ymoofitness.com", "Lumc-cosmetics DE", "Natascha-Germany",
-                "SIMGRADE AD", "Zylvia DE", "Thamara", "Wise Cic DE"
+            merchants: [
+                { name: "Interhome DE", url: "https://tatrck.com/h/0Hu30_aa0Ole?model=cpc" },
+                { name: "Auto Europa DE", url: "https://tatrck.com/h/0Hu30_aa0PWd?model=cpc" },
+                { name: "DocYardFlightsGlobal DE", url: "https://tatrck.com/h/0Hu30_aa0PY-?model=cpc" },
+                { name: "JD Hollis DE", url: "https://tatrck.com/h/0Hu30_aa0UPp?model=cpc" },
+                { name: "Logitel DE", url: "https://tatrck.com/h/0Hu30_aa0V3K?model=cpc" },
+                { name: "airembing DE", url: "https://tatrck.com/h/0Hu30_aa0Z51?model=cpc" },
+                { name: "Nestilka DE", url: "https://tatrck.com/h/0Hu30_aa0Z6u?model=cpc" },
+                { name: "Thesaurierbude DE", url: "https://tatrck.com/h/0Hu30_aa0Z95?model=cpc" },
+                { name: "Flugreining DE", url: "https://tatrck.com/h/0Hu30_aa0blO?model=cpc" },
+                { name: "acne Rosace DE", url: "https://tatrck.com/h/0Hu30_aa0jje?model=cpc" },
+                { name: "Innoshoesbrunnen DE", url: "https://tatrck.com/h/0Hu30_aa0lqP?model=cpc" },
+                { name: "25% Weihnachtsrabatt DE", url: "https://tatrck.com/h/0Hu30_aa0pk_?model=cpc" },
+                { name: "Gents DE", url: "https://tatrck.com/h/0Hu30_aa0qn4?model=cpc" },
+                { name: "Hamby DE", url: "https://tatrck.com/h/0Hu30_aa0rtZ?model=cpc" },
+                { name: "Robben-Basar.de DE", url: "https://tatrck.com/h/0Hu30_aa0vGt?model=cpc" },
+                { name: "Elizabeth Arden DE", url: "https://tatrck.com/h/0Hu30_aa0vK5?model=cpc" },
+                { name: "Getierk.de DE", url: "https://tatrck.com/h/0Hu30_aa0z07?model=cpc" },
+                { name: "Europeanprep.eu DE", url: "https://tatrck.com/h/0Hu30_aa12DS?model=cpc" },
+                { name: "seoBest.de DE", url: "https://tatrck.com/h/0Hu30_aa16tJ?model=cpc" },
+                { name: "IndulgeoDream DE", url: "https://tatrck.com/h/0Hu30_aa172M?model=cpc" },
+                { name: "AQUA direct DE", url: "https://tatrck.com/h/0Hu30_aa17Dh?model=cpc" },
+                { name: "Greenweek DACH", url: "https://tatrck.com/h/0Hu30_aa17pw?model=cpc" },
+                { name: "BON BON DE", url: "https://tatrck.com/h/0Hu30_aa18sk?model=cpc" },
+                { name: "Lensmotion DE", url: "https://tatrck.com/h/0Hu30_aa19MJ?model=cpc" },
+                { name: "EVA", url: "https://tatrck.com/h/0Hu30_aa1Bgg?model=cpc" },
+                { name: "Modena AD", url: "https://tatrck.com/h/0Hu30_aa1DFr?model=cpc" },
+                { name: "TuneYourGlobal DE", url: "https://tatrck.com/h/0Hu30_aa1E52?model=cpc" },
+                { name: "LIZYANNE DE", url: "https://tatrck.com/h/0Hu30_aa1H9S?model=cpc" },
+                { name: "OFFICE DE", url: "https://tatrck.com/h/0Hu30_aa1HFe?model=cpc" },
+                { name: "ymoofitness.com", url: "https://tatrck.com/h/0Hu30_aa1I4c?model=cpc" },
+                { name: "Lumc-cosmetics DE", url: "https://tatrck.com/h/0Hu30_aa1J-g?model=cpc" },
+                { name: "Natascha-Germany", url: "https://tatrck.com/h/0Hu30_aa1K0U?model=cpc" },
+                { name: "SIMGRADE AD", url: "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc" },
+                { name: "Zylvia DE", url: "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc" },
+                { name: "Thamara", url: "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc" },
+                { name: "Wise Cic DE", url: "https://tatrck.com/h/0Hu30_aa1OKG?model=cpc" }
             ]
         }
     ];
 
     function createTickerHTML(country) {
-        const doubledLinks = [...country.links, ...country.links];
-        const doubledNames = [...country.names, ...country.names];
+        // Duplicate the array for seamless scrolling
+        const doubledMerchants = [...country.merchants, ...country.merchants];
 
         let linksHTML = "";
-        for (let i = 0; i < doubledLinks.length; i++) {
+        doubledMerchants.forEach(merchant => {
             linksHTML += `
-                <a href="${doubledLinks[i]}" target="_blank" rel="noopener noreferrer" class="bf-link">
+                <a href="${merchant.url}" target="_blank" rel="noopener noreferrer" class="bf-link">
                     <span class="bf-flag">${country.flag}</span>
-                    <span class="bf-name">${doubledNames[i]}</span>
+                    <span class="bf-name">${merchant.name}</span>
                     <span class="bf-arrow">↗</span>
                 </a>
             `;
-        }
+        });
 
         return `
             <div class="bf-strip" style="--strip-color: ${country.color};">
