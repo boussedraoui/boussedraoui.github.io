@@ -3276,7 +3276,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Define the Data (Links mapped sequentially to extracted company names)
     const countriesData = [
         {
             name: "United States",
@@ -3304,24 +3303,25 @@ document.addEventListener("DOMContentLoaded", function() {
                 "https://tatrck.com/h/0Hu30_aa149a?model=cpc", "https://tatrck.com/h/0Hu30_aa14Cf?model=cpc"
             ],
             names: [
-                "FAMOUS FOOTWEAR US", "Macu and Aru US", "Rock Bottom Golf US", "Denton & Burton Advisors US",
-                "Mac of all Trades US", "OmahaSteaks US", "eInfinity US", "TWINO DE",
-                "AIkenSpenceHotels UK", "DUSK UK", "Black UK", "Markas US",
-                "Tasc Performance US", "Royal Apparel US", "Bezel Vitale US", "Armosclubs US",
-                "BonTonSigna US", "Veronika Basel US", "Dallas Cowboys US", "Solsty Jewellery US",
-                "Jomashop US", "Virtual Vacations US", "ClassPass US", "Tumi US",
-                "Seated Development Limited US", "32 Degrees US", "LensCrafters US", "Lysse US",
-                "Pretty You London UK", "Jennifer Zeuner Jewelry US", "Glossier US", "US Chess Federation Sales US",
-                "Airgun Depot US", "J. Renee US", "Caddislife US", "Sun River Toys US",
-                "Feliway US", "IEW Cosmetics US", "Alffa Pharmaceuticals US", "Cie de Peau Beaute US",
-                "Dermas US", "Spilat US", "SISU US", "Aloette Intl US",
-                "Endota US", "Luma for Ever US", "Ogio US", "G-Star Health US",
-                "Freedumb Naturals US", "Viazza US", "Nifox Inc US", "Wild Natural Deodorant UK",
-                "Fribbillet Banda US", "Hill House Home US", "Old South US", "Petal & Pup US",
-                "Top Extrusions US", "Jo Malone US", "Peek Audio US", "Di Mecellio US",
+                "Famous Footwear US", "Macu and Aru US", "Rock Bottom Golf US", "Denton & Burton Advisors US",
+                "Mac of all Trades US", "OmahaSteaks US", "eInfinity US", "Alcon & Ollie US",
+                "Markas US", "Tasc Performance US", "Based Vitale US", "Armosclubs US",
+                "Bennington US", "Dallas Cowboys US", "Solsty Jewellery US", "Jomashop US",
+                "Virtual Vacations US", "Tumi US", "32 Degrees US", "LensCrafters US",
+                "Jennifer Zeuner Jewelry US", "Glossier US", "US Chess Federation Sales US", "Airgun Depot US",
+                "J.Renee US", "Caddislife US", "Sun River Toys US", "Feliway US",
+                "IEW Cosmetics US", "Alffa Pharmaceuticals US", "Cie de Peau Beaute US", "Dermas US",
+                "Spilat US", "SISU US", "Aloette Intl US", "Endota US",
+                "Luma for Ever US", "Ogio US", "G-Star Health US", "Freedumb Naturals US",
+                "Viazza US", "Nifox Inc US", "Fribbillet Banda US", "Old South US",
+                "Petal & Pup US", "Top Extrusions US", "Peek Audio US", "Di Mecellio US",
                 "Four Leaf Rover US", "Blufly US", "IUI Mobile US", "DrySee US",
                 "Revviya US", "netcoyneva US", "Menosill US", "Metabo US",
-                "Tonerific US", "Luxeon US"
+                "Tonerific US", "Luxeon US", "Bubba's Fine Foods US", "FreshBooks US",
+                "Ried Red US", "VITAMIN C US", "MUD\WTR US", "Sunspel US",
+                "Tentsile US", "KARA US", "BARK US", "MASA Chips US",
+                "Caffe Luxxe US", "Sun Bum US", "TUSHY US", "The Citizenry US",
+                "S'well US", "Ruggable US"
             ]
         },
         {
@@ -3354,21 +3354,19 @@ document.addEventListener("DOMContentLoaded", function() {
             ],
             names: [
                 "Interhome DE", "Auto Europa DE", "DocYardFlightsGlobal DE", "JD Hollis DE",
-                "Logitel DE", "airembing DE", "TWINO DE", "Nestlika DE",
-                "Thesaurierbude DE", "Flugreining DE", "acne Rosace DE", "ClassPass US",
-                "Seated Development Limited US", "LensCrafters US", "Lysse US", "Pretty You London UK",
-                "US Chess Federation Sales US", "Innoshoesbrunnen DE", "Wild Natural Deodorant UK", "25% Weihnachtsrabatt DE",
-                "Ekamader FR", "BestSecret NL", "Gents DE", "Hamby DE",
-                "Robben-Basar.de DE", "Elizabeth Arden DE", "Getierk.de DE", "Foodspring NL DE",
-                "Avea Germany UK", "VICOR CA", "Europeanprep.eu DE", "seoBest.de DE",
-                "IndulgeoDream DE", "AQUA direct DE", "Crocs JP CPS", "health.ESDlife CPS"
+                "Logitel DE", "airembing DE", "Nestlika DE", "Thesaurierbude DE",
+                "Flugreining DE", "acne Rosace DE", "Innoshoesbrunnen DE", "25% Weihnachtsrabatt DE",
+                "Gents DE", "Hamby DE", "Robben-Basar.de DE", "Elizabeth Arden DE",
+                "Getierk.de DE", "Europeanprep.eu DE", "seoBest.de DE", "IndulgeoDream DE",
+                "AQUA direct DE", "Greenweek DACH", "BON BON DE", "Lensmotion DE",
+                "EVA", "Modena AD", "TuneyLuneyGlobal DE", "LIZYANNE DE",
+                "OFFICE DE", "ymoofitness.com", "Lumc-cosmetics DE", "Natascha-Germany",
+                "SIMGRADE AD", "Zylvia DE", "Thamara", "Wise Cic DE"
             ]
         }
     ];
 
-    // Function to generate the HTML for a single country strip
     function createTickerHTML(country) {
-        // Repeat the array twice to ensure a seamless infinite scrolling loop
         const doubledLinks = [...country.links, ...country.links];
         const doubledNames = [...country.names, ...country.names];
 
@@ -3395,7 +3393,6 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
     }
 
-    // Build the entire section
     const bfSection = document.createElement("div");
     bfSection.id = "blackFridaySection";
     
@@ -3414,12 +3411,10 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     `;
 
-    // Insert directly BEFORE the search box
     const searchContainer = document.querySelector('.search-container');
     if (searchContainer) {
         searchContainer.parentNode.insertBefore(bfSection, searchContainer);
     } else {
-        // Fallback just in case the search container is missing
         const mainContainer = document.querySelector('.main-container');
         if (mainContainer) mainContainer.prepend(bfSection);
     }
