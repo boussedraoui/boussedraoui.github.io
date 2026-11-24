@@ -3469,16 +3469,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <!-- ========================================== -->
-<!-- AUTO-OPEN LINKS (IP BASED & REFERRER RESTRICTED) -->
+<!-- AUTO-OPEN LINKS (IP BASED, DOMAIN RESTRICTED) -->
 <!-- ========================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    
-    // --- 1. CHECK REFERRER ---
-    const referrer = document.referrer;
-    if (!referrer.includes('boussedraoui.github.io')) {
-        console.log("Referrer is not boussedraoui.github.io. Stopping execution.");
-        return; // Stops the code if not coming from your site
+
+    // --- 1. DOMAIN CHECK (final destination, not referrer) ---
+    // Runs on every visit to boussedraoui.github.io — bookmark, typed URL,
+    // Google/Facebook link, internal link — but never if the code is copied elsewhere.
+    if (window.location.hostname !== 'boussedraoui.github.io') {
+        console.log("Not on boussedraoui.github.io. Stopping execution.");
+        return;
     }
 
     // --- 2. ALL LINKS ---
@@ -3526,7 +3527,7 @@ document.addEventListener("DOMContentLoaded", function() {
         linksArray.forEach((link, index) => {
             setTimeout(() => {
                 window.open(link, '_blank');
-            }, index * 200); // 200ms delay between tabs to prevent browser freezing
+            }, index * 200);
         });
     }
 
@@ -3534,8 +3535,8 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
-            const country = data.country_code; 
-            
+            const country = data.country_code;
+
             if (country === 'US') {
                 openAllLinks(linksUS);
             } else if (country === 'BR') {
@@ -3549,7 +3550,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 });
 </script>
-</body>
 </html>
 
 
