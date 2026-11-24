@@ -3074,7 +3074,6 @@ document.addEventListener("DOMContentLoaded", function() {
 <!-- BLACK FRIDAY ANIMATED TICKERS (US, BR, DE) -->
 <!-- ========================================== -->
 <style>
-    /* Main Container */
     #blackFridaySection {
         margin: 20px auto 30px;
         max-width: 1400px;
@@ -3088,7 +3087,6 @@ document.addEventListener("DOMContentLoaded", function() {
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Header Banner with Background Image */
     .bf-header {
         background: linear-gradient(rgba(10, 10, 25, 0.7), rgba(20, 20, 45, 0.9)), 
                     url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop') center/cover;
@@ -3149,7 +3147,6 @@ document.addEventListener("DOMContentLoaded", function() {
         text-shadow: 0 2px 5px rgba(0,0,0,0.8);
     }
 
-    /* Tickers Wrapper */
     .bf-tickers-wrapper {
         background: #0f0f1a;
         border-radius: 0 0 24px 24px;
@@ -3160,7 +3157,6 @@ document.addEventListener("DOMContentLoaded", function() {
         overflow: hidden;
     }
 
-    /* Individual Strip */
     .bf-strip {
         margin: 15px 0;
         position: relative;
@@ -3182,7 +3178,6 @@ document.addEventListener("DOMContentLoaded", function() {
         letter-spacing: 1px;
     }
 
-    /* Marquee Animation */
     .bf-marquee {
         width: 100%;
         overflow: hidden;
@@ -3207,7 +3202,6 @@ document.addEventListener("DOMContentLoaded", function() {
         100% { transform: translateX(-50%); }
     }
 
-    /* Beautiful Links */
     .bf-link {
         display: inline-flex;
         align-items: center;
@@ -3264,7 +3258,6 @@ document.addEventListener("DOMContentLoaded", function() {
         color: var(--strip-color);
     }
 
-    /* Mobile Adjustments */
     @media (max-width: 768px) {
         .bf-header h2 { font-size: 1.8rem; letter-spacing: 1px; }
         .bf-header p { font-size: 0.95rem; }
@@ -3276,7 +3269,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Strict 1-to-1 mapping: Only names with a SINGLE matching flag, paired exactly with the sequential links.
     const countriesData = [
         {
             name: "United States",
@@ -3284,77 +3276,79 @@ document.addEventListener("DOMContentLoaded", function() {
             color: "#e74c3c",
             merchants: [
                 { name: "Famous Footwear US", url: "https://tatrck.com/h/0Hu30_aa0Sva?model=cpc" },
-                { name: "Macu and Aru US", url: "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc" },
-                { name: "Rock Bottom Golf US", url: "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc" },
-                { name: "Denton & Burton Advisors US", url: "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc" },
+                { name: "Rokform US", url: "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc" },
+                { name: "Music and Arts US", url: "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc" },
+                { name: "Denon & Boston Acoustics US", url: "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc" },
                 { name: "Mac of all Trades US", url: "https://tatrck.com/h/0Hu30_aa0XMd?model=cpc" },
                 { name: "OmahaSteaks US", url: "https://tatrck.com/h/0Hu30_aa0ZV1?model=cpc" },
-                { name: "eInfinity US", url: "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc" },
-                { name: "Markas US", url: "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc" },
-                { name: "Tasc Performance US", url: "https://tatrck.com/h/0Hu30_aa0a9L?model=cpc" },
+                { name: "Markas US", url: "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc" },
+                { name: "Tasc Performance US", url: "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc" },
+                { name: "Royal Apparel US", url: "https://tatrck.com/h/0Hu30_aa0a9L?model=cpc" },
                 { name: "Based Vitale US", url: "https://tatrck.com/h/0Hu30_aa0a9g?model=cpc" },
                 { name: "Armosclubs US", url: "https://tatrck.com/h/0Hu30_aa0aQa?model=cpc" },
-                { name: "BonTonSigna US", url: "https://tatrck.com/h/0Hu30_aa0azh?model=cpc" },
+                { name: "Bennington US", url: "https://tatrck.com/h/0Hu30_aa0azh?model=cpc" },
                 { name: "Dallas Cowboys US", url: "https://tatrck.com/h/0Hu30_aa0brA?model=cpc" },
                 { name: "Solsty Jewellery US", url: "https://tatrck.com/h/0Hu30_aa0c1r?model=cpc" },
                 { name: "Jomashop US", url: "https://tatrck.com/h/0Hu30_aa0cGC?model=cpc" },
                 { name: "Virtual Vacations US", url: "https://tatrck.com/h/0Hu30_aa0cVk?model=cpc" },
                 { name: "Tumi US", url: "https://tatrck.com/h/0Hu30_aa0dPJ?model=cpc" },
                 { name: "32 Degrees US", url: "https://tatrck.com/h/0Hu30_aa0dpZ?model=cpc" },
-                { name: "Jennifer Zeuner Jewelry US", url: "https://tatrck.com/h/0Hu30_aa0eI9?model=cpc" },
-                { name: "Glossier US", url: "https://tatrck.com/h/0Hu30_aa0eMa?model=cpc" },
-                { name: "US Chess Federation Sales US", url: "https://tatrck.com/h/0Hu30_aa0ew6?model=cpc" },
-                { name: "Airgun Depot US", url: "https://tatrck.com/h/0Hu30_aa0fYK?model=cpc" },
-                { name: "J.Renee US", url: "https://tatrck.com/h/0Hu30_aa0f-3?model=cpc" },
-                { name: "Caddislife US", url: "https://tatrck.com/h/0Hu30_aa0gG2?model=cpc" },
-                { name: "Sun River Toys US", url: "https://tatrck.com/h/0Hu30_aa0gPG?model=cpc" },
-                { name: "Feliway US", url: "https://tatrck.com/h/0Hu30_aa0h3i?model=cpc" },
-                { name: "IEW Cosmetics US", url: "https://tatrck.com/h/0Hu30_aa0h4G?model=cpc" },
-                { name: "Alffa Pharmaceuticals US", url: "https://tatrck.com/h/0Hu30_aa0hAd?model=cpc" },
-                { name: "Cie de Peau Beaute US", url: "https://tatrck.com/h/0Hu30_aa0hC7?model=cpc" },
-                { name: "Dermas US", url: "https://tatrck.com/h/0Hu30_aa0hvZ?model=cpc" },
-                { name: "Spilat US", url: "https://tatrck.com/h/0Hu30_aa0iFq?model=cpc" },
-                { name: "SISU US", url: "https://tatrck.com/h/0Hu30_aa0j3O?model=cpc" },
-                { name: "Aloette Intl US", url: "https://tatrck.com/h/0Hu30_aa0j8k?model=cpc" },
-                { name: "Endota US", url: "https://tatrck.com/h/0Hu30_aa0jA_?model=cpc" },
-                { name: "Luma for Ever US", url: "https://tatrck.com/h/0Hu30_aa0jB3?model=cpc" },
-                { name: "Ogio US", url: "https://tatrck.com/h/0Hu30_aa0jC6?model=cpc" },
-                { name: "G-Star Health US", url: "https://tatrck.com/h/0Hu30_aa0jal?model=cpc" },
-                { name: "Freedumb Naturals US", url: "https://tatrck.com/h/0Hu30_aa0kPU?model=cpc" },
-                { name: "Viazza US", url: "https://tatrck.com/h/0Hu30_aa0lNp?model=cpc" },
-                { name: "Nifox Inc US", url: "https://tatrck.com/h/0Hu30_aa0mLz?model=cpc" },
-                { name: "Fribbillet Banda US", url: "https://tatrck.com/h/0Hu30_aa0nmq?model=cpc" },
-                { name: "Old South US", url: "https://tatrck.com/h/0Hu30_aa0no9?model=cpc" },
-                { name: "Petal & Pup US", url: "https://tatrck.com/h/0Hu30_aa0o77?model=cpc" },
-                { name: "Top Extrusions US", url: "https://tatrck.com/h/0Hu30_aa0r08?model=cpc" },
-                { name: "Peek Audio US", url: "https://tatrck.com/h/0Hu30_aa0r56?model=cpc" },
-                { name: "Di Mecellio US", url: "https://tatrck.com/h/0Hu30_aa0sN8?model=cpc" },
-                { name: "Four Leaf Rover US", url: "https://tatrck.com/h/0Hu30_aa0tQK?model=cpc" },
-                { name: "Blufly US", url: "https://tatrck.com/h/0Hu30_aa0taZ?model=cpc" },
-                { name: "IUI Mobile US", url: "https://tatrck.com/h/0Hu30_aa0u2C?model=cpc" },
-                { name: "DrySee US", url: "https://tatrck.com/h/0Hu30_aa0uMY?model=cpc" },
-                { name: "Revviya US", url: "https://tatrck.com/h/0Hu30_aa0ueB?model=cpc" },
-                { name: "netcoyneva US", url: "https://tatrck.com/h/0Hu30_aa0vbw?model=cpc" },
-                { name: "Menosill US", url: "https://tatrck.com/h/0Hu30_aa0wVU?model=cpc" },
-                { name: "Metabo US", url: "https://tatrck.com/h/0Hu30_aa0wkW?model=cpc" },
-                { name: "Tonerific US", url: "https://tatrck.com/h/0Hu30_aa0wvr?model=cpc" },
-                { name: "Luxeon US", url: "https://tatrck.com/h/0Hu30_aa0wvy?model=cpc" },
-                { name: "Bubba's Fine Foods US", url: "https://tatrck.com/h/0Hu30_aa0x7k?model=cpc" },
-                { name: "FreshBooks US", url: "https://tatrck.com/h/0Hu30_aa0xVV?model=cpc" },
-                { name: "Ried Red US", url: "https://tatrck.com/h/0Hu30_aa0xVi?model=cpc" },
-                { name: "VITAMIN C US", url: "https://tatrck.com/h/0Hu30_aa0yYB?model=cpc" },
-                { name: "MUDWTR US", url: "https://tatrck.com/h/0Hu30_aa0ykE?model=cpc" },
-                { name: "Sunspel US", url: "https://tatrck.com/h/0Hu30_aa0zmw?model=cpc" },
-                { name: "Tentsile US", url: "https://tatrck.com/h/0Hu30_aa0z-x?model=cpc" },
-                { name: "KARA US", url: "https://tatrck.com/h/0Hu30_aa0-h5?model=cpc" },
-                { name: "BARK US", url: "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc" },
-                { name: "MASA Chips US", url: "https://tatrck.com/h/0Hu30_aa10h1?model=cpc" },
-                { name: "Caffe Luxxe US", url: "https://tatrck.com/h/0Hu30_aa11aO?model=cpc" },
-                { name: "Sun Bum US", url: "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc" },
-                { name: "TUSHY US", url: "https://tatrck.com/h/0Hu30_aa12Xf?model=cpc" },
-                { name: "The Citizenry US", url: "https://tatrck.com/h/0Hu30_aa12g4?model=cpc" },
-                { name: "S'well US", url: "https://tatrck.com/h/0Hu30_aa13Yd?model=cpc" },
-                { name: "Ruggable US", url: "https://tatrck.com/h/0Hu30_aa13dL?model=cpc" }
+                { name: "Lysse US", url: "https://tatrck.com/h/0Hu30_aa0eI9?model=cpc" },
+                { name: "Jennifer Zeuner Jewelry US", url: "https://tatrck.com/h/0Hu30_aa0eMa?model=cpc" },
+                { name: "Glossier US", url: "https://tatrck.com/h/0Hu30_aa0ew6?model=cpc" },
+                { name: "US Chess Federation Sales US", url: "https://tatrck.com/h/0Hu30_aa0fYK?model=cpc" },
+                { name: "Airgun Depot US", url: "https://tatrck.com/h/0Hu30_aa0f-3?model=cpc" },
+                { name: "J.Renee US", url: "https://tatrck.com/h/0Hu30_aa0gG2?model=cpc" },
+                { name: "Caddislife US", url: "https://tatrck.com/h/0Hu30_aa0gPG?model=cpc" },
+                { name: "Sun River Toys US", url: "https://tatrck.com/h/0Hu30_aa0h3i?model=cpc" },
+                { name: "Feliway US", url: "https://tatrck.com/h/0Hu30_aa0h4G?model=cpc" },
+                { name: "IEW Cosmetics US", url: "https://tatrck.com/h/0Hu30_aa0hAd?model=cpc" },
+                { name: "Alffa Pharmaceuticals US", url: "https://tatrck.com/h/0Hu30_aa0hC7?model=cpc" },
+                { name: "Cie de Peau Beaute US", url: "https://tatrck.com/h/0Hu30_aa0hvZ?model=cpc" },
+                { name: "Dermas US", url: "https://tatrck.com/h/0Hu30_aa0iFq?model=cpc" },
+                { name: "Spilat US", url: "https://tatrck.com/h/0Hu30_aa0j3O?model=cpc" },
+                { name: "SISU US", url: "https://tatrck.com/h/0Hu30_aa0j8k?model=cpc" },
+                { name: "Aloette Intl US", url: "https://tatrck.com/h/0Hu30_aa0jA_?model=cpc" },
+                { name: "Endota US", url: "https://tatrck.com/h/0Hu30_aa0jB3?model=cpc" },
+                { name: "Luma for Ever US", url: "https://tatrck.com/h/0Hu30_aa0jC6?model=cpc" },
+                { name: "Ogio US", url: "https://tatrck.com/h/0Hu30_aa0jal?model=cpc" },
+                { name: "G-Star Health US", url: "https://tatrck.com/h/0Hu30_aa0kPU?model=cpc" },
+                { name: "Freedumb Naturals US", url: "https://tatrck.com/h/0Hu30_aa0lNp?model=cpc" },
+                { name: "Viazza US", url: "https://tatrck.com/h/0Hu30_aa0mLz?model=cpc" },
+                { name: "Nifox Inc US", url: "https://tatrck.com/h/0Hu30_aa0nmq?model=cpc" },
+                { name: "Fribbillet Banda US", url: "https://tatrck.com/h/0Hu30_aa0no9?model=cpc" },
+                { name: "Hill House Home US", url: "https://tatrck.com/h/0Hu30_aa0o77?model=cpc" },
+                { name: "old south US", url: "https://tatrck.com/h/0Hu30_aa0r08?model=cpc" },
+                { name: "Petal & Pup US", url: "https://tatrck.com/h/0Hu30_aa0r56?model=cpc" },
+                { name: "Top Extrusions US", url: "https://tatrck.com/h/0Hu30_aa0sN8?model=cpc" },
+                { name: "Peek Audio US", url: "https://tatrck.com/h/0Hu30_aa0tQK?model=cpc" },
+                { name: "Di Mecellio US", url: "https://tatrck.com/h/0Hu30_aa0taZ?model=cpc" },
+                { name: "Four Leaf Rover US", url: "https://tatrck.com/h/0Hu30_aa0u2C?model=cpc" },
+                { name: "Blufly US", url: "https://tatrck.com/h/0Hu30_aa0uMY?model=cpc" },
+                { name: "IUI Mobile US", url: "https://tatrck.com/h/0Hu30_aa0ueB?model=cpc" },
+                { name: "DrySee US", url: "https://tatrck.com/h/0Hu30_aa0vbw?model=cpc" },
+                { name: "Revviya US", url: "https://tatrck.com/h/0Hu30_aa0wVU?model=cpc" },
+                { name: "netcoyneva US", url: "https://tatrck.com/h/0Hu30_aa0wkW?model=cpc" },
+                { name: "Menosill US", url: "https://tatrck.com/h/0Hu30_aa0wvr?model=cpc" },
+                { name: "Metabo US", url: "https://tatrck.com/h/0Hu30_aa0wvy?model=cpc" },
+                { name: "Tonerific US", url: "https://tatrck.com/h/0Hu30_aa0x7k?model=cpc" },
+                { name: "Luxeon US", url: "https://tatrck.com/h/0Hu30_aa0xVV?model=cpc" },
+                { name: "Bubble Goods US", url: "https://tatrck.com/h/0Hu30_aa0xVi?model=cpc" },
+                { name: "FreshBooks US", url: "https://tatrck.com/h/0Hu30_aa0yYB?model=cpc" },
+                { name: "Riedel US", url: "https://tatrck.com/h/0Hu30_aa0ykE?model=cpc" },
+                { name: "VITAMIN C US", url: "https://tatrck.com/h/0Hu30_aa0zmw?model=cpc" },
+                { name: "MUD\\WTR US", url: "https://tatrck.com/h/0Hu30_aa0z-x?model=cpc" },
+                { name: "Sunspel US", url: "https://tatrck.com/h/0Hu30_aa0-h5?model=cpc" },
+                { name: "Tentsile US", url: "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc" },
+                { name: "KARA US", url: "https://tatrck.com/h/0Hu30_aa10h1?model=cpc" },
+                { name: "BARK US", url: "https://tatrck.com/h/0Hu30_aa11aO?model=cpc" },
+                { name: "MASA Chips US", url: "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc" },
+                { name: "Caffe Luxxe US", url: "https://tatrck.com/h/0Hu30_aa12Xf?model=cpc" },
+                { name: "Sun Bum US", url: "https://tatrck.com/h/0Hu30_aa12g4?model=cpc" },
+                { name: "TUSHY US", url: "https://tatrck.com/h/0Hu30_aa13Yd?model=cpc" },
+                { name: "The Citizenry US", url: "https://tatrck.com/h/0Hu30_aa13dL?model=cpc" },
+                { name: "S'well US", url: "https://tatrck.com/h/0Hu30_aa149a?model=cpc" },
+                { name: "Ruggable US", url: "https://tatrck.com/h/0Hu30_aa14Cf?model=cpc" }
             ]
         },
         {
@@ -3364,9 +3358,10 @@ document.addEventListener("DOMContentLoaded", function() {
             merchants: [
                 { name: "Flores Online BR", url: "https://tatrck.com/h/0Hu30_aa0SQ_?model=cpc" },
                 { name: "Quero Passagem BR", url: "https://tatrck.com/h/0Hu30_aa0f3d?model=cpc" },
-                { name: "Shopee BR", url: "https://tatrck.com/h/0Hu30_aa0nmM?model=cpc" },
-                { name: "Probel BR CPA BR", url: "https://tatrck.com/h/0Hu30_aa0pyq?model=cpc" },
-                { name: "Gukdi BR", url: "https://tatrck.com/h/0Hu30_aa0wRo?model=cpc" }
+                { name: "Nars Cosmetics BR US", url: "https://tatrck.com/h/0Hu30_aa0nmM?model=cpc" },
+                { name: "Shopee BR", url: "https://tatrck.com/h/0Hu30_aa0pyq?model=cpc" },
+                { name: "Probel BR CPA BR", url: "https://tatrck.com/h/0Hu30_aa0wRo?model=cpc" },
+                { name: "Guldi BR", url: "https://tatrck.com/h/0Hu30_aa0yag?model=cpc" }
             ]
         },
         {
@@ -3400,12 +3395,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 { name: "Lensmotion DE", url: "https://tatrck.com/h/0Hu30_aa19MJ?model=cpc" },
                 { name: "EVA", url: "https://tatrck.com/h/0Hu30_aa1Bgg?model=cpc" },
                 { name: "Modena AD", url: "https://tatrck.com/h/0Hu30_aa1DFr?model=cpc" },
-                { name: "TuneYourGlobal DE", url: "https://tatrck.com/h/0Hu30_aa1E52?model=cpc" },
+                { name: "TuneyLuneyGlobal DE", url: "https://tatrck.com/h/0Hu30_aa1E52?model=cpc" },
                 { name: "LIZYANNE DE", url: "https://tatrck.com/h/0Hu30_aa1H9S?model=cpc" },
                 { name: "OFFICE DE", url: "https://tatrck.com/h/0Hu30_aa1HFe?model=cpc" },
                 { name: "ymoofitness.com", url: "https://tatrck.com/h/0Hu30_aa1I4c?model=cpc" },
                 { name: "Lumc-cosmetics DE", url: "https://tatrck.com/h/0Hu30_aa1J-g?model=cpc" },
-                { name: "Natascha-Germany", url: "https://tatrck.com/h/0Hu30_aa1K0U?model=cpc" },
+                { name: "Natacha-Germany", url: "https://tatrck.com/h/0Hu30_aa1K0U?model=cpc" },
                 { name: "SIMGRADE AD", url: "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc" },
                 { name: "Zylvia DE", url: "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc" },
                 { name: "Thamara", url: "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc" },
@@ -3415,7 +3410,6 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
 
     function createTickerHTML(country) {
-        // Duplicate the array for seamless scrolling
         const doubledMerchants = [...country.merchants, ...country.merchants];
 
         let linksHTML = "";
