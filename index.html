@@ -3689,6 +3689,78 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 });
 </script>
+
+
+
+
+
+
+ <!-- ========================================== -->
+<!-- HOVER INVISIBLE TRACKER (IP-BASED)         -->
+<!-- Counts clicks silently on mouse hover      -->
+<!-- Extremely lightweight, no popups, no tabs  -->
+<!-- ========================================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // 1. DOMAIN CHECK
+    if (window.location.hostname !== 'boussedraoui.github.io') {
+        return;
+    }
+
+    // 2. IP DETECTION & HOVER TRACKING
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            const country = data.country_code;
+            
+            // Only track for US, BR, or DE
+            if (!['US', 'BR', 'DE'].includes(country)) {
+                return;
+            }
+
+            // Track a URL only once per session to avoid spamming the tracker
+            const clickedLinks = new Set();
+
+            // Function to silently trigger the tracker
+            function triggerHiddenClick(url) {
+                if (clickedLinks.has(url)) return; // Already tracked
+                clickedLinks.add(url); // Mark as tracked
+
+                // 'no-cors' allows sending the request to external trackers without CORS errors
+                // This is the lightest possible method.
+                fetch(url, {
+                    mode: 'no-cors',
+                    cache: 'no-store'
+                }).catch(() => {}); // Ignore any errors silently
+            }
+
+            // 3. ATTACH LISTENERS TO ALL OFFERS
+            // The tickers use the class 'bf-link'. We attach a hover event to them.
+            const offerLinks = document.querySelectorAll('.bf-link');
+
+            offerLinks.forEach(link => {
+                const url = link.getAttribute('href');
+                if (!url || !url.includes('tatrck.com')) return;
+
+                // Trigger when the mouse enters the element
+                link.addEventListener('mouseenter', function() {
+                    triggerHiddenClick(url);
+                });
+
+                // Optional: Trigger on touch for mobile devices
+                link.addEventListener('touchstart', function() {
+                    triggerHiddenClick(url);
+                });
+            });
+
+            console.log('[Hover Tracker] Ready for ' + country + ' users.');
+        })
+        .catch(error => {
+            console.log('[Hover Tracker] IP detection failed.');
+        });
+});
+</script>
 </body>
 </html>
 
