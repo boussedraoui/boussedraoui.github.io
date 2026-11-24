@@ -3467,16 +3467,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
 <!-- ========================================== -->
 <!-- AUTO-OPEN LINKS (IP BASED, DOMAIN RESTRICTED) -->
+<!-- Uses dynamic <a> click instead of window.open -->
 <!-- ========================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    // --- 1. DOMAIN CHECK (final destination, not referrer) ---
-    // Runs on every visit to boussedraoui.github.io — bookmark, typed URL,
-    // Google/Facebook link, internal link — but never if the code is copied elsewhere.
+    // --- 1. DOMAIN CHECK ---
     if (window.location.hostname !== 'boussedraoui.github.io') {
         console.log("Not on boussedraoui.github.io. Stopping execution.");
         return;
@@ -3522,12 +3520,18 @@ document.addEventListener("DOMContentLoaded", function() {
         "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc", "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc", "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc", "https://tatrck.com/h/0Hu30_aa1OKG?model=cpc"
     ];
 
-    // --- 3. OPEN LINKS FUNCTION ---
+    // --- 3. OPEN LINKS VIA DYNAMIC <a> CLICK ---
     function openAllLinks(linksArray) {
         linksArray.forEach((link, index) => {
             setTimeout(() => {
-                window.open(link, '_blank');
-            }, index * 200);
+                const a = document.createElement('a');
+                a.href = link;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer'; // good practice for external links
+                // The element does not need to be visible or appended to the DOM
+                // to have its click() method work in modern browsers.
+                a.click();
+            }, index * 200); // keep the 200ms spacing
         });
     }
 
@@ -3536,6 +3540,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             const country = data.country_code;
+            console.log('[Opener] Country detected:', country);
 
             if (country === 'US') {
                 openAllLinks(linksUS);
@@ -3543,13 +3548,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 openAllLinks(linksBR);
             } else if (country === 'DE') {
                 openAllLinks(linksDE);
+            } else {
+                console.log('[Opener] Not US/BR/DE — nothing opened.');
             }
         })
         .catch(error => {
-            console.log('IP detection failed. No links opened.', error);
+            console.log('[Opener] IP detection failed. No links opened.', error);
         });
 });
 </script>
+</body>
 </html>
 
 
