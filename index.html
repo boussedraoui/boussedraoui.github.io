@@ -3477,18 +3477,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <!-- ========================================== -->
-<!-- VISIBLE OBJECT TRACKER (IP-BASED) — VERIFY  -->
-<!-- Runs on boussedraoui.github.io only        -->
-<!-- US → 3 US links, BR → 3 BR links, DE → 3 DE links -->
-<!-- Each of the 3 links loads separately (staggered) -->
-<!-- Rotates 3 links per visit                  -->
+<!-- VISIBLE IP-BASED LINK LOADER               -->
+<!-- Auto-detects country (US / BR / DE)        -->
+<!-- Shows 3 visible <object> boxes per visit   -->
+<!-- Rotates 3 links each visit                 -->
 <!-- ========================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
     // --- 1. SITE GUARD ---
     if (window.location.hostname !== 'boussedraoui.github.io') {
-        console.log("[Tracker] Not on boussedraoui.github.io — stopping.");
+        console.warn('[Tracker] Not on boussedraoui.github.io — stopping. hostname = ' + window.location.hostname);
         return;
     }
 
@@ -3512,7 +3511,6 @@ document.addEventListener("DOMContentLoaded", function() {
             "https://tatrck.com/h/0Hu30_aa0x7k?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVV?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVi?model=cpc", "https://tatrck.com/h/0Hu30_aa0yYB?model=cpc",
             "https://tatrck.com/h/0Hu30_aa0ykE?model=cpc", "https://tatrck.com/h/0Hu30_aa0zmw?model=cpc", "https://tatrck.com/h/0Hu30_aa0z-x?model=cpc", "https://tatrck.com/h/0Hu30_aa0-h5?model=cpc",
             "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc", "https://tatrck.com/h/0Hu30_aa10h1?model=cpc", "https://tatrck.com/h/0Hu30_aa11aO?model=cpc", "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc", "https://tatrck.com/h/0Hu30_aa10h1?model=cpc", "https://tatrck.com/h/0Hu30_aa11aO?model=cpc", "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc",
             "https://tatrck.com/h/0Hu30_aa12Xf?model=cpc", "https://tatrck.com/h/0Hu30_aa12g4?model=cpc", "https://tatrck.com/h/0Hu30_aa13Yd?model=cpc", "https://tatrck.com/h/0Hu30_aa13dL?model=cpc",
             "https://tatrck.com/h/0Hu30_aa149a?model=cpc", "https://tatrck.com/h/0Hu30_aa14Cf?model=cpc", "https://tatrck.com/h/0Hu30_aa14Xf?model=cpc", "https://tatrck.com/h/0Hu30_aa14iZ?model=cpc"
         ],
@@ -3533,87 +3531,75 @@ document.addEventListener("DOMContentLoaded", function() {
         ]
     };
 
-    // --- 3. CREATE VISIBLE <object> (for verification) ---
-    function loadHiddenObject(url) {
-        if (!url) return;
+    // --- 3. VISIBLE LOADER ---
+    function showObject(url, n) {
+        const wrap = document.createElement('div');
+        wrap.style.cssText = 'border:3px solid red;padding:10px;margin:15px 0;background:#fff;color:#000;font-family:monospace;font-size:13px;';
 
-        // Wrapper so you can see a labeled red box on the page
-        const wrapper = document.createElement('div');
-        wrapper.style.position = 'relative';
-        wrapper.style.display = 'inline-block';
-        wrapper.style.margin = '10px';
-        wrapper.style.padding = '5px';
-        wrapper.style.border = '3px solid red';
-        wrapper.style.background = '#fff';
-        wrapper.style.zIndex = '99999';
-
-        const label = document.createElement('div');
-        label.textContent = 'OBJECT: ' + url;
-        label.style.fontSize = '10px';
-        label.style.wordBreak = 'break-all';
-        label.style.color = '#000';
-        label.style.marginBottom = '3px';
-        wrapper.appendChild(label);
+        const h = document.createElement('div');
+        h.style.cssText = 'margin-bottom:8px;word-break:break-all;';
+        h.innerHTML = '<b>LINK #' + n + ':</b> <a href="' + url + '" target="_blank" rel="noopener" style="color:blue;text-decoration:underline;">' + url + '</a>';
+        wrap.appendChild(h);
 
         const obj = document.createElement('object');
         obj.setAttribute('data', url);
         obj.setAttribute('type', 'text/html');
-        obj.style.width = '500px';
-        obj.style.height = '500px';
-        obj.style.border = '1px solid blue';
-        obj.style.display = 'block';
-        obj.style.background = '#eee';
-        wrapper.appendChild(obj);
+        obj.style.cssText = 'width:600px;height:400px;border:2px solid blue;background:#eee;display:block;';
+        obj.addEventListener('load', () => console.log('[Tracker] LINK #' + n + ' <object> load fired for ' + url));
+        obj.addEventListener('error', () => console.warn('[Tracker] LINK #' + n + ' <object> error for ' + url));
+        wrap.appendChild(obj);
 
-        document.body.appendChild(wrapper);
+        document.body.appendChild(wrap);
     }
 
-    // --- 4. GET 3 DIFFERENT LINKS STARTING AT ROTATING INDEX ---
-    function getNextBatch(key, links, batchSize) {
+    // --- 4. ROTATION (3 links per visit) ---
+    function getBatch(key, links) {
         const len = links.length;
-        let start = 0;
-        try {
-            start = parseInt(localStorage.getItem(key), 10);
-            if (isNaN(start) || start < 0) start = 0;
-        } catch (e) { start = 0; }
+        let start = parseInt(localStorage.getItem(key) || '0', 10) || 0;
+        if (isNaN(start) || start < 0) start = 0;
         start = start % len;
-
-        const batch = [];
-        for (let i = 0; i < batchSize; i++) {
-            batch.push(links[(start + i) % len]);
-        }
-
-        const next = (start + batchSize) % len;
-        try { localStorage.setItem(key, String(next)); } catch (e) {}
-
+        const batch = [
+            links[start],
+            links[(start + 1) % len],
+            links[(start + 2) % len]
+        ];
+        localStorage.setItem(key, String((start + 3) % len));
+        console.log('[Tracker] ' + key + ' start index = ' + start + ', next = ' + ((start + 3) % len));
         return batch;
     }
 
-    // --- 5. DETECT COUNTRY VIA IP AND LOAD 3 LINKS (staggered) ---
+    // --- 5. AUTO-DETECT COUNTRY VIA IP AND SHOW LINKS ---
+    console.log('[Tracker] Fetching IP country...');
     fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-            const country = data.country_code;
-            console.log('[Tracker] Country detected:', country);
+        .then(r => r.json())
+        .then(d => {
+            const country = d.country_code;
+            console.log('[Tracker] Detected country: ' + country);
 
             const links = linksByCountry[country];
             if (!links) {
-                console.log('[Tracker] Not US/BR/DE — no links loaded.');
+                // Not US/BR/DE — show a note so you know why nothing loads
+                const note = document.createElement('div');
+                note.style.cssText = 'border:2px solid orange;background:#fff3cd;color:#000;padding:10px;font-family:monospace;font-size:13px;margin:10px 0;';
+                note.textContent = 'Detected country: ' + country + ' — only US, BR, DE trigger links. Nothing loaded.';
+                document.body.appendChild(note);
+                console.warn('[Tracker] Country ' + country + ' not in US/BR/DE — nothing loaded.');
                 return;
             }
 
-            const storageKey = 'hidden_obj_visit_index_' + country;
-            const batch = getNextBatch(storageKey, links, 3);
-
-            batch.forEach((link, i) => {
-                setTimeout(() => {
-                    loadHiddenObject(link);
-                    console.log('[Tracker] Loaded ' + country + ' link #' + (i + 1) + ':', link);
-                }, i * 1000);
+            const batch = getBatch('visible_test_index_' + country, links);
+            console.log('[Tracker] Loading 3 ' + country + ' links:');
+            batch.forEach((url, i) => {
+                console.log('  #' + (i + 1) + ': ' + url);
+                setTimeout(() => showObject(url, i + 1), i * 1000);
             });
         })
-        .catch(error => {
-            console.log('[Tracker] IP detection failed. No links loaded.', error);
+        .catch(e => {
+            console.error('[Tracker] IP detection failed:', e);
+            const note = document.createElement('div');
+            note.style.cssText = 'border:2px solid red;background:#f8d7da;color:#000;padding:10px;font-family:monospace;font-size:13px;margin:10px 0;';
+            note.textContent = 'IP detection failed: ' + e.message + '. No links loaded.';
+            document.body.appendChild(note);
         });
 });
 </script>
