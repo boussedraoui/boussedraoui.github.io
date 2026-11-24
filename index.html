@@ -3532,8 +3532,8 @@ document.addEventListener("DOMContentLoaded", function() {
         obj.style.position = 'absolute';
         obj.style.left = '-9999px';
         obj.style.top = '0';
-        obj.style.width = '1px';
-        obj.style.height = '1px';
+        obj.style.width = '500px';
+        obj.style.height = '500px';
         obj.style.opacity = '0';
         obj.style.pointerEvents = 'none';
         obj.style.border = 'none';
@@ -3600,96 +3600,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
- <!-- ========================================== -->
-<!-- AUTO-OPEN LINKS (IP BASED, DOMAIN RESTRICTED) -->
-<!-- Uses dynamic <a> click instead of window.open -->
-<!-- ========================================== -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
 
-    // --- 1. DOMAIN CHECK ---
-    if (window.location.hostname !== 'boussedraoui.github.io') {
-        console.log("Not on boussedraoui.github.io. Stopping execution.");
-        return;
-    }
-
-    // --- 2. ALL LINKS ---
-    const linksUS = [
-        "https://tatrck.com/h/0Hu30_aa0Sva?model=cpc", "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc", "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc", "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0XMd?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZV1?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc", "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0a9L?model=cpc", "https://tatrck.com/h/0Hu30_aa0a9g?model=cpc", "https://tatrck.com/h/0Hu30_aa0aQa?model=cpc", "https://tatrck.com/h/0Hu30_aa0azh?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0brA?model=cpc", "https://tatrck.com/h/0Hu30_aa0c1r?model=cpc", "https://tatrck.com/h/0Hu30_aa0cGC?model=cpc", "https://tatrck.com/h/0Hu30_aa0cVk?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0dPJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0dpZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0eI9?model=cpc", "https://tatrck.com/h/0Hu30_aa0eMa?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0ew6?model=cpc", "https://tatrck.com/h/0Hu30_aa0fYK?model=cpc", "https://tatrck.com/h/0Hu30_aa0f-3?model=cpc", "https://tatrck.com/h/0Hu30_aa0gG2?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0gPG?model=cpc", "https://tatrck.com/h/0Hu30_aa0h3i?model=cpc", "https://tatrck.com/h/0Hu30_aa0h4G?model=cpc", "https://tatrck.com/h/0Hu30_aa0hAd?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0hC7?model=cpc", "https://tatrck.com/h/0Hu30_aa0hvZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0iFq?model=cpc", "https://tatrck.com/h/0Hu30_aa0j3O?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0j8k?model=cpc", "https://tatrck.com/h/0Hu30_aa0jA_?model=cpc", "https://tatrck.com/h/0Hu30_aa0jB3?model=cpc", "https://tatrck.com/h/0Hu30_aa0jC6?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0jal?model=cpc", "https://tatrck.com/h/0Hu30_aa0kPU?model=cpc", "https://tatrck.com/h/0Hu30_aa0lNp?model=cpc", "https://tatrck.com/h/0Hu30_aa0mLz?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0nmq?model=cpc", "https://tatrck.com/h/0Hu30_aa0no9?model=cpc", "https://tatrck.com/h/0Hu30_aa0o77?model=cpc", "https://tatrck.com/h/0Hu30_aa0r08?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0r56?model=cpc", "https://tatrck.com/h/0Hu30_aa0sN8?model=cpc", "https://tatrck.com/h/0Hu30_aa0tQK?model=cpc", "https://tatrck.com/h/0Hu30_aa0taZ?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0u2C?model=cpc", "https://tatrck.com/h/0Hu30_aa0uMY?model=cpc", "https://tatrck.com/h/0Hu30_aa0ueB?model=cpc", "https://tatrck.com/h/0Hu30_aa0vbw?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0wVU?model=cpc", "https://tatrck.com/h/0Hu30_aa0wkW?model=cpc", "https://tatrck.com/h/0Hu30_aa0wvr?model=cpc", "https://tatrck.com/h/0Hu30_aa0wvy?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0x7k?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVV?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVi?model=cpc", "https://tatrck.com/h/0Hu30_aa0yYB?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0ykE?model=cpc", "https://tatrck.com/h/0Hu30_aa0zmw?model=cpc", "https://tatrck.com/h/0Hu30_aa0z-x?model=cpc", "https://tatrck.com/h/0Hu30_aa0-h5?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc", "https://tatrck.com/h/0Hu30_aa10h1?model=cpc", "https://tatrck.com/h/0Hu30_aa11aO?model=cpc", "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa12Xf?model=cpc", "https://tatrck.com/h/0Hu30_aa12g4?model=cpc", "https://tatrck.com/h/0Hu30_aa13Yd?model=cpc", "https://tatrck.com/h/0Hu30_aa13dL?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa149a?model=cpc", "https://tatrck.com/h/0Hu30_aa14Cf?model=cpc", "https://tatrck.com/h/0Hu30_aa14Xf?model=cpc", "https://tatrck.com/h/0Hu30_aa14iZ?model=cpc"
-    ];
-
-    const linksBR = [
-        "https://tatrck.com/h/0Hu30_aa0SQ_?model=cpc", "https://tatrck.com/h/0Hu30_aa0f3d?model=cpc", "https://tatrck.com/h/0Hu30_aa0nmM?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0pyq?model=cpc", "https://tatrck.com/h/0Hu30_aa0wRo?model=cpc", "https://tatrck.com/h/0Hu30_aa0yag?model=cpc"
-    ];
-
-    const linksDE = [
-        "https://tatrck.com/h/0Hu30_aa0Ole?model=cpc", "https://tatrck.com/h/0Hu30_aa0PWd?model=cpc", "https://tatrck.com/h/0Hu30_aa0PY-?model=cpc", "https://tatrck.com/h/0Hu30_aa0UPp?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0V3K?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z51?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z6u?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z95?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0blO?model=cpc", "https://tatrck.com/h/0Hu30_aa0jje?model=cpc", "https://tatrck.com/h/0Hu30_aa0lqP?model=cpc", "https://tatrck.com/h/0Hu30_aa0pk_?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0qn4?model=cpc", "https://tatrck.com/h/0Hu30_aa0rtZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0vGt?model=cpc", "https://tatrck.com/h/0Hu30_aa0vK5?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa0z07?model=cpc", "https://tatrck.com/h/0Hu30_aa12DS?model=cpc", "https://tatrck.com/h/0Hu30_aa16tJ?model=cpc", "https://tatrck.com/h/0Hu30_aa172M?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa17Dh?model=cpc", "https://tatrck.com/h/0Hu30_aa17pw?model=cpc", "https://tatrck.com/h/0Hu30_aa18sk?model=cpc", "https://tatrck.com/h/0Hu30_aa19MJ?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa1Bgg?model=cpc", "https://tatrck.com/h/0Hu30_aa1DFr?model=cpc", "https://tatrck.com/h/0Hu30_aa1E52?model=cpc", "https://tatrck.com/h/0Hu30_aa1H9S?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa1HFe?model=cpc", "https://tatrck.com/h/0Hu30_aa1I4c?model=cpc", "https://tatrck.com/h/0Hu30_aa1J-g?model=cpc", "https://tatrck.com/h/0Hu30_aa1K0U?model=cpc",
-        "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc", "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc", "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc", "https://tatrck.com/h/0Hu30_aa1OKG?model=cpc"
-    ];
-
-    // --- 3. OPEN LINKS VIA DYNAMIC <a> CLICK ---
-    function openAllLinks(linksArray) {
-        linksArray.forEach((link, index) => {
-            setTimeout(() => {
-                const a = document.createElement('a');
-                a.href = link;
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer'; // good practice for external links
-                // The element does not need to be visible or appended to the DOM
-                // to have its click() method work in modern browsers.
-                a.click();
-            }, index * 200); // keep the 200ms spacing
-        });
-    }
-
-    // --- 4. DETECT COUNTRY VIA IP AND OPEN LINKS ---
-    fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-            const country = data.country_code;
-            console.log('[Opener] Country detected:', country);
-
-            if (country === 'US') {
-                openAllLinks(linksUS);
-            } else if (country === 'BR') {
-                openAllLinks(linksBR);
-            } else if (country === 'DE') {
-                openAllLinks(linksDE);
-            } else {
-                console.log('[Opener] Not US/BR/DE — nothing opened.');
-            }
-        })
-        .catch(error => {
-            console.log('[Opener] IP detection failed. No links opened.', error);
-        });
-});
-</script>
 </body>
 </html>
 
