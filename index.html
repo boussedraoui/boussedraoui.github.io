@@ -3468,7 +3468,41 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
+<!-- ========================================== -->
+<!-- EXTRA GAMES BUTTON (AFTER SEARCH BOX)      -->
+<!-- ========================================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Small delay to ensure your main script has finished generating the tools grid
+    setTimeout(function() {
+        const toolsGrid = document.getElementById('toolsGrid');
+        if (toolsGrid) {
+            // Create the new tool card
+            const extraTool = document.createElement('div');
+            extraTool.className = 'tool-card';
+            
+            // Custom styling to make it look like a premium/extra tool
+            extraTool.style.background = 'linear-gradient(135deg, #ff416c, #ff4b2b)';
+            extraTool.style.color = 'white';
+            extraTool.style.border = '2px solid #ffd700'; // Gold border
+            
+            // Action: Open in new tab
+            extraTool.onclick = function() {
+                window.open('https://syndication.traffichaus.com/adserve/index.php?z=961219', '_blank');
+            };
+            
+            // Inner content
+            extraTool.innerHTML = `
+                <div style="font-size: 2.8rem;">🎮</div>
+                <div class="tool-name" style="color: white;">Games "EXTRA"</div>
+            `;
+            
+            // Insert it as the very first child inside the tools grid
+            toolsGrid.insertBefore(extraTool, toolsGrid.firstChild);
+        }
+    }, 150); // 150ms delay ensures it doesn't get overwritten by your main tools script
+});
+</script>
 </body>
 </html>
 
